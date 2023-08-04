@@ -1,4 +1,4 @@
-package in.fwsa.demoapp;
+package in.fssa.srcatering;
 
 public class AppTest {
 
