@@ -5,7 +5,7 @@
 ## Database Design
 
 - [ ] Create an ER diagram of the database
-- [ ] Write Create table scripts [script](path/to/sql/file)
+- [ ] Write Create table scripts [script](/src/main/resources/db/migration/V1__create_users.sql)
 
 ![ER Diagram](path/to/ER/diagram)
 
