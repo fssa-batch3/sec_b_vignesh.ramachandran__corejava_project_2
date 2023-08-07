@@ -38,6 +38,8 @@ public class DishEntity implements Comparable<DishEntity> {
 	public void setQuantity_unit(String quantity_unit) {
 		this.quantity_unit = quantity_unit;
 	}
+	
+	
 
 	@Override
 	public int compareTo(DishEntity o) {

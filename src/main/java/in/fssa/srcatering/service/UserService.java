@@ -13,7 +13,9 @@ public class UserService {
 	
 	public List<User> getAll() {
 		
+		System.out.println(userdao.findAll());
 		return userdao.findAll();
+		
 		
 	}
 	
