@@ -13,16 +13,8 @@ public class StringUtil {
 		}
 	}
 
-	public static void rejectIfInvalidPhoneNumber(long phoneNumber) throws ValidationException {
-		
-		if (phoneNumber < 6000000000L || phoneNumber > 9999999999L) {
-			throw new ValidationException("Invalid phone number");
-		}
-
-	}
-
 	public static void rejectIfInvalidEmail(String email) throws ValidationException {
-		
+
 		String regexPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$";
 
 		// Create a Pattern object
@@ -30,26 +22,26 @@ public class StringUtil {
 
 		// Create a Matcher object
 		Matcher matcher = pattern.matcher(email);
-		
-		if(!matcher.matches()) {
+
+		if (!matcher.matches()) {
 			throw new ValidationException("Invalid email");
 		}
 	}
-	
+
 	public static void rejectIfIvalidPassword(String password) throws ValidationException {
-		
+
 		String regexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
 
-        // Create a Pattern object
-        Pattern pattern = Pattern.compile(regexPattern);
+		// Create a Pattern object
+		Pattern pattern = Pattern.compile(regexPattern);
 
-        // Create a Matcher object
-        Matcher matcher = pattern.matcher(password);
-        
-        if(!matcher.matches()) {
-        	
-        	throw new ValidationException("Password doesn't matches with pattern");
-        }
+		// Create a Matcher object
+		Matcher matcher = pattern.matcher(password);
+
+		if (!matcher.matches()) {
+
+			throw new ValidationException("Password doesn't matches with pattern");
+		}
 	}
 
 	public static boolean isValidString(String newString) {

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.fssa.srcatering.exception.DAOException;
+import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.interfacee.UserInterface;
 import in.fssa.srcatering.model.User;
 import in.fssa.srcatering.util.ConnectionUtil;
@@ -14,7 +16,7 @@ import in.fssa.srcatering.util.ConnectionUtil;
 public class UserDAO implements UserInterface {
 
 	@Override
-	public List<User> findAll() {
+	public List<User> findAll() throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -41,11 +43,7 @@ public class UserDAO implements UserInterface {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
@@ -53,7 +51,7 @@ public class UserDAO implements UserInterface {
 	}
 
 	@Override
-	public void create(User newUser) {
+	public void create(User newUser) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -62,8 +60,8 @@ public class UserDAO implements UserInterface {
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
-			ps.setString(1, newUser.getName());
-			ps.setString(2, newUser.getEmail());
+			ps.setString(1, newUser.getName().trim());
+			ps.setString(2, newUser.getEmail().trim());
 			ps.setLong(3, newUser.getPhone_number());
 			ps.setString(4, newUser.getPassword());
 
@@ -73,33 +71,31 @@ public class UserDAO implements UserInterface {
 
 		} catch (SQLException e) {
 			if (e.getMessage().contains("Duplicate entry")) {
-				throw new RuntimeException("Duplicate constraint");
+				throw new DAOException("Duplicate constraint");
 			} else {
-				System.out.println(e.getMessage());
-				throw new RuntimeException(e);
+				e.printStackTrace();
+				throw new DAOException(e.getMessage());
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
 		}
 	}
 
 	@Override
-	public void update(int id, User newUser) {
+	public void update(int id, User newUser) throws DAOException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			
+
 			String query = "UPDATE users SET name=?, password=? WHERE id =?";
+			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
 			ps.setString(1, newUser.getName());
-			ps.setString(2, newUser.getEmail());
+			ps.setString(2, newUser.getPassword());
 			ps.setInt(3, id);
 
 			int rowUpdated = ps.executeUpdate();
@@ -112,26 +108,22 @@ public class UserDAO implements UserInterface {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
-
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(int id) throws DAOException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			String query = "UPDATE users SET status =0 WHERE id = ?";
+			String query = "UPDATE users SET status =0 WHERE id = ? AND status = 1";
+			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
 			ps.setInt(1, id);
@@ -146,11 +138,35 @@ public class UserDAO implements UserInterface {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-		} catch (Exception e) {
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+
+	}
+
+	public void isIdAlreadyExists(int userId) throws DAOException {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			String query = "SELECT * FROM users WHERE status = 1 && id =? ";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+
+			ps.setInt(1, userId);
+			rs = ps.executeQuery();
+
+			if (!rs.next()) {
+				throw new DAOException("Invaid UserId");
+			}
+
+		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+			throw new DAOException(e.getMessage());
+			
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
@@ -158,7 +174,7 @@ public class UserDAO implements UserInterface {
 	}
 
 	@Override
-	public User findById(int id) {
+	public User findById(int id) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -166,7 +182,7 @@ public class UserDAO implements UserInterface {
 		User user = null;
 
 		try {
-			String query = "SELECT * FROM uses WHERE status = 1 && id = ?";
+			String query = "SELECT * FROM users WHERE status = 1 && id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
@@ -184,19 +200,43 @@ public class UserDAO implements UserInterface {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
+		System.out.println(user);
 		return user;
 	}
 
+	public void isEmailAlreadyExists(String email) throws DAOException {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			String query = "SELECT * FROM users WHERE email = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				throw new DAOException("Email already exists");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+
+	}
+
 	@Override
-	public User findByEmail(String email) {
+	public User findByEmail(String email) throws DAOException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -205,7 +245,7 @@ public class UserDAO implements UserInterface {
 		User user = null;
 
 		try {
-			String query = "SELECT * FROM users WHERE is_active = 1 AND email = ?";
+			String query = "SELECT * FROM users WHERE status = 1 AND email = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setString(1, email);
@@ -222,20 +262,18 @@ public class UserDAO implements UserInterface {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e);
-		} finally {
+			throw new DAOException(e.getMessage());
+		}  finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
+		
+		System.out.println(user);
 		return user;
 	}
 
 	@Override
 	public int count() {
-		
+
 		return 0;
 	}
 

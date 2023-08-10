@@ -2,16 +2,18 @@ package in.fssa.srcatering.interfacee;
 
 import java.util.List;
 
+import in.fssa.srcatering.exception.DAOException;
+
 public interface Base<T> {
 
-	public abstract List<T> findAll();
+	public abstract List<T> findAll() throws DAOException;
 
-	public abstract void create(T t);
+	public abstract void create(T t) throws DAOException;
 
-	public abstract void update(int id, T t);
+	public abstract void update(int id, T t) throws DAOException;
 
-	public abstract void delete(int id);
+	public abstract void delete(int id) throws DAOException;
 
-	public abstract T findById(int id);
+	public abstract T findById(int id) throws DAOException;
 
 }

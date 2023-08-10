@@ -2,6 +2,7 @@ package in.fssa.srcatering.model;
 
 public abstract class CategoryEntity implements Comparable<CategoryEntity> {
 	
+
 	private int id;
 	private String category_name;
 	
@@ -18,4 +19,8 @@ public abstract class CategoryEntity implements Comparable<CategoryEntity> {
 		this.category_name = category_name;
 	}
 	
+	@Override
+	public String toString() {
+		return "CategoryEntity [id=" + id + ", category_name=" + category_name + "]";
+	}
 }

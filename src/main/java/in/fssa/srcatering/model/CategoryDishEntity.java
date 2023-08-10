@@ -2,11 +2,12 @@ package in.fssa.srcatering.model;
 
 public class CategoryDishEntity implements Comparable<DishEntity> {
 
-	int id;
-	int menu_id;
-	int category_id;
-	int dish_id;
-
+	private int id;
+	private int menu_id;
+	private int category_id;
+	private int dish_id;
+	private boolean status;
+	
 	public int getId() {
 		return id;
 	}
@@ -39,6 +40,13 @@ public class CategoryDishEntity implements Comparable<DishEntity> {
 		this.dish_id = dish_id;
 	}
 	
+	public boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 
 	@Override
 	public int compareTo(DishEntity o) {

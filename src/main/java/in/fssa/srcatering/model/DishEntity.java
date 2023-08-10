@@ -5,7 +5,10 @@ public class DishEntity implements Comparable<DishEntity> {
 	private int id;
 	private String dish_name;
 	private int quantity;
-	private String quantity_unit;
+	private QuantityUnit quantity_unit;
+	private int menu_id;
+	private int category_id;
+	private int dish_price;
 
 	public int getId() {
 		return id;
@@ -31,20 +34,49 @@ public class DishEntity implements Comparable<DishEntity> {
 		this.quantity = quantity;
 	}
 
-	public String getQuantity_unit() {
+	public QuantityUnit getQuantity_unit() {
 		return quantity_unit;
 	}
 
-	public void setQuantity_unit(String quantity_unit) {
+	public void setQuantity_unit(QuantityUnit quantity_unit) {
 		this.quantity_unit = quantity_unit;
 	}
 	
-	
+
+	public int getMenu_id() {
+		return menu_id;
+	}
+
+	public void setMenu_id(int menu_id) {
+		this.menu_id = menu_id;
+	}
+
+	public int getCategory_id() {
+		return category_id;
+	}
+
+	public void setCategory_id(int category_id) {
+		this.category_id = category_id;
+	}
+
+	public int getDish_price() {
+		return dish_price;
+	}
+
+	public void setDish_price(int dish_price) {
+		this.dish_price = dish_price;
+	}
 
 	@Override
 	public int compareTo(DishEntity o) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public String toString() {
+		return "DishEntity [id=" + id + ", dish_name=" + dish_name + ", quantity=" + quantity + ", quantity_unit="
+				+ quantity_unit + "]";
 	}
 
 }

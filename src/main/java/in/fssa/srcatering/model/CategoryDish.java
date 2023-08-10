@@ -6,11 +6,12 @@ public class CategoryDish extends CategoryDishEntity{
 		
 	}
 	
-	public CategoryDish(int id, int menu_id, int category_id, int dish_id) {
+	public CategoryDish(int id, int menu_id, int category_id, int dish_id, boolean status) {
 		super.setId(id);
 		super.setMenu_id(menu_id);
 		super.setCategory_id(category_id);
 		super.setDish_id(dish_id);
+		super.setStatus(status);
 	}
  
 }

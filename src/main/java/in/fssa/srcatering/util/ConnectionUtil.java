@@ -10,7 +10,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 public class ConnectionUtil {
 
-	public static Connection getConnection() throws Exception {
+	public static Connection getConnection() throws SQLException {
 
 		Dotenv env = Dotenv.load();
 		String url = env.get("DATABASE_HOSTNAME");
@@ -23,11 +23,10 @@ public class ConnectionUtil {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(url, username, password);
 
-		} catch (Exception e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new Exception(e);
-
+			throw new SQLException(e);
 		}
 		return con;
 
