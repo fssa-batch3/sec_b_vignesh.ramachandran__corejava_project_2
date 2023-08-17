@@ -1,8 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import in.fssa.srcatering.exception.DAOException;
+import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Dish;
 import in.fssa.srcatering.model.QuantityUnit;
 import in.fssa.srcatering.model.User;
+import in.fssa.srcatering.service.CategoryDishService;
 import in.fssa.srcatering.service.CategoryService;
 import in.fssa.srcatering.service.DishService;
 import in.fssa.srcatering.service.MenuService;
@@ -36,6 +41,7 @@ public class App {
 //		}
 		
 		CategoryService categoryservice = new CategoryService();
+		
 //		categoryservice.getAll();
 //		try {
 //			categoryservice.findById(1);
@@ -46,31 +52,37 @@ public class App {
 
 		DishService dishservice = new DishService();
 		
-//		Dish dish = new Dish();
-//		dish.setDish_name("SAMBAR");
-//		dish.setMenu_id(1);
-//		dish.setCategory_id(1);
-//		dish.setQuantity(20);
-//		dish.setQuantity_unit(QuantityUnit.grams);
-//		dish.setDish_price(10);
-//		dish.setId(6);
-//		
+		Dish dish = new Dish();
+		dish.setDish_name("VADA");
+		dish.setMenu_id(1);
+		dish.setCategory_id(1);
+		dish.setQuantity(1);
+		dish.setQuantity_unit(QuantityUnit.NOS);
+		dish.setDish_price(10);
+		
+		try {
+			dishservice.create(dish);
+		} catch (ValidationException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			
+		} catch (ServiceException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+
+		CategoryDishService categorydishservice = new CategoryDishService();
 //		try {
-//			dishservice.delete(dish);
-//		} catch (ValidationException e) {
-//			e.printStackTrace();
-//			System.out.println(e.getMessage());
+//			System.out.println(categorydishservice.findDishNameByMenuIdAndCategoryId(1,1));
 //			
-//		} catch (DAOException e) {
+//		} catch (ValidationException e) {
+//			
 //			e.printStackTrace();
-//			System.out.println(e.getMessage());
-//		}
-//		try {
-//			dishservice.findByDishId(5);
-//		} catch (ValidationException | DAOException e) {
-//			// TODO Auto-generated catch block
+//		} catch (ServiceException e) {
+//			
 //			e.printStackTrace();
 //		}
+		
 
 	}
 

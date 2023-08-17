@@ -94,7 +94,7 @@ public class MenuDAO {
 			rs = ps.executeQuery();
 
 			if (!rs.next()) {
-				throw new DAOException("Invaid MenuId");
+				throw new DAOException("MenuId not found");
 			}
 
 		} catch (SQLException e) {

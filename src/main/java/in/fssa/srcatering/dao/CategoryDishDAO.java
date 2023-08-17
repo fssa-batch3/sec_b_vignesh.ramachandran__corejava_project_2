@@ -27,7 +27,7 @@ public class CategoryDishDAO {
 			rs = ps.executeQuery();
 			
 			if(!rs.next()) {
-				throw new DAOException("Invalid MenuId");
+				throw new DAOException("MenuId not found");
 			}
 			
 		} catch (SQLException e) {
@@ -55,7 +55,7 @@ public class CategoryDishDAO {
 			rs = ps.executeQuery();
 			
 			if(!rs.next()) {
-				throw new DAOException("Invalid CategoryId");
+				throw new DAOException("CategoryId not found");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -80,7 +80,7 @@ public class CategoryDishDAO {
 			rs = ps.executeQuery();
 			
 			if(!rs.next()) {
-				throw new DAOException("Invalid DishId");
+				throw new DAOException("DishId not found");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -109,7 +109,7 @@ public class CategoryDishDAO {
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				dishNames.add(rs.getString("dish_name"));
+				dishNames.add(rs.getString("dish_name").trim());
 			}
 			
 		} catch (SQLException e) {

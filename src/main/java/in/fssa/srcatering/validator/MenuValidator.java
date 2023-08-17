@@ -13,12 +13,12 @@ public class MenuValidator {
 
 			MenuDAO menudao = new MenuDAO();
 
-			IntUtil.rejectIfInvalidInt(menu_id, "Menu Id");
+			IntUtil.rejectIfInvalidInt(menu_id, "MenuId");
 
 			menudao.IsMenuIdIsValid(menu_id);
 
 		} catch (DAOException e) {
-			throw new ValidationException("Invalid MenuId");
+			throw new ValidationException("MenuId not found");
 		}
 
 	}

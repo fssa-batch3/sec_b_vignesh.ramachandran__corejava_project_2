@@ -11,12 +11,13 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 INSERT INTO users (name, email, phone_number, password)
-VALUES ("Vignesh", "vignesh@gamil.com", 6379370482, "Vig@1234"),
-("Maruthan", "maruthan@gamil.com", 7810012456, "Mar@1234"),
-("Boobalan", "boobalan@gamil.com", 9878687542, "Bob@1234");
+VALUES ("Vignesh", "vignesh@gmail.com", 6379370482, "Vig@1234"),
+("Maruthan", "maruthan@gmail.com", 7810012456, "Mar@1234"),
+("Boobalan", "boobalan@gmail.com", 9878687542, "Bob@1234");
 
 -- findall users
-SELECT * FROM users WHERE status =1;
+SELECT * FROM users ;
+
 
 
 CREATE TABLE IF NOT EXISTS menus (
@@ -32,6 +33,7 @@ VALUES ("Breakfast", "SR Catering Service offers best breakfast menu that is ava
 ("Lunch", "SR Catering Service provides delicious lunch menu that suits all functions and parties; we also allow clients to create a personalized menu just according to their taste, budget"),
 ("Hightea","SR Catering Service gives evening tea and snacks menu which is available for all functions; we also help customers to create a personalized menu just according to client’s taste and perfect for the occasion"),
 ("Dinner", "SR Catering Service present a detailed dinner menu which is available for all parties, wedding and reception; we also aid customers to create a personalized and special menu just according to the taste and budget");
+
 
 SELECT * FROM menus;
 
@@ -53,17 +55,17 @@ CREATE TABLE IF NOT EXISTS dishes (
   id INT AUTO_INCREMENT PRIMARY KEY,
   dish_name VARCHAR(100) NOT NULL,
   quantity INT NOT NULL,
-  quantity_unit enum ('nos', 'grams') NOT NULL,
+  quantity_unit enum ('NOS', 'GRAMS') NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO dishes (dish_name, quantity, quantity_unit)
-VALUES ("MINI LADDU",  1, "nos"),
-("IDLY",  2, "nos"),
-("KITCHADI",  100, "grams"),
-("VADA",  1, "nos"),
-("POORI & VEG GRAVY", 2, "nos");
+VALUES ("MINI LADDU",  1, "NOS"),
+("IDLY",  2, "NOS"),
+("KITCHADI",  100, "GRAMS"),
+("VADA",  1, "NOS"),
+("POORI & VEG GRAVY", 2, "NOS");
 
 select * from dishes;
 
@@ -75,8 +77,8 @@ select * from dishes;
 
 CREATE TABLE IF NOT EXISTS dish_price (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    start_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    end_date TIMESTAMP,
+    start_date TIMESTAMP NOT NULL,
+    end_date TIMESTAMP ,
     price INT NOT NULL,
     dish_id INT,
     FOREIGN KEY (dish_id) REFERENCES dishes(id)
@@ -89,15 +91,7 @@ VALUES (10, 1),
 (10, 4),
 (30, 5);
 
-SELECT * From dish_price;
-
-
--- update
--- UPDATE dish_price SET end_date = current_timestamp
--- WHERE dish_id = 1;
-
--- INSERT INTO dish_price(price, dish_id)
--- Values(10,1);
+SELECT * From dish_price ;
 
 
 CREATE TABLE IF NOT EXISTS category_dish(
@@ -120,9 +114,26 @@ VALUES(1,1,1),
 
 SELECT * FROM category_dish;
 
+drop table category_dish;
+drop table dish_price;
+drop table dishes;
+
+
+SELECT c.dish_id, dp.price FROM category_dish c INNER JOIN dish_price dp ON c.dish_id = dp.dish_id WHERE c.menu_id = 1 AND c.category_id =1;
+
 SELECT d.dish_name
 FROM dishes d
 JOIN category_dish cd ON d.id = cd.dish_id
 WHERE cd.menu_id = 1 AND cd.category_id = 2;
+
+CREATE TABLE IF NOT EXISTS order_price(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT,
+    price_id INT,
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (price_id) REFERENCES dish_price(id)
+);
+
+select * from order_price;
 
 

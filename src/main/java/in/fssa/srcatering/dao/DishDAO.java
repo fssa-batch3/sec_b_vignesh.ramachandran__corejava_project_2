@@ -13,7 +13,7 @@ import in.fssa.srcatering.util.ConnectionUtil;
 
 public class DishDAO {
 
-	public int create(String dish_name, int quantity, QuantityUnit quantity_unit) {
+	public int create(String dish_name, int quantity, QuantityUnit quantity_unit) throws DAOException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -38,19 +38,15 @@ public class DishDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-		} finally {
+			throw new DAOException(e.getMessage());
+		}  finally {
 			ConnectionUtil.close(con, ps,rs);
 		}
 		return generatedId;
 	}
 	
 	
-	public void update(Dish dish) {
+	public void update(Dish dish) throws DAOException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -69,11 +65,7 @@ public class DishDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(e.getMessage());
-			throw new RuntimeException(e);
-		} catch(Exception e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
 		}
@@ -93,7 +85,7 @@ public class DishDAO {
 			rs = ps.executeQuery();
 
 			if (!rs.next()) {
-				throw new DAOException("Invalid DishId");
+				throw new DAOException("DishId not found");
 			}
 
 		} catch (SQLException e) {

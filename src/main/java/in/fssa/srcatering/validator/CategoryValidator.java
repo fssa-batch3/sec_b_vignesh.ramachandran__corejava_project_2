@@ -12,11 +12,11 @@ public class CategoryValidator {
 		try {
 			CategoryDAO categorydao = new CategoryDAO();
 
-			IntUtil.rejectIfInvalidInt(category_id, "Category Id");
+			IntUtil.rejectIfInvalidInt(category_id, "CategoryId");
 			categorydao.isCategoryIdIsValid(category_id);
 
 		} catch (DAOException e) {
-			throw new ValidationException("Invalid CategoryId");
+			throw new ValidationException("CategoryId not found");
 		}
 	}
 

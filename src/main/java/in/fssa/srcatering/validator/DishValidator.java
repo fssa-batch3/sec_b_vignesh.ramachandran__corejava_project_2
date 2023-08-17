@@ -25,19 +25,34 @@ public class DishValidator {
 
 		StringUtil.rejectIfInvalidString(dish.getDish_name(), "Dish Name");
 		IntUtil.rejectIfInvalidInt(dish.getQuantity(), "Quantity");
+		
+		if(dish.getQuantity_unit().name().equals("nos") && dish.getQuantity() > 5 ) {
+			throw new ValidationException("Check Quantity and QuantityUnit");
+		}
+		
+		if(dish.getQuantity_unit().name().equals("grams") && dish.getQuantity() < 20){
+			throw new ValidationException("Check Quantity and QuantityUnit");
+		}
 
 	}
 
 	public static void ValidateAllIdsAndDishName(Dish dish) throws ValidationException {
 
 		try {
+			
+			MenuService menuservice = new MenuService();
+			menuservice.isMenuIdIsValid(dish.getMenu_id());
+
+			CategoryService categoryservice = new CategoryService();
+			categoryservice.isCategoryIdIsValid(dish.getCategory_id());
+			
 
 			CategoryDishService categorydishservice = new CategoryDishService();
 
 			List<String> dishNames = categorydishservice.findDishNameByMenuIdAndCategoryId(dish.getMenu_id(),
 					dish.getCategory_id());
 
-			if (dishNames.contains(dish.getDish_name())) {
+			if (dishNames.contains(dish.getDish_name().trim())) {
 				throw new ValidationException("Dish name already Exists");
 			}
 
@@ -51,9 +66,9 @@ public class DishValidator {
 
 //		try {
 
-			IntUtil.rejectIfInvalidInt(menu_id, "Menu Id");
-			IntUtil.rejectIfInvalidInt(category_id, "Category Id");
-			IntUtil.rejectIfInvalidInt(dish_id, "Dish Id");
+			IntUtil.rejectIfInvalidInt(menu_id, "MenuId");
+			IntUtil.rejectIfInvalidInt(category_id, "CategoryId");
+			IntUtil.rejectIfInvalidInt(dish_id, "DishId");
 
 			MenuService menuservice = new MenuService();
 			menuservice.isMenuIdIsValid(menu_id);
@@ -95,11 +110,11 @@ public class DishValidator {
 		try {
 			DishDAO dishdao = new DishDAO();
 
-			IntUtil.rejectIfInvalidInt(dish_id, "Dish Id");
+			IntUtil.rejectIfInvalidInt(dish_id, "DishId");
 			dishdao.isDishIdIsValid(dish_id);
 
 		} catch (DAOException e) {
-			throw new ValidationException("Invalid DishId");
+			throw new ValidationException("DishId not found");
 		}
 
 	}

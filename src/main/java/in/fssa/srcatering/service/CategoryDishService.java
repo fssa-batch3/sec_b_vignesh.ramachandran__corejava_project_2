@@ -43,7 +43,7 @@ public class CategoryDishService {
 		
 		try {
 
-			this.isCategoryIdIsValid(menu_id, category_id);
+			//this.isCategoryIdIsValid(menu_id, category_id);
 
 			dishNames = categorydishdao.findDishNameByMenuIdAndCategoryId(menu_id, category_id);
 

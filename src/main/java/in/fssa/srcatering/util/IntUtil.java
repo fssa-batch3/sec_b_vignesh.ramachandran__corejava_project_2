@@ -23,4 +23,10 @@ public class IntUtil {
 			throw new ValidationException("Invalid ".concat(inputName));
 		}
 	}
+	
+	public void QuantityCheck(int input, String inputName) throws ValidationException {
+		if(input > 500) {
+			throw new ValidationException("Quantity doesn't above 500");
+		}
+	}
 }

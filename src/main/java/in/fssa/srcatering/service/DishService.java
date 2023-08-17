@@ -16,43 +16,59 @@ public class DishService {
 	CategoryDishService categorydishservice = new CategoryDishService();
 
 	public void create(Dish dish) throws ValidationException, ServiceException {
-		DishPriceService dishpriceservice = new DishPriceService();
-		int generatedDishId = -1;
 
-		DishValidator.Validate(dish);
-		DishValidator.ValidateAllIdsAndDishName(dish);
+		try {
 
-		// dish
-		generatedDishId = dishdao.create(dish.getDish_name().trim(), dish.getQuantity(), dish.getQuantity_unit());
+			DishPriceService dishpriceservice = new DishPriceService();
+			int generatedDishId = -1;
 
-		// dish price
-		dishpriceservice.create(generatedDishId, dish.getDish_price());
+			DishValidator.Validate(dish);
+			DishValidator.ValidateAllIdsAndDishName(dish);
 
-		// category_dish
-		categorydishservice.create(dish.getMenu_id(), dish.getCategory_id(), generatedDishId);
+			// dish
+			generatedDishId = dishdao.create(dish.getDish_name().trim(), dish.getQuantity(), dish.getQuantity_unit());
+
+			// dish price
+			dishpriceservice.create(generatedDishId, dish.getDish_price());
+
+			// category_dish
+			categorydishservice.create(dish.getMenu_id(), dish.getCategory_id(), generatedDishId);
+
+		} catch (DAOException e) {
+			throw new ServiceException("Dish creation failed");
+
+		}
 
 	}
 
 	public void update(Dish dish) throws ValidationException, ServiceException {
+		
+		try {
+			
+			DishPriceService dishpriceservice = new DishPriceService();
 
-		DishPriceService dishpriceservice = new DishPriceService();
+			DishValidator.Validate(dish);
+			DishValidator.ValidateIds(dish.getMenu_id(), dish.getCategory_id(), dish.getId());
 
-		DishValidator.Validate(dish);
-		DishValidator.ValidateIds(dish.getMenu_id(), dish.getCategory_id(), dish.getId());
+			dishdao.update(dish);
 
-		dishdao.update(dish);
+			dishpriceservice.update(dish.getId(), dish.getDish_price());
+			
+		} catch (DAOException e) {
+			throw new ServiceException("Dish Updation failed");
+		}
 
-		dishpriceservice.update(dish.getId(), dish.getDish_price());
+		
 
 	}
 
-	public void delete(Dish dish) throws ValidationException, ServiceException {
+	public void delete(int menu_id, int category_id, int dish_id) throws ValidationException, ServiceException {
 
-		DishValidator.isDishIdIsValid(dish.getId());
+		DishValidator.isDishIdIsValid(dish_id);
 
-		categorydishservice.isDishIdIsValid(dish.getId());
+		categorydishservice.isDishIdIsValid(dish_id);
 
-		categorydishservice.delete(dish.getMenu_id(), dish.getCategory_id(), dish.getId());
+		categorydishservice.delete(menu_id, category_id, dish_id);
 
 	}
 
@@ -73,7 +89,6 @@ public class DishService {
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage());
 		}
-
 	}
 
 }

@@ -99,7 +99,7 @@ public class CategoryDAO {
 			
 			rs = ps.executeQuery();
 			if(!rs.next()) {
-				throw new DAOException("Invalid CategoryId");
+				throw new DAOException("CategoryId not found");
 			}
 			
 		} catch (SQLException e) {

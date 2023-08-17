@@ -41,6 +41,7 @@ public class CategoryService {
 		
 		try {
 			IntUtil.rejectIfInvalidInt(category_id, "CategoryId");
+			this.isCategoryIdIsValid(category_id);
 			
 			return categorydao.findById(category_id);
 			

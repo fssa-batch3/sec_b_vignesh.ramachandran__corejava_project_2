@@ -23,7 +23,7 @@ public class DishEntity implements Comparable<DishEntity> {
 	}
 
 	public void setDish_name(String dish_name) {
-		this.dish_name = dish_name;
+		this.dish_name = dish_name.trim();
 	}
 
 	public int getQuantity() {

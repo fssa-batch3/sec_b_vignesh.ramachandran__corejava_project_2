@@ -1,5 +1,7 @@
 package in.fssa.srcatering.service;
 
+import java.time.LocalDateTime;
+
 import in.fssa.srcatering.dao.DishPriceDAO;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
@@ -17,12 +19,15 @@ public class DishPriceService {
 	public void create(int dish_id, int price) throws ValidationException, ServiceException {
 
 		try {
+			
+			LocalDateTime localDateTime = LocalDateTime.now();
+			java.sql.Timestamp dateTime = java.sql.Timestamp.valueOf(localDateTime);
 
 			dishservice.isDishIdIsValid(dish_id);
 
 			IntUtil.priceCheck(price, "Price");
 
-			dishpricedao.create(dish_id, price);
+			dishpricedao.create(dish_id, price,dateTime);
 
 		} catch (DAOException e) {
 			throw new ServiceException("Invalid DishId");
@@ -40,11 +45,16 @@ public class DishPriceService {
 			DishPriceValidator.isDishIdIsValid(dish_id);
 			
 			int price = dishpricedao.findPriceByDishId(dish_id);
-//			System.out.println(price);
+			int price_id = dishpricedao.findPriceIdByDishId(dish_id);
+			
+			IntUtil.rejectIfInvalidInt(price_id, "PriceId");
+
+			LocalDateTime localDateTime = LocalDateTime.now();
+			java.sql.Timestamp dateTime = java.sql.Timestamp.valueOf(localDateTime);
 			
 			if (price != dish_price) {
-				dishpricedao.update(dish_id, dish_price);
-				dishpricedao.create(dish_id, dish_price);
+				dishpricedao.update(price_id, dateTime);
+				dishpricedao.create(dish_id, dish_price, dateTime);
 			}
 			
 		} catch (DAOException e) {
