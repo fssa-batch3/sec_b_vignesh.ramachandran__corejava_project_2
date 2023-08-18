@@ -26,11 +26,11 @@ public class DishValidator {
 		StringUtil.rejectIfInvalidString(dish.getDish_name(), "Dish Name");
 		IntUtil.rejectIfInvalidInt(dish.getQuantity(), "Quantity");
 		
-		if(dish.getQuantity_unit().name().equals("nos") && dish.getQuantity() > 5 ) {
+		if(dish.getQuantity_unit().name().equals("NOS") && dish.getQuantity() > 5 ) {
 			throw new ValidationException("Check Quantity and QuantityUnit");
 		}
 		
-		if(dish.getQuantity_unit().name().equals("grams") && dish.getQuantity() < 20){
+		if(dish.getQuantity_unit().name().equals("GRAMS") && dish.getQuantity() < 20){
 			throw new ValidationException("Check Quantity and QuantityUnit");
 		}
 

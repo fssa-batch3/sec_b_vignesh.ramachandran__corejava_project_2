@@ -51,7 +51,17 @@ public class CategoryDishService {
 			throw new ServiceException("Failed to Find Dish Name By MenuId & CategoryId");
 		}
 		return dishNames;
-
+	}
+	
+	public List<Integer> findDishIdByMenuIdAndCategoryId(int menu_id, int category_id) throws ServiceException{
+		
+		List<Integer> dishIds;
+		try {
+			dishIds = categorydishdao.findDishIdByMenuIdAndCategoryId(menu_id, category_id);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage());
+		}
+		return dishIds;
 	}
 
 	public void create(int menu_id, int category_id, int dish_id) throws ValidationException, ServiceException {

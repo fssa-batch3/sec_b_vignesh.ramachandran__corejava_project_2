@@ -19,11 +19,12 @@ public class TestDish {
 		DishService dishservice = new DishService();
 
 		Dish dish = new Dish();
+
 		dish.setMenu_id(1);
 		dish.setCategory_id(1);
-		dish.setDish_name("MINI LADDU");
-		dish.setDish_price(10);
-		dish.setQuantity(1);
+		dish.setDish_name("MINI UTTAPPAM");
+		dish.setDish_price(30);
+		dish.setQuantity(2);
 		dish.setQuantity_unit(QuantityUnit.NOS);
 
 		assertDoesNotThrow(() -> {
@@ -55,8 +56,8 @@ public class TestDish {
 			dish.setMenu_id(1);
 			dish.setDish_name(null);
 			dish.setDish_price(0);
-			dish.setQuantity(20);
-			dish.setQuantity_unit(QuantityUnit.GRAMS);
+			dish.setQuantity(1);
+			dish.setQuantity_unit(QuantityUnit.NOS);
 
 			dishservice.create(dish);
 		});
@@ -78,8 +79,8 @@ public class TestDish {
 			dish.setMenu_id(1);
 			dish.setDish_name("");
 			dish.setDish_price(0);
-			dish.setQuantity(20);
-			dish.setQuantity_unit(QuantityUnit.GRAMS);
+			dish.setQuantity(1);
+			dish.setQuantity_unit(QuantityUnit.NOS);
 
 			dishservice.create(dish);
 		});
@@ -121,10 +122,10 @@ public class TestDish {
 
 			dish.setMenu_id(0);
 			dish.setCategory_id(1);
-			dish.setDish_name("SAMBAR");
-			dish.setDish_price(0);
-			dish.setQuantity(20);
-			dish.setQuantity_unit(QuantityUnit.GRAMS);
+			dish.setDish_name("MINI UTTAPPAM");
+			dish.setDish_price(30);
+			dish.setQuantity(2);
+			dish.setQuantity_unit(QuantityUnit.NOS);
 
 			dishservice.create(dish);
 		});
@@ -144,10 +145,10 @@ public class TestDish {
 
 			dish.setMenu_id(-1);
 			dish.setCategory_id(1);
-			dish.setDish_name("SAMBAR");
-			dish.setDish_price(0);
-			dish.setQuantity(20);
-			dish.setQuantity_unit(QuantityUnit.GRAMS);
+			dish.setDish_name("MINI UTTAPPAM");
+			dish.setDish_price(30);
+			dish.setQuantity(2);
+			dish.setQuantity_unit(QuantityUnit.NOS);
 
 			dishservice.create(dish);
 		});
@@ -168,9 +169,9 @@ public class TestDish {
 
 			dish.setMenu_id(5);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
-			dish.setDish_price(10);
-			dish.setQuantity(1);
+			dish.setDish_name("MINI UTTAPPAM");
+			dish.setDish_price(30);
+			dish.setQuantity(2);
 			dish.setQuantity_unit(QuantityUnit.NOS);
 
 			dishservice.create(dish);
@@ -193,10 +194,10 @@ public class TestDish {
 
 			dish.setMenu_id(1);
 			dish.setCategory_id(0);
-			dish.setDish_name("SAMBAR");
-			dish.setDish_price(0);
-			dish.setQuantity(20);
-			dish.setQuantity_unit(QuantityUnit.GRAMS);
+			dish.setDish_name("MINI UTTAPPAM");
+			dish.setDish_price(30);
+			dish.setQuantity(2);
+			dish.setQuantity_unit(QuantityUnit.NOS);
 
 			dishservice.create(dish);
 		});
@@ -216,10 +217,10 @@ public class TestDish {
 
 			dish.setMenu_id(1);
 			dish.setCategory_id(-1);
-			dish.setDish_name("SAMBAR");
-			dish.setDish_price(0);
-			dish.setQuantity(20);
-			dish.setQuantity_unit(QuantityUnit.GRAMS);
+			dish.setDish_name("MINI UTTAPPAM");
+			dish.setDish_price(30);
+			dish.setQuantity(2);
+			dish.setQuantity_unit(QuantityUnit.NOS);
 
 			dishservice.create(dish);
 		});
@@ -240,9 +241,9 @@ public class TestDish {
 
 			dish.setMenu_id(1);
 			dish.setCategory_id(5);
-			dish.setDish_name("VADA");
-			dish.setDish_price(10);
-			dish.setQuantity(1);
+			dish.setDish_name("MINI UTTAPPAM");
+			dish.setDish_price(30);
+			dish.setQuantity(2);
 			dish.setQuantity_unit(QuantityUnit.NOS);
 
 			dishservice.create(dish);
@@ -265,9 +266,9 @@ public class TestDish {
 
 			dish.setMenu_id(1);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
-			dish.setDish_price(-1);
-			dish.setQuantity(1);
+			dish.setDish_name("MINI UTTAPPAM");
+			dish.setDish_price(-30);
+			dish.setQuantity(2);
 			dish.setQuantity_unit(QuantityUnit.NOS);
 
 			dishservice.create(dish);
@@ -291,9 +292,9 @@ public class TestDish {
 
 			dish.setMenu_id(1);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
-			dish.setDish_price(10);
-			dish.setQuantity(-1);
+			dish.setDish_name("MINI UTTAPPAM");
+			dish.setDish_price(30);
+			dish.setQuantity(-2);
 			dish.setQuantity_unit(QuantityUnit.NOS);
 
 			dishservice.create(dish);
@@ -316,8 +317,8 @@ public class TestDish {
 
 			dish.setMenu_id(1);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
-			dish.setDish_price(10);
+			dish.setDish_name("MINI UTTAPPAM");
+			dish.setDish_price(30);
 			dish.setQuantity(0);
 			dish.setQuantity_unit(QuantityUnit.NOS);
 
@@ -338,10 +339,10 @@ public class TestDish {
 
 			dish.setMenu_id(1);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
-			dish.setDish_price(10);
-			dish.setQuantity(10);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setDish_name("MINI UTTAPPAM");
+			dish.setDish_price(30);
+			dish.setQuantity(2);
+			dish.setQuantity_unit(QuantityUnit.GRAMS);
 
 			dishservice.create(dish);
 		});
@@ -361,14 +362,13 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			
 			Dish dish = new Dish();
-
 			dish.setMenu_id(1);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
+			dish.setDish_name("MINI LADDU");
 			dish.setDish_price(10);
 			dish.setQuantity(-1);
 			dish.setQuantity_unit(QuantityUnit.NOS);
-			dish.setId(2);
+			dish.setId(1);
 
 			dishservice.update(dish);
 		});
@@ -388,14 +388,13 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-
 			dish.setMenu_id(1);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
+			dish.setDish_name("MINI LADDU");
 			dish.setDish_price(10);
 			dish.setQuantity(0);
 			dish.setQuantity_unit(QuantityUnit.NOS);
-			dish.setId(2);
+			dish.setId(1);
 
 			dishservice.update(dish);
 		});
@@ -411,15 +410,15 @@ public class TestDish {
 		DishService dishservice = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
+			
 			Dish dish = new Dish();
-
 			dish.setMenu_id(1);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
+			dish.setDish_name("MINI LADDU");
 			dish.setDish_price(10);
-			dish.setQuantity(10);
+			dish.setQuantity(100);
 			dish.setQuantity_unit(QuantityUnit.NOS);
-			dish.setId(2);
+			dish.setId(1);
 
 			dishservice.update(dish);
 		});
@@ -438,14 +437,13 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-
 			dish.setMenu_id(0);
 			dish.setCategory_id(1);
-			dish.setDish_name("SAMBAR");
-			dish.setDish_price(0);
-			dish.setQuantity(20);
-			dish.setQuantity_unit(QuantityUnit.GRAMS);
-			dish.setId(2);
+			dish.setDish_name("MINI LADDU");
+			dish.setDish_price(10);
+			dish.setQuantity(1);
+			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setId(1);
 
 			dishservice.update(dish);
 		});
@@ -464,14 +462,13 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-
 			dish.setMenu_id(-1);
 			dish.setCategory_id(1);
-			dish.setDish_name("SAMBAR");
-			dish.setDish_price(0);
-			dish.setQuantity(20);
-			dish.setQuantity_unit(QuantityUnit.GRAMS);
-			dish.setId(2);
+			dish.setDish_name("MINI LADDU");
+			dish.setDish_price(10);
+			dish.setQuantity(1);
+			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setId(1);
 
 			dishservice.update(dish);
 		});
@@ -489,14 +486,13 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-
 			dish.setMenu_id(5);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
+			dish.setDish_name("MINI LADDU");
 			dish.setDish_price(10);
 			dish.setQuantity(1);
 			dish.setQuantity_unit(QuantityUnit.NOS);
-			dish.setId(2);
+			dish.setId(1);
 
 			dishservice.update(dish);
 		});
@@ -515,14 +511,13 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-
 			dish.setMenu_id(1);
 			dish.setCategory_id(0);
-			dish.setDish_name("SAMBAR");
-			dish.setDish_price(0);
-			dish.setQuantity(20);
-			dish.setQuantity_unit(QuantityUnit.GRAMS);
-			dish.setId(2);
+			dish.setDish_name("MINI LADDU");
+			dish.setDish_price(10);
+			dish.setQuantity(1);
+			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setId(1);
 
 			dishservice.update(dish);
 		});
@@ -539,14 +534,13 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-
 			dish.setMenu_id(1);
 			dish.setCategory_id(-1);
-			dish.setDish_name("SAMBAR");
-			dish.setDish_price(0);
-			dish.setQuantity(20);
-			dish.setQuantity_unit(QuantityUnit.GRAMS);
-			dish.setId(2);
+			dish.setDish_name("MINI LADDU");
+			dish.setDish_price(10);
+			dish.setQuantity(1);
+			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setId(1);
 
 			dishservice.update(dish);
 		});
@@ -564,14 +558,13 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-
 			dish.setMenu_id(1);
 			dish.setCategory_id(5);
-			dish.setDish_name("VADA");
+			dish.setDish_name("MINI LADDU");
 			dish.setDish_price(10);
 			dish.setQuantity(1);
 			dish.setQuantity_unit(QuantityUnit.NOS);
-			dish.setId(2);
+			dish.setId(1);
 
 			dishservice.update(dish);
 		});
@@ -590,14 +583,13 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-
 			dish.setMenu_id(1);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
-			dish.setDish_price(-1);
+			dish.setDish_name("MINI LADDU");
+			dish.setDish_price(-10);
 			dish.setQuantity(1);
 			dish.setQuantity_unit(QuantityUnit.NOS);
-			dish.setId(2);
+			dish.setId(1);
 
 			dishservice.update(dish);
 		});
@@ -617,10 +609,9 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-
 			dish.setMenu_id(1);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
+			dish.setDish_name("MINI LADDU");
 			dish.setDish_price(10);
 			dish.setQuantity(1);
 			dish.setQuantity_unit(QuantityUnit.NOS);
@@ -643,14 +634,13 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-
 			dish.setMenu_id(1);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
+			dish.setDish_name("MINI LADDU");
 			dish.setDish_price(10);
 			dish.setQuantity(1);
 			dish.setQuantity_unit(QuantityUnit.NOS);
-			dish.setId(-2);
+			dish.setId(-1);
 
 			dishservice.update(dish);
 		});
@@ -669,14 +659,13 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-
 			dish.setMenu_id(1);
 			dish.setCategory_id(1);
-			dish.setDish_name("VADA");
+			dish.setDish_name("MINI LADDU");
 			dish.setDish_price(10);
 			dish.setQuantity(1);
 			dish.setQuantity_unit(QuantityUnit.NOS);
-			dish.setId(5);
+			dish.setId(9);
 
 			dishservice.update(dish);
 		});
@@ -725,7 +714,7 @@ public class TestDish {
 		
 		Exception exception = assertThrows(ValidationException.class, ()-> {
 
-			dishservice.delete(1, 1, 4);
+			dishservice.delete(1, 1, 8);
 		});
 		String expectedMessage = "DishId not found";
 		String actualMessage = exception.getMessage();

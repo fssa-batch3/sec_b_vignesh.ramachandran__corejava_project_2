@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.model.Dish;
@@ -131,8 +133,51 @@ public class DishDAO {
 		}  finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
-		System.out.println(dish);
 		return dish;
+	}
+	
+	
+	public List<Dish> findAllDishes() throws DAOException{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		List<Dish> dishes = new ArrayList<Dish>();
+		
+		try {
+			String query = "SELECT d.id, d.dish_name, d.quantity, d.quantity_unit, cd.menu_id, cd.category_id, dp.price "
+					+ "FROM dishes d JOIN category_dish cd ON d.id = cd.dish_id "
+					+ "JOIN dish_price dp ON d.id = dp.dish_id WHERE cd.status = 1";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				Dish dish = new Dish();
+				dish.setId(rs.getInt("id"));
+				dish.setMenu_id(rs.getInt("menu_id"));
+				dish.setCategory_id(rs.getInt("category_id"));
+				dish.setDish_name(rs.getString("dish_name"));
+				dish.setQuantity(rs.getInt("quantity"));
+				
+				String quantityUnitString = rs.getString("quantity_unit");
+				QuantityUnit quantityUnit = QuantityUnit.valueOf(quantityUnitString);
+				
+				dish.setQuantity_unit(quantityUnit);
+				dish.setDish_price(rs.getInt("price"));
+				
+				dishes.add(dish);
+				//System.out.println("sr"+dish);
+			}
+			
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		}  finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		return dishes;
 	}
 
 //	public List<Integer> findByDishName(String dish_name){

@@ -51,25 +51,43 @@ public class App {
 //		}
 
 		DishService dishservice = new DishService();
+		List<Dish> dishes = new ArrayList<Dish>();
 		
-		Dish dish = new Dish();
-		dish.setDish_name("VADA");
-		dish.setMenu_id(1);
-		dish.setCategory_id(1);
-		dish.setQuantity(1);
-		dish.setQuantity_unit(QuantityUnit.NOS);
-		dish.setDish_price(10);
-		
+
 		try {
-			dishservice.create(dish);
-		} catch (ValidationException e) {
-			e.printStackTrace();
-			System.out.println(e.getMessage());
+		dishes = dishservice.findAllDishesByMenuIdAndCategoryId(1, 2);
 			
 		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println(e.getMessage());
+		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		for(Dish dish:dishes) {
+			System.out.println(dish);
+		}
+
+		
+//		Dish dish = new Dish();
+//		dish.setDish_name("VADA");
+//		dish.setMenu_id(1);
+//		dish.setCategory_id(1);
+//		dish.setQuantity(1);
+//		dish.setQuantity_unit(QuantityUnit.NOS);
+//		dish.setDish_price(10);
+//		
+//		try {
+//			dishservice.create(dish);
+//		} catch (ValidationException e) {
+//			e.printStackTrace();
+//			System.out.println(e.getMessage());
+//			
+//		} catch (ServiceException e) {
+//			e.printStackTrace();
+//			System.out.println(e.getMessage());
+//		}
 
 		CategoryDishService categorydishservice = new CategoryDishService();
 //		try {

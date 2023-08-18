@@ -1,13 +1,21 @@
 package in.fssa.srcatering.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import in.fssa.srcatering.dao.CategoryDishDAO;
 import in.fssa.srcatering.dao.DishDAO;
+import in.fssa.srcatering.dao.DishPriceDAO;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Dish;
+import in.fssa.srcatering.model.DishPrice;
 import in.fssa.srcatering.util.IntUtil;
 import in.fssa.srcatering.validator.CategoryDishValidator;
+import in.fssa.srcatering.validator.CategoryValidator;
 import in.fssa.srcatering.validator.DishValidator;
+import in.fssa.srcatering.validator.MenuValidator;
 
 public class DishService {
 
@@ -42,9 +50,9 @@ public class DishService {
 	}
 
 	public void update(Dish dish) throws ValidationException, ServiceException {
-		
+
 		try {
-			
+
 			DishPriceService dishpriceservice = new DishPriceService();
 
 			DishValidator.Validate(dish);
@@ -53,12 +61,10 @@ public class DishService {
 			dishdao.update(dish);
 
 			dishpriceservice.update(dish.getId(), dish.getDish_price());
-			
+
 		} catch (DAOException e) {
 			throw new ServiceException("Dish Updation failed");
 		}
-
-		
 
 	}
 
@@ -89,6 +95,51 @@ public class DishService {
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage());
 		}
+	}
+
+	public List<Dish> findAllDishesByMenuIdAndCategoryId(int menu_id, int category_id) throws ValidationException, ServiceException {
+
+		CategoryDishDAO categorydishdao = new CategoryDishDAO();
+		DishPriceDAO dishpricedao = new DishPriceDAO();
+		
+		List<Dish> dishes = new ArrayList<Dish>();
+		
+		try {
+			
+			MenuValidator.isMenuIdIsValid(menu_id);
+			CategoryValidator.isCategoryIdIsValid(category_id);
+			
+			List<Integer> dishIds = categorydishdao.findDishIdByMenuIdAndCategoryId(menu_id, category_id);
+
+			for(int id: dishIds) {
+				
+				dishes.add(dishdao.findByDishId(id));
+			}	 
+			
+			for(Dish dish: dishes) {
+				
+				int price_1 = dishpricedao.findPriceByDishId(dish.getId());
+				
+				dish.setDish_price(price_1);
+				dish.setMenu_id(menu_id);
+				dish.setCategory_id(category_id);
+			}
+			
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage());
+		}
+		return dishes;
+	}
+	
+	public List<Dish> getAllDishes() throws ServiceException{
+		List<Dish> dishes;
+		try {
+			dishes = dishdao.findAllDishes();
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage());
+		}
+		
+		return dishes;
 	}
 
 }

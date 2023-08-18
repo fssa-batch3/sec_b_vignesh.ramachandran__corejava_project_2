@@ -123,7 +123,34 @@ public class CategoryDishDAO {
 	}
 		
 
-	
+	public List<Integer> findDishIdByMenuIdAndCategoryId(int menu_id, int category_id) throws DAOException{
+		Connection con1 = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		List<Integer> dishIds = new ArrayList<Integer>();
+		
+		try {
+			String query = "SELECT dish_id FROM category_dish WHERE menu_id = ? AND category_id = ?";
+			con1 = ConnectionUtil.getConnection();
+			ps = con1.prepareStatement(query);
+			ps.setInt(1, menu_id);
+			ps.setInt(2, category_id);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				dishIds.add(rs.getInt("dish_id"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} 
+		finally {
+			ConnectionUtil.close(con1, ps, rs);
+		}
+		return dishIds;
+	}
 	
 	
 	

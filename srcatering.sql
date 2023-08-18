@@ -114,26 +114,33 @@ VALUES(1,1,1),
 
 SELECT * FROM category_dish;
 
-drop table category_dish;
-drop table dish_price;
-drop table dishes;
+-- drop table category_dish;
+-- drop table dish_price;
+-- drop table dishes;
+
+-- SELECT d.id, d.dish_name, d.quantity, d.quantity_unit, cd.menu_id, cd.category_id, dp.price FROM dishes d JOIN category_dish cd ON d.id = cd.dish_id
+-- JOIN dish_price dp ON d.id = dp.dish_id WHERE cd.status = 1;
 
 
-SELECT c.dish_id, dp.price FROM category_dish c INNER JOIN dish_price dp ON c.dish_id = dp.dish_id WHERE c.menu_id = 1 AND c.category_id =1;
+-- SELECT c.dish_id, dp.price FROM category_dish c INNER JOIN dish_price dp ON c.dish_id = dp.dish_id WHERE c.menu_id = 1 AND c.category_id =1;
 
-SELECT d.dish_name
-FROM dishes d
-JOIN category_dish cd ON d.id = cd.dish_id
-WHERE cd.menu_id = 1 AND cd.category_id = 2;
+-- SELECT d.dish_name
+-- FROM dishes d
+-- JOIN category_dish cd ON d.id = cd.dish_id
+-- WHERE cd.menu_id = 1 AND cd.category_id = 2;
+
+CREATE TABLE IF NOT EXISTS orders
+
+
 
 CREATE TABLE IF NOT EXISTS order_price(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-    order_id INT,
-    price_id INT,
-    FOREIGN KEY (order_id) REFERENCES orders(id),
-    FOREIGN KEY (price_id) REFERENCES dish_price(id)
-);
+-- 	id INT PRIMARY KEY AUTO_INCREMENT,
+--     order_id INT,
+--     price_id INT,
+--     FOREIGN KEY (order_id) REFERENCES orders(id),
+--     FOREIGN KEY (price_id) REFERENCES dish_price(id)
+-- );
 
-select * from order_price;
+-- select * from order_price;
 
 

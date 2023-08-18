@@ -72,11 +72,20 @@ public class DishEntity implements Comparable<DishEntity> {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "DishEntity [id=" + id + ", dish_name=" + dish_name + ", quantity=" + quantity + ", quantity_unit="
-				+ quantity_unit + "]";
+				+ quantity_unit + ", menu_id=" + menu_id + ", category_id=" + category_id + ", dish_price=" + dish_price
+				+ "]";
 	}
+
+//	@Override
+//	public String toString() {
+//		return "DishEntity [id=" + id + ", dish_name=" + dish_name + ", quantity=" + quantity + ", quantity_unit="
+//				+ quantity_unit + ", dish_price=" + dish_price + "]";
+//	}
+	
+
 
 }

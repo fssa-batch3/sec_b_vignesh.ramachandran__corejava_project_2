@@ -50,10 +50,10 @@ public class TestUser {
 
 			User newUser = new User();
 
-			newUser.setName("Varun");
+			newUser.setName("Vignesh");
 			newUser.setEmail("vignesh@gmail.com");
 			newUser.setPhone_number(9876545678L);
-			newUser.setPassword("Var@1234");
+			newUser.setPassword("Vig@1234");
 
 			userservice.create(newUser);
 		});
@@ -72,10 +72,10 @@ public class TestUser {
 
 			User newUser = new User();
 
-			newUser.setName("Varun");
+			newUser.setName("Vignesh");
 			newUser.setEmail(null);
 			newUser.setPhone_number(9876545678L);
-			newUser.setPassword("Var@1234");
+			newUser.setPassword("Vig@1234");
 
 			userservice.create(newUser);
 
@@ -95,10 +95,10 @@ public class TestUser {
 
 			User newUser = new User();
 
-			newUser.setName("Varun");
+			newUser.setName("Vignesh");
 			newUser.setEmail("");
 			newUser.setPhone_number(9876545678L);
-			newUser.setPassword("Var@1234");
+			newUser.setPassword("Vig@1234");
 
 			userservice.create(newUser);
 
@@ -119,8 +119,8 @@ public class TestUser {
 			// user 1
 			User newUser = new User();
 
-			newUser.setName("Varun");
-			newUser.setEmail("varun@gmail.com");
+			newUser.setName("Vignesh");
+			newUser.setEmail("vignesh@gmail.com");
 			newUser.setPhone_number(9876545678L);
 			newUser.setPassword(null);
 
@@ -139,8 +139,8 @@ public class TestUser {
 			// user 1
 			User newUser = new User();
 
-			newUser.setName("Varun");
-			newUser.setEmail("varun@gmail.com");
+			newUser.setName("Vignesh");
+			newUser.setEmail("vignesh@gmail.com");
 			newUser.setPhone_number(9876545678L);
 			newUser.setPassword("");
 
@@ -159,10 +159,10 @@ public class TestUser {
 
 			User newUser = new User();
 
-			newUser.setName("Varun");
-			newUser.setEmail("varun@gmail.com");
+			newUser.setName("Vignesh");
+			newUser.setEmail("vignesh@gmail.com");
 			newUser.setPhone_number(1237649873L);
-			newUser.setPassword("Var@1234");
+			newUser.setPassword("Vig@1234");
 
 			userservice.create(newUser);
 		});
@@ -182,9 +182,9 @@ public class TestUser {
 			User newUser = new User();
 
 			newUser.setName(null);
-			newUser.setEmail("varun@gmail.com");
+			newUser.setEmail("vignesh@gmail.com");
 			newUser.setPhone_number(9876545678L);
-			newUser.setPassword("Var@1234");
+			newUser.setPassword("Vig@1234");
 
 			userservice.create(newUser);
 		});
@@ -202,9 +202,9 @@ public class TestUser {
 			User newUser = new User();
 
 			newUser.setName("");
-			newUser.setEmail("varun@gmail.com");
+			newUser.setEmail("vignesh@gmail.com");
 			newUser.setPhone_number(9876545678L);
-			newUser.setPassword("Var@1234");
+			newUser.setPassword("Vig@1234");
 
 			userservice.create(newUser);
 		});
@@ -219,13 +219,13 @@ public class TestUser {
 
 		// user object
 		User user = new User();
-		user.setName("Varun.SR");
-		user.setEmail("varun@gmail.com");
+		user.setName("Vignesh");
+		user.setEmail("vignesh@gmail.com");
 		user.setPassword("Var@1234");
 		user.setPhone_number(9876545678L);
 
 		assertDoesNotThrow(() -> {
-			userservice.update(4, user);
+			userservice.update(1, user);
 		});
 	}
 
@@ -237,10 +237,10 @@ public class TestUser {
 
 			User newUser = new User();
 
-			newUser.setName("Varun.SR");
-			newUser.setEmail("varun@gmail.com");
+			newUser.setName("Vignesh");
+			newUser.setEmail("vignesh@gmail.com");
 			newUser.setPhone_number(9876545678L);
-			newUser.setPassword("Var@1234");
+			newUser.setPassword("Vig@1234");
 
 			userservice.update(0, newUser);
 		});
@@ -259,12 +259,12 @@ public class TestUser {
 
 			User newUser = new User();
 
-			newUser.setName("Varun.SR");
-			newUser.setEmail("varun@gmail.com");
+			newUser.setName("Vignesh");
+			newUser.setEmail("vignesh@gmail.com");
 			newUser.setPhone_number(9876545678L);
-			newUser.setPassword("Var@1234");
+			newUser.setPassword("Vig@1234");
 
-			userservice.update(5, newUser);
+			userservice.update(6, newUser);
 		});
 
 		String expectedMessage = "Invalid UserId";
@@ -298,7 +298,7 @@ public class TestUser {
 		UserService userservice = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			userservice.delete(4);
+			userservice.delete(6);
 		});
 		String expectedMessage = "Invalid UserId";
 		String actualMessage = exception.getMessage();
