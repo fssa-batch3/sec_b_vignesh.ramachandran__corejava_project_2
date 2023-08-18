@@ -16,6 +16,11 @@ public class CategoryService {
 
 	CategoryDAO categorydao = new CategoryDAO();
 
+	/**
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
 	public List<Category> getAll() throws ServiceException {
 		
 		try {
@@ -32,11 +37,15 @@ public class CategoryService {
 		} catch (DAOException e) {
 			throw new ServiceException("Failed to GetAll Category");
 		}
-
-		
-
 	}
 	
+	/**
+	 * 
+	 * @param category_id
+	 * @return
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public Category findById(int category_id) throws ValidationException, ServiceException {
 		
 		try {
@@ -51,6 +60,11 @@ public class CategoryService {
 		
 	}
 	
+	/**
+	 * 
+	 * @param category_id
+	 * @throws ValidationException
+	 */
 	public void isCategoryIdIsValid(int category_id) throws ValidationException {
 		
 		CategoryValidator.isCategoryIdIsValid(category_id);

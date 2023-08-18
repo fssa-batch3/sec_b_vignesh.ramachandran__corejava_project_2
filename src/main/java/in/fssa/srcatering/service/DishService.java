@@ -23,6 +23,12 @@ public class DishService {
 
 	CategoryDishService categorydishservice = new CategoryDishService();
 
+	/**
+	 * 
+	 * @param dish
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public void create(Dish dish) throws ValidationException, ServiceException {
 
 		try {
@@ -49,6 +55,12 @@ public class DishService {
 
 	}
 
+	/**
+	 * 
+	 * @param dish
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public void update(Dish dish) throws ValidationException, ServiceException {
 
 		try {
@@ -68,6 +80,14 @@ public class DishService {
 
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @param dish_id
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public void delete(int menu_id, int category_id, int dish_id) throws ValidationException, ServiceException {
 
 		DishValidator.isDishIdIsValid(dish_id);
@@ -78,12 +98,23 @@ public class DishService {
 
 	}
 
+	/**
+	 * 
+	 * @param dish_id
+	 * @throws ValidationException
+	 */
 	public void isDishIdIsValid(int dish_id) throws ValidationException {
 
 		DishValidator.isDishIdIsValid(dish_id);
 
 	}
-
+	
+	/**
+	 * 
+	 * @param dish_id
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public void findByDishId(int dish_id) throws ValidationException, ServiceException {
 
 		try {
@@ -97,6 +128,14 @@ public class DishService {
 		}
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @return
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public List<Dish> findAllDishesByMenuIdAndCategoryId(int menu_id, int category_id) throws ValidationException, ServiceException {
 
 		CategoryDishDAO categorydishdao = new CategoryDishDAO();
@@ -131,6 +170,11 @@ public class DishService {
 		return dishes;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
 	public List<Dish> getAllDishes() throws ServiceException{
 		List<Dish> dishes;
 		try {

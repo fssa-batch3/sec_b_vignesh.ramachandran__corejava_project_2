@@ -15,6 +15,11 @@ import in.fssa.srcatering.util.ConnectionUtil;
 
 public class UserDAO implements UserInterface {
 
+	/**
+	 * 
+	 * @return
+	 * @throws DAOException
+	 */
 	@Override
 	public List<User> findAll() throws DAOException {
 		Connection con = null;
@@ -50,6 +55,11 @@ public class UserDAO implements UserInterface {
 		return userList;
 	}
 
+	/**
+	 * 
+	 * @param new_User
+	 * @throws DAOException
+	 */
 	@Override
 	public void create(User newUser) throws DAOException {
 		Connection con = null;
@@ -81,6 +91,12 @@ public class UserDAO implements UserInterface {
 		}
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param newUser
+	 * @throws DAOException
+	 */
 	@Override
 	public void update(int id, User newUser) throws DAOException {
 
@@ -114,6 +130,10 @@ public class UserDAO implements UserInterface {
 		}
 	}
 
+	/**
+	 * 
+	 * @throws DAOException
+	 */
 	@Override
 	public void delete(int id) throws DAOException {
 
@@ -145,6 +165,11 @@ public class UserDAO implements UserInterface {
 
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @throws DAOException
+	 */
 	public void isIdAlreadyExists(int userId) throws DAOException {
 
 		Connection con = null;
@@ -173,6 +198,11 @@ public class UserDAO implements UserInterface {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @throws DAOException
+	 */
 	@Override
 	public User findById(int id) throws DAOException {
 		Connection con = null;
@@ -208,6 +238,11 @@ public class UserDAO implements UserInterface {
 		return user;
 	}
 
+	/**
+	 * 
+	 * @param email
+	 * @throws DAOException
+	 */
 	public void isEmailAlreadyExists(String email) throws DAOException {
 
 		Connection con = null;
@@ -235,6 +270,11 @@ public class UserDAO implements UserInterface {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @throws DAOException
+	 */
 	@Override
 	public User findByEmail(String email) throws DAOException {
 

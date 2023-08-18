@@ -10,6 +10,13 @@ import in.fssa.srcatering.util.IntUtil;
 
 public class CategoryDishValidator {
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @param dish_id
+	 * @throws ValidationException
+	 */
 	public static void Validate(int menu_id, int category_id, int dish_id) throws ValidationException {
 
 //		try {
@@ -43,6 +50,11 @@ public class CategoryDishValidator {
 
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @throws ValidationException
+	 */
 	public static void isMenuIdIsValid(int menu_id) throws ValidationException {
 
 		try {
@@ -57,6 +69,12 @@ public class CategoryDishValidator {
 
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @throws ValidationException
+	 */
 	public static void isCategoryIdIsValid(int menu_id, int category_id) throws ValidationException {
 
 		try {
@@ -72,6 +90,11 @@ public class CategoryDishValidator {
 
 	}
 
+	/**
+	 * 
+	 * @param dish_id
+	 * @throws ValidationException
+	 */
 	public static void isDishIdIsValid(int dish_id) throws ValidationException {
 
 		try {

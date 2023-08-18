@@ -23,6 +23,7 @@ SELECT * FROM users ;
 
 
 
+
 CREATE TABLE IF NOT EXISTS menus (
 id INT auto_increment primary KEY,
 menu_name VARCHAR(50) NOT NULL,
@@ -138,7 +139,7 @@ CREATE TABLE IF NOT EXISTS orders
 
 
 
-CREATE TABLE IF NOT EXISTS order_price(
+-- CREATE TABLE IF NOT EXISTS order_price(
 -- 	id INT PRIMARY KEY AUTO_INCREMENT,
 --     order_id INT,
 --     price_id INT,

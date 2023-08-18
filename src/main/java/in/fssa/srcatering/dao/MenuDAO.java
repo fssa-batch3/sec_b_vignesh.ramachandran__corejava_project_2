@@ -14,6 +14,11 @@ import in.fssa.srcatering.util.ConnectionUtil;
 
 public class MenuDAO {
 
+	/**
+	 * 
+	 * @return
+	 * @throws DAOException
+	 */
 	public List<Menu> findAll() throws DAOException {
 
 		Connection con = null;
@@ -45,6 +50,12 @@ public class MenuDAO {
 		return menuList;
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @return
+	 * @throws DAOException
+	 */
 	public Menu findById(int menu_id) throws DAOException {
 
 		Connection con = null;
@@ -79,6 +90,11 @@ public class MenuDAO {
 
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @throws DAOException
+	 */
 	public static void IsMenuIdIsValid(int menu_id) throws DAOException {
 
 		Connection con = null;

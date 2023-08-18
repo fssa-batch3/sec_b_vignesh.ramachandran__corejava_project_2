@@ -17,6 +17,11 @@ import in.fssa.srcatering.util.StringUtil;
 
 public class DishValidator {
 
+	/**
+	 * 
+	 * @param dish
+	 * @throws ValidationException
+	 */
 	public static void Validate(Dish dish) throws ValidationException {
 
 		if (dish == null) {
@@ -25,7 +30,7 @@ public class DishValidator {
 
 		StringUtil.rejectIfInvalidString(dish.getDish_name(), "Dish Name");
 		IntUtil.rejectIfInvalidInt(dish.getQuantity(), "Quantity");
-		IntUtil.priceCheck(dish.getDish_price(), null);
+		IntUtil.priceCheck(dish.getDish_price(), "Price");
 		
 		
 		if(dish.getQuantity_unit().name().equals("NOS") && dish.getQuantity() > 5 ) {
@@ -38,6 +43,11 @@ public class DishValidator {
 
 	}
 
+	/**
+	 * 
+	 * @param dish
+	 * @throws ValidationException
+	 */
 	public static void ValidateAllIdsAndDishName(Dish dish) throws ValidationException {
 
 		try {
@@ -64,6 +74,13 @@ public class DishValidator {
 
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @param dish_id
+	 * @throws ValidationException
+	 */
 	public static void ValidateIds(int menu_id, int category_id, int dish_id) throws ValidationException {
 
 //		try {
@@ -107,6 +124,11 @@ public class DishValidator {
 
 	}
 
+	/**
+	 * 
+	 * @param dish_id
+	 * @throws ValidationException
+	 */
 	public static void isDishIdIsValid(int dish_id) throws ValidationException {
 
 		try {

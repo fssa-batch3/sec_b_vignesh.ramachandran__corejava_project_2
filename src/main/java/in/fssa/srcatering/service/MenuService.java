@@ -16,6 +16,11 @@ public class MenuService {
 
 	MenuDAO menudao = new MenuDAO();
 
+	/**
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
 	public List<Menu> getAll() throws ServiceException {
 
 		List<Menu> menuList = new ArrayList<Menu>();
@@ -36,6 +41,13 @@ public class MenuService {
 		return menuList;
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @return
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public Menu findById(int menu_id) throws ValidationException, ServiceException {
 
 		Menu menu = null;
@@ -55,6 +67,11 @@ public class MenuService {
 
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @throws ValidationException
+	 */
 	public void isMenuIdIsValid(int menu_id) throws ValidationException {
 
 		MenuValidator.isMenuIdIsValid(menu_id);

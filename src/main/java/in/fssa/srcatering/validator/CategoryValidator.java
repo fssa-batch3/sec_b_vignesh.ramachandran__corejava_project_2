@@ -7,6 +7,11 @@ import in.fssa.srcatering.util.IntUtil;
 
 public class CategoryValidator {
 
+	/**
+	 * 
+	 * @param category_id
+	 * @throws ValidationException
+	 */
 	public static void isCategoryIdIsValid(int category_id) throws ValidationException {
 
 		try {

@@ -8,6 +8,11 @@ import in.fssa.srcatering.util.IntUtil;
 
 public class DishPriceValidator {
 
+	/**
+	 * 
+	 * @param dish_id
+	 * @throws ValidationException
+	 */
 	public static void isDishIdIsValid(int dish_id) throws ValidationException {
 
 		try {

@@ -15,6 +15,14 @@ import in.fssa.srcatering.util.ConnectionUtil;
 
 public class DishDAO {
 
+	/**
+	 * 
+	 * @param dish_name
+	 * @param quantity
+	 * @param quantity_unit
+	 * @return
+	 * @throws DAOException
+	 */
 	public int create(String dish_name, int quantity, QuantityUnit quantity_unit) throws DAOException {
 
 		Connection con = null;
@@ -47,7 +55,11 @@ public class DishDAO {
 		return generatedId;
 	}
 	
-	
+	/**
+	 * 
+	 * @param dish
+	 * @throws DAOException
+	 */
 	public void update(Dish dish) throws DAOException {
 		
 		Connection con = null;
@@ -73,6 +85,11 @@ public class DishDAO {
 		}
 	}
 
+	/**
+	 * 
+	 * @param dish_id
+	 * @throws DAOException
+	 */
 	public void isDishIdIsValid(int dish_id) throws DAOException {
 
 		Connection con = null;
@@ -99,7 +116,12 @@ public class DishDAO {
 
 	}
 	
-	
+	/**
+	 * 
+	 * @param dish_id
+	 * @return
+	 * @throws DAOException
+	 */
 	public Dish findByDishId(int dish_id) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -136,7 +158,11 @@ public class DishDAO {
 		return dish;
 	}
 	
-	
+	/**
+	 * 
+	 * @return
+	 * @throws DAOException
+	 */
 	public List<Dish> findAllDishes() throws DAOException{
 		Connection con = null;
 		PreparedStatement ps = null;

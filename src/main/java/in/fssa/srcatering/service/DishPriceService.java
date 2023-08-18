@@ -16,6 +16,13 @@ public class DishPriceService {
 	DishService dishservice = new DishService();
 	DishPriceDAO dishpricedao = new DishPriceDAO();
 
+	/**
+	 * 
+	 * @param dish_id
+	 * @param price
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public void create(int dish_id, int price) throws ValidationException, ServiceException {
 
 		try {
@@ -35,6 +42,13 @@ public class DishPriceService {
 
 	}
 
+	/**
+	 * 
+	 * @param dish_id
+	 * @param dish_price
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public void update(int dish_id, int dish_price) throws ValidationException, ServiceException {
 		
 		try {
@@ -63,6 +77,11 @@ public class DishPriceService {
 
 	}
 
+	/**
+	 * 
+	 * @param dish_id
+	 * @throws ValidationException
+	 */
 	public void isDishIdIsValid(int dish_id) throws ValidationException {
 
 		DishPriceValidator.isDishIdIsValid(dish_id);

@@ -16,12 +16,23 @@ public class CategoryDishService {
 	CategoryDishDAO categorydishdao = new CategoryDishDAO();
 	DishDAO dishdao = new DishDAO();
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @throws ValidationException
+	 */
 	public void isMenuIdIsValid(int menu_id) throws ValidationException {
 
 		CategoryDishValidator.isMenuIdIsValid(menu_id);
 
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @throws ValidationException
+	 */
 	public void isCategoryIdIsValid(int menu_id, int category_id) throws ValidationException {
 
 		this.isMenuIdIsValid(menu_id);
@@ -30,12 +41,25 @@ public class CategoryDishService {
 
 	}
 
+	/**
+	 * 
+	 * @param dish_id
+	 * @throws ValidationException
+	 */
 	public void isDishIdIsValid(int dish_id) throws ValidationException {
 
 		CategoryDishValidator.isDishIdIsValid(dish_id);
 
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @return
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public List<String> findDishNameByMenuIdAndCategoryId(int menu_id, int category_id)
 			throws ValidationException, ServiceException {
 
@@ -53,6 +77,13 @@ public class CategoryDishService {
 		return dishNames;
 	}
 	
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @return
+	 * @throws ServiceException
+	 */
 	public List<Integer> findDishIdByMenuIdAndCategoryId(int menu_id, int category_id) throws ServiceException{
 		
 		List<Integer> dishIds;
@@ -64,6 +95,14 @@ public class CategoryDishService {
 		return dishIds;
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @param dish_id
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public void create(int menu_id, int category_id, int dish_id) throws ValidationException, ServiceException {
 
 		try {
@@ -75,6 +114,14 @@ public class CategoryDishService {
 
 	}
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @param dish_id
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public void delete(int menu_id, int category_id, int dish_id) throws ValidationException, ServiceException {
 
 		try {

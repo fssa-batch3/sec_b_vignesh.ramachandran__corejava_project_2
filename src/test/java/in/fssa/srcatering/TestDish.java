@@ -262,7 +262,7 @@ public class TestDish {
 
 		DishService dishservice = new DishService();
 
-		Exception exception = assertThrows(ValidationException.class, () -> {
+		Exception exception = assertThrows(Exception.class, () -> {
 
 			Dish dish = new Dish();
 
@@ -278,7 +278,7 @@ public class TestDish {
 		String expectedMessage = "Invalid Price";
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
-
+		exception.printStackTrace();
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 

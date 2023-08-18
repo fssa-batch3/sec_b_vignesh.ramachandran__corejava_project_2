@@ -7,6 +7,11 @@ import in.fssa.srcatering.util.IntUtil;
 
 public class MenuValidator {
 
+	/**
+	 * 
+	 * @param menu_id
+	 * @throws ValidationException
+	 */
 	public static void isMenuIdIsValid(int menu_id) throws ValidationException {
 
 		try {

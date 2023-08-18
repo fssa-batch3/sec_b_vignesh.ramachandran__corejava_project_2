@@ -18,6 +18,11 @@ import in.fssa.srcatering.util.IntUtil;
 
 public class CategoryDAO {
 
+	/**
+	 * 
+	 * @return
+	 * @throws DAOException
+	 */
 	public List<Category> findAll() throws DAOException {
 
 		Connection con = null;
@@ -48,6 +53,12 @@ public class CategoryDAO {
 		return categoryList;
 	}
 
+	/**
+	 * 
+	 * @param category_id
+	 * @return
+	 * @throws DAOException
+	 */
 	public Category findById(int category_id) throws DAOException {
 
 		Connection con = null;
@@ -84,7 +95,11 @@ public class CategoryDAO {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param category_id
+	 * @throws DAOException
+	 */
 	public void isCategoryIdIsValid(int category_id)throws DAOException {
 		
 		Connection con = null;

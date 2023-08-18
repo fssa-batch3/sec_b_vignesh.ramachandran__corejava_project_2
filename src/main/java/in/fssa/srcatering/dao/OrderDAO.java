@@ -11,6 +11,11 @@ import in.fssa.srcatering.util.ConnectionUtil;
 
 public class OrderDAO {
 
+	/**
+	 * 
+	 * @param order
+	 * @throws DAOException
+	 */
 	public void create(Order order) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;

@@ -9,6 +9,11 @@ import in.fssa.srcatering.util.StringUtil;
 
 public class UserValidator {
 
+	/**
+	 * 
+	 * @param newUser
+	 * @throws ValidationException
+	 */
 	public static void validate(User newUser) throws ValidationException {
 
 		if (newUser == null) {
@@ -23,6 +28,11 @@ public class UserValidator {
 		StringUtil.rejectIfIvalidPassword(newUser.getPassword());
 	}
 	
+	/**
+	 * 
+	 * @param email
+	 * @throws ValidationException
+	 */
 	public static void isEmailAlreadyExists(String email) throws ValidationException {
 		
 		try {
@@ -39,6 +49,11 @@ public class UserValidator {
 		
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @throws ValidationException
+	 */
 	public static void isUserIdIsValid(int id) throws ValidationException {
 		
 		try {
@@ -51,7 +66,4 @@ public class UserValidator {
 		}
 		
 	}
-	
-	
-
 }

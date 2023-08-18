@@ -10,6 +10,11 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 public class ConnectionUtil {
 
+	/**
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Connection getConnection() throws SQLException {
 
         String url;
@@ -42,6 +47,11 @@ public class ConnectionUtil {
 
 	}
 	
+	/**
+	 * 
+	 * @param connection
+	 * @param ps
+	 */
 	public static void close(Connection connection, PreparedStatement ps) {
 
 		try {
@@ -58,7 +68,12 @@ public class ConnectionUtil {
 		}
 	}
 	
-
+	/**
+	 * 
+	 * @param connection
+	 * @param ps
+	 * @param rs
+	 */
 	public static void close(Connection connection, PreparedStatement ps, ResultSet rs) {
 
 		try {

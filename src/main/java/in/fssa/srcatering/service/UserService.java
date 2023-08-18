@@ -15,6 +15,11 @@ public class UserService {
 
 	UserDAO userdao = new UserDAO();
 
+	/**
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
 	public List<User> getAll() throws ServiceException {
 
 		List<User> userList;
@@ -34,6 +39,12 @@ public class UserService {
 
 	}
 
+	/**
+	 * 
+	 * @param newUser
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public void create(User newUser) throws ValidationException, ServiceException {
 
 		try {
@@ -52,6 +63,13 @@ public class UserService {
 
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param newUser
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public void update(int id, User newUser) throws ValidationException, ServiceException {
 
 		try {
@@ -67,6 +85,12 @@ public class UserService {
 
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public void delete(int id) throws ValidationException, ServiceException {
 
 		try {
@@ -80,6 +104,13 @@ public class UserService {
 		}
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public User findById(int id) throws ValidationException, ServiceException {
 
 		try {
@@ -93,6 +124,13 @@ public class UserService {
 		}
 	}
 
+	/**
+	 * 
+	 * @param email
+	 * @return
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
 	public User findByEmail(String email) throws ValidationException, ServiceException {
 
 		try {

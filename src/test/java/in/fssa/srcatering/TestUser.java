@@ -276,7 +276,7 @@ public class TestUser {
 		UserService userservice = new UserService();
 
 		assertDoesNotThrow(() -> {
-			userservice.delete(4);
+			userservice.delete(3);
 		});
 	}
 

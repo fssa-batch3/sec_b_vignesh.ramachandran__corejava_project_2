@@ -13,6 +13,11 @@ import in.fssa.srcatering.util.ConnectionUtil;
 
 public class CategoryDishDAO {
 	
+	/**
+	 * 
+	 * @param menu_id
+	 * @throws DAOException
+	 */
 	public void isMenuIdIsValid(int menu_id)throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -39,7 +44,12 @@ public class CategoryDishDAO {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @throws DAOException
+	 */
 	public void isCategoryIdIsValid(int menu_id, int category_id) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -66,7 +76,11 @@ public class CategoryDishDAO {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param dish_id
+	 * @throws DAOException
+	 */
 	public void isDishIdIsValid(int dish_id) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -91,7 +105,13 @@ public class CategoryDishDAO {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @return
+	 * @throws DAOException
+	 */
 	public List<String> findDishNameByMenuIdAndCategoryId(int menu_id, int category_id) throws DAOException {
 		
 		Connection con1 = null;
@@ -122,7 +142,13 @@ public class CategoryDishDAO {
 		return dishNames;
 	}
 		
-
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @return
+	 * @throws DAOException
+	 */
 	public List<Integer> findDishIdByMenuIdAndCategoryId(int menu_id, int category_id) throws DAOException{
 		Connection con1 = null;
 		PreparedStatement ps = null;
@@ -154,7 +180,13 @@ public class CategoryDishDAO {
 	
 	
 	
-	
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @param dish_id
+	 * @throws DAOException
+	 */
 	public void create(int menu_id, int category_id, int dish_id) throws DAOException {
 		
 		Connection con = null;
@@ -181,7 +213,13 @@ public class CategoryDishDAO {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param menu_id
+	 * @param category_id
+	 * @param dish_id
+	 * @throws DAOException
+	 */
 	public void delete(int menu_id, int category_id, int dish_id) throws DAOException {
 		
 		Connection con = null;
