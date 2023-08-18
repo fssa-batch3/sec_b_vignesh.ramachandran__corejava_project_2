@@ -244,6 +244,30 @@ public class CategoryDishDAO {
 			ConnectionUtil.close(con, ps);
 		}
 	}
+	
+	
+	public void changeStatus(int menu_id, int category_id, int dish_id) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			String query = "UPDATE category_dish SET status =1 WHERE menu_id=? AND category_id=? AND dish_id=? AND status = 1";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+
+			ps.setInt(1, menu_id);
+			ps.setInt(2, category_id);
+			ps.setInt(3, dish_id);
+			
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps);
+		}
+	}
 
 
 }

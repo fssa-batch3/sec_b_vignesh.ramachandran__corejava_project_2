@@ -20,7 +20,7 @@ public class TestUser {
 		// user object
 		User user = new User();
 		user.setName("Varun");
-		user.setEmail("varun@gmail.com");
+		user.setEmail(generateRandomEmail());
 		user.setPassword("Var@1234");
 		user.setPhone_number(9876545678L);
 
@@ -263,7 +263,7 @@ public class TestUser {
 			newUser.setPhone_number(9876545678L);
 			newUser.setPassword("Vig@1234");
 
-			userservice.update(6, newUser);
+			userservice.update(100, newUser);
 		});
 
 		String expectedMessage = "Invalid UserId";
@@ -278,6 +278,12 @@ public class TestUser {
 		assertDoesNotThrow(() -> {
 			userservice.delete(3);
 		});
+		
+		try {
+			userservice.changeStatus(3);
+		} catch (ValidationException | ServiceException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -297,11 +303,26 @@ public class TestUser {
 		UserService userservice = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			userservice.delete(6);
+			userservice.delete(100);
 		});
 		String expectedMessage = "Invalid UserId";
 		String actualMessage = exception.getMessage();
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
+	
+	
+    private String generateRandomEmail() {
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        StringBuilder email = new StringBuilder();
+
+        for (int i = 0; i < 10; i++) {
+            int index = (int) (Math.random() * alphabet.length());
+            char randomChar = alphabet.charAt(index);
+            email.append(randomChar);
+        }
+
+        email.append("@gmail.com");
+        return email.toString();
+    }
 
 }

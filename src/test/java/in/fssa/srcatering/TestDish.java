@@ -10,6 +10,7 @@ import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Dish;
 import in.fssa.srcatering.model.QuantityUnit;
+import in.fssa.srcatering.service.CategoryDishService;
 import in.fssa.srcatering.service.DishService;
 
 public class TestDish {
@@ -22,7 +23,7 @@ public class TestDish {
 
 		dish.setMenu_id(1);
 		dish.setCategory_id(1);
-		dish.setDish_name("MINI UTTAPPAM");
+		dish.setDish_name(generateRandomDishName());
 		dish.setDish_price(30);
 		dish.setQuantity(2);
 		dish.setQuantity_unit(QuantityUnit.NOS);
@@ -169,7 +170,7 @@ public class TestDish {
 
 			Dish dish = new Dish();
 
-			dish.setMenu_id(5);
+			dish.setMenu_id(10);
 			dish.setCategory_id(1);
 			dish.setDish_name("MINI UTTAPPAM");
 			dish.setDish_price(30);
@@ -242,7 +243,7 @@ public class TestDish {
 			Dish dish = new Dish();
 
 			dish.setMenu_id(1);
-			dish.setCategory_id(5);
+			dish.setCategory_id(10);
 			dish.setDish_name("MINI UTTAPPAM");
 			dish.setDish_price(30);
 			dish.setQuantity(2);
@@ -488,7 +489,7 @@ public class TestDish {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenu_id(5);
+			dish.setMenu_id(10);
 			dish.setCategory_id(1);
 			dish.setDish_name("MINI LADDU");
 			dish.setDish_price(10);
@@ -561,7 +562,7 @@ public class TestDish {
 
 			Dish dish = new Dish();
 			dish.setMenu_id(1);
-			dish.setCategory_id(5);
+			dish.setCategory_id(10);
 			dish.setDish_name("MINI LADDU");
 			dish.setDish_price(10);
 			dish.setQuantity(1);
@@ -667,7 +668,7 @@ public class TestDish {
 			dish.setDish_price(10);
 			dish.setQuantity(1);
 			dish.setQuantity_unit(QuantityUnit.NOS);
-			dish.setId(9);
+			dish.setId(100);
 
 			dishservice.update(dish);
 		});
@@ -680,6 +681,24 @@ public class TestDish {
 	
 	
 	// delete
+	@Test
+	public void testDeleteDishWithValidDishId() {
+		DishService dishservice = new DishService();
+		
+		assertDoesNotThrow(() -> {
+			dishservice.delete(1, 1, 4);
+		});
+		
+		CategoryDishService categorydishservice = new CategoryDishService();
+		try {
+			categorydishservice.changeStatus(1, 1, 4);
+		} catch (ValidationException | ServiceException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	@Test
 	public void testDeleteDishWithDishIdZero() {
 		DishService dishservice = new DishService();
@@ -716,7 +735,7 @@ public class TestDish {
 		
 		Exception exception = assertThrows(ValidationException.class, ()-> {
 
-			dishservice.delete(1, 1, 8);
+			dishservice.delete(1, 1, 100);
 		});
 		String expectedMessage = "DishId not found";
 		String actualMessage = exception.getMessage();
@@ -724,5 +743,19 @@ public class TestDish {
 
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
+	
+	
+    private String generateRandomDishName() {
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        StringBuilder dishName = new StringBuilder();
+
+        for (int i = 0; i < 10; i++) {
+            int index = (int) (Math.random() * alphabet.length());
+            char randomChar = alphabet.charAt(index);
+            dishName.append(Character.toUpperCase(randomChar));
+        }
+
+        return dishName.toString();
+    }
 
 }

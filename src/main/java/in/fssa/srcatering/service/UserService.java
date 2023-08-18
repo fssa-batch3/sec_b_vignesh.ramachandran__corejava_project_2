@@ -8,6 +8,7 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.User;
+import in.fssa.srcatering.util.IntUtil;
 import in.fssa.srcatering.util.StringUtil;
 import in.fssa.srcatering.validator.UserValidator;
 
@@ -143,7 +144,25 @@ public class UserService {
 			e.printStackTrace();
 			throw new ServiceException("Failed to findById");
 		}
-
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @throws ValidationException 
+	 * @throws ServiceException 
+	 */
+	public void changeStatus(int id) throws ValidationException, ServiceException {
+		
+		
+		try {
+			IntUtil.rejectIfInvalidInt(id, "UserId");
+			userdao.changeStatus(id);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+			
+		}
 	}
 
 }

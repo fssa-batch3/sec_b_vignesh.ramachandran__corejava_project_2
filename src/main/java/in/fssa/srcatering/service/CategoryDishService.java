@@ -135,7 +135,23 @@ public class CategoryDishService {
 		} catch (DAOException e) {
 			throw new ServiceException("Failed to Delete Dish");
 		}
-
+	}
+	
+	public void changeStatus(int menu_id, int category_id, int dish_id) throws ValidationException, ServiceException {
+		
+		
+		try {
+			IntUtil.rejectIfInvalidInt(menu_id, "Menu Id");
+			IntUtil.rejectIfInvalidInt(category_id, "Category Id");
+			IntUtil.rejectIfInvalidInt(dish_id, "Dish Id");
+			
+			categorydishdao.changeStatus(menu_id, category_id, dish_id);
+			
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+			
+		}
 	}
 
 }

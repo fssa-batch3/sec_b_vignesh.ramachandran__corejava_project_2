@@ -316,5 +316,33 @@ public class UserDAO implements UserInterface {
 
 		return 0;
 	}
+	
+	
+	public void changeStatus(int id) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			String query = "UPDATE users SET status =1 WHERE id = ? AND status = 0";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+
+			ps.setInt(1, id);
+
+			int rowsUpdated = ps.executeUpdate();
+
+			if (rowsUpdated > 0) {
+				System.out.println("User with ID " + id + " has been deactivated.");
+			} else {
+				System.out.println("No user found with ID " + id + ". Nothing changed.");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps);
+		}
+	}
 
 }

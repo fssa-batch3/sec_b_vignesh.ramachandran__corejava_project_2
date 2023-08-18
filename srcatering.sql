@@ -16,12 +16,7 @@ VALUES ("Vignesh", "vignesh@gmail.com", 6379370482, "Vig@1234"),
 ("Boobalan", "boobalan@gmail.com", 9878687542, "Bob@1234");
 
 -- findall users
-SELECT * FROM users ;
-
-
-
-
-
+SELECT * FROM users;
 
 
 CREATE TABLE IF NOT EXISTS menus (
@@ -83,7 +78,7 @@ select * from dishes;
 
 CREATE TABLE IF NOT EXISTS dish_price (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    start_date TIMESTAMP NOT NULL,
+    start_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     end_date TIMESTAMP ,
     price INT NOT NULL,
     dish_id INT,
@@ -94,8 +89,7 @@ INSERT INTO dish_price (price, dish_id)
 VALUES (10, 1),
 (15, 2),
 (30,3),
-(10, 4),
-(30, 5);
+(10, 4);
 
 SELECT * From dish_price ;
 
@@ -115,8 +109,7 @@ INSERT INTO category_dish(menu_id, category_id, dish_id)
 VALUES(1,1,1),
 (1,1,2),
 (1,1,3),
-(1,1,4),
-(1,1,5);
+(1,1,4);
 
 SELECT * FROM category_dish;
 
