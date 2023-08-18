@@ -25,6 +25,8 @@ public class DishValidator {
 
 		StringUtil.rejectIfInvalidString(dish.getDish_name(), "Dish Name");
 		IntUtil.rejectIfInvalidInt(dish.getQuantity(), "Quantity");
+		IntUtil.priceCheck(dish.getDish_price(), null);
+		
 		
 		if(dish.getQuantity_unit().name().equals("NOS") && dish.getQuantity() > 5 ) {
 			throw new ValidationException("Check Quantity and QuantityUnit");

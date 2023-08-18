@@ -20,6 +20,9 @@ SELECT * FROM users ;
 
 
 
+
+
+
 CREATE TABLE IF NOT EXISTS menus (
 id INT auto_increment primary KEY,
 menu_name VARCHAR(50) NOT NULL,
@@ -64,10 +67,12 @@ INSERT INTO dishes (dish_name, quantity, quantity_unit)
 VALUES ("MINI LADDU",  1, "NOS"),
 ("IDLY",  2, "NOS"),
 ("KITCHADI",  100, "GRAMS"),
-("VADA",  1, "NOS"),
-("POORI & VEG GRAVY", 2, "NOS");
+("VADA",  1, "NOS");
+
 
 select * from dishes;
+
+
 
 
 -- update

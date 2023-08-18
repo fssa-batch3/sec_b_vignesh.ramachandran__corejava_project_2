@@ -46,7 +46,7 @@ public class TestUser {
 	public void testCreateUserWithExistingEmail() {
 		UserService userservice = new UserService();
 
-		Exception exception = assertThrows(ServiceException.class, () -> {
+		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			User newUser = new User();
 
@@ -57,10 +57,9 @@ public class TestUser {
 
 			userservice.create(newUser);
 		});
-		String expectedMessage = "Failed to Create User EmailId already exists";
+		String expectedMessage = "Email already exists";
 		String actualMessage = exception.getMessage();
-		System.out.println(exception.getMessage());
-//		System.out.println(expectedMessage == actualMessage);
+		
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
@@ -76,14 +75,14 @@ public class TestUser {
 			newUser.setEmail(null);
 			newUser.setPhone_number(9876545678L);
 			newUser.setPassword("Vig@1234");
-
+			
 			userservice.create(newUser);
 
 		});
 
 		String expectedMessage = "Email cannot be null or empty";
 		String actualMessage = exception.getMessage();
-
+		exception.printStackTrace();
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 

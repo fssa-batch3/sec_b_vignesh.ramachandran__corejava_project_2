@@ -55,7 +55,7 @@ public class TestDish {
 			dish.setCategory_id(1);
 			dish.setMenu_id(1);
 			dish.setDish_name(null);
-			dish.setDish_price(0);
+			dish.setDish_price(10);
 			dish.setQuantity(1);
 			dish.setQuantity_unit(QuantityUnit.NOS);
 
@@ -63,6 +63,8 @@ public class TestDish {
 		});
 		String expectedMessage = "Dish Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
+		exception.printStackTrace();
+		System.out.println(actualMessage);
 
 		assertTrue(expectedMessage.equals(actualMessage));
 
@@ -78,7 +80,7 @@ public class TestDish {
 			dish.setCategory_id(1);
 			dish.setMenu_id(1);
 			dish.setDish_name("");
-			dish.setDish_price(0);
+			dish.setDish_price(10);
 			dish.setQuantity(1);
 			dish.setQuantity_unit(QuantityUnit.NOS);
 
