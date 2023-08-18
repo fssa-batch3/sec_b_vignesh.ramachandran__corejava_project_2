@@ -251,7 +251,7 @@ public class CategoryDishDAO {
 		PreparedStatement ps = null;
 
 		try {
-			String query = "UPDATE category_dish SET status =1 WHERE menu_id=? AND category_id=? AND dish_id=? AND status = 1";
+			String query = "UPDATE category_dish SET status =1 WHERE menu_id=? AND category_id=? AND dish_id=? AND status = 0";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
@@ -260,6 +260,7 @@ public class CategoryDishDAO {
 			ps.setInt(3, dish_id);
 			
 			ps.executeUpdate();
+			System.out.println("done");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
