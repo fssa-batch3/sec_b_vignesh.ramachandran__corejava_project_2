@@ -28,7 +28,7 @@ public class TestMenu {
 		Exception exception = assertThrows(ValidationException.class, () ->{
 			menuservice.findById(0);
 		});
-		String expectedMessage = "Invalid MenuId";
+		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -42,7 +42,7 @@ public class TestMenu {
 		Exception exception = assertThrows(ValidationException.class, () ->{
 			menuservice.findById(-1);
 		});
-		String expectedMessage = "Invalid MenuId";
+		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));

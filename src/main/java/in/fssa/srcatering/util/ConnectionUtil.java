@@ -65,7 +65,7 @@ public class ConnectionUtil {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 	
@@ -91,7 +91,7 @@ public class ConnectionUtil {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 

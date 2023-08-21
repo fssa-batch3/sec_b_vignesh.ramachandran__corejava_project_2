@@ -3,19 +3,13 @@ CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    phone_number LONG,
-    password VARCHAR(255) NOT NULL,
+    phone_number BIGINT NOT NULL,
+    password VARCHAR(8) NOT NULL,
     status BOOLEAN NOT NULL DEFAULT true,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    
-
 );
-    -- Additional Constraints 
---     CHECK (LENGTH(name) > 0),
---     CHECK (status IN (0, 1)),
---     CHECK (LENGTH(phone_number) = 10),
---     CHECK (LENGTH(password) =8)
+
 
 INSERT INTO users (name, email, phone_number, password)
 VALUES ("Vignesh", "vignesh@gmail.com", 6379370482, "Vig@1234"),
@@ -24,6 +18,8 @@ VALUES ("Vignesh", "vignesh@gmail.com", 6379370482, "Vig@1234"),
 
 -- findall users
 SELECT * FROM users;
+
+
 
 
 

@@ -28,10 +28,10 @@ public class StringUtil {
 	 * @throws ValidationException Thrown if the input string doesn't match the specified pattern.
 	 */
 	public static void rejectIfInvalidName(String input, String inputName) throws ValidationException {
-		final String NAME_PATTERN = "^[A-Za-z][A-Za-z\\\\s]*$";
+		final String NAME_PATTERN = "^[a-zA-Z ]+$";
 		
 		if (!Pattern.matches(NAME_PATTERN, input)) {
-			throw new ValidationException(inputName+" doesn't match the pattern");
+			throw new ValidationException(inputName+" should contain only alphabetic characters");
 		}
 	}
 
@@ -74,7 +74,8 @@ public class StringUtil {
 
 		if (!matcher.matches()) {
 
-			throw new ValidationException("Password doesn't matches with pattern");
+			throw new ValidationException("Password doesn't matches with pattern. Password atleast contain one Uppercase,"
+					+ "one Lowercase,one Special character,one number");
 		}
 	}
 

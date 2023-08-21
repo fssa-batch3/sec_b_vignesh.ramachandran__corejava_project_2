@@ -33,7 +33,8 @@ public class IntUtil {
      */
 	public static void rejectIfInvalidInt(int input, String inputName) throws ValidationException {
 		if(input <=0) {
-			throw new ValidationException("Invalid ".concat(inputName));
+//			throw new ValidationException("Invalid ".concat(inputName));
+			throw new ValidationException(inputName +" cannot be less than or equal to zero");
 		}
 	}
 
@@ -46,7 +47,7 @@ public class IntUtil {
      */
 	public static void priceCheck(int input, String inputName) throws ValidationException {
 		if(input < 0) {
-			throw new ValidationException("Invalid ".concat(inputName));
+			throw new ValidationException(inputName +" cannot be less than zero");
 		}
 	}
 	

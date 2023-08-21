@@ -28,7 +28,7 @@ public class TestCategory {
 		Exception exception = assertThrows(ValidationException.class, () ->{
 			categoryservice.findById(0);
 		});
-		String expectedMessage = "Invalid CategoryId";
+		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -42,7 +42,7 @@ public class TestCategory {
 		Exception exception = assertThrows(ValidationException.class, () ->{
 			categoryservice.findById(-1);
 		});
-		String expectedMessage = "Invalid CategoryId";
+		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));

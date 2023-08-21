@@ -132,7 +132,7 @@ public class TestDish {
 
 			dishservice.create(dish);
 		});
-		String expectedMessage = "Invalid MenuId";
+		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -155,7 +155,7 @@ public class TestDish {
 
 			dishservice.create(dish);
 		});
-		String expectedMessage = "Invalid MenuId";
+		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -204,7 +204,7 @@ public class TestDish {
 
 			dishservice.create(dish);
 		});
-		String expectedMessage = "Invalid CategoryId";
+		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -227,7 +227,7 @@ public class TestDish {
 
 			dishservice.create(dish);
 		});
-		String expectedMessage = "Invalid CategoryId";
+		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -276,7 +276,7 @@ public class TestDish {
 
 			dishservice.create(dish);
 		});
-		String expectedMessage = "Invalid Price";
+		String expectedMessage = "Price cannot be less than zero";
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 		exception.printStackTrace();
@@ -302,7 +302,7 @@ public class TestDish {
 
 			dishservice.create(dish);
 		});
-		String expectedMessage = "Invalid Quantity";
+		String expectedMessage = "Quantity cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
@@ -327,7 +327,7 @@ public class TestDish {
 
 			dishservice.create(dish);
 		});
-		String expectedMessage = "Invalid Quantity";
+		String expectedMessage = "Quantity cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -375,7 +375,7 @@ public class TestDish {
 
 			dishservice.update(dish);
 		});
-		String expectedMessage = "Invalid Quantity";
+		String expectedMessage = "Quantity cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
@@ -401,7 +401,7 @@ public class TestDish {
 
 			dishservice.update(dish);
 		});
-		String expectedMessage = "Invalid Quantity";
+		String expectedMessage = "Quantity cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -450,7 +450,7 @@ public class TestDish {
 
 			dishservice.update(dish);
 		});
-		String expectedMessage = "Invalid MenuId";
+		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
@@ -475,7 +475,7 @@ public class TestDish {
 
 			dishservice.update(dish);
 		});
-		String expectedMessage = "Invalid MenuId";
+		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -524,7 +524,7 @@ public class TestDish {
 
 			dishservice.update(dish);
 		});
-		String expectedMessage = "Invalid CategoryId";
+		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -547,7 +547,7 @@ public class TestDish {
 
 			dishservice.update(dish);
 		});
-		String expectedMessage = "Invalid CategoryId";
+		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
 		assertTrue(expectedMessage.equals(actualMessage));
@@ -596,7 +596,7 @@ public class TestDish {
 
 			dishservice.update(dish);
 		});
-		String expectedMessage = "Invalid Price";
+		String expectedMessage = "Price cannot be less than zero";
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
@@ -622,7 +622,7 @@ public class TestDish {
 
 			dishservice.update(dish);
 		});
-		String expectedMessage = "Invalid DishId";
+		String expectedMessage = "DishId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
@@ -647,7 +647,7 @@ public class TestDish {
 
 			dishservice.update(dish);
 		});
-		String expectedMessage = "Invalid DishId";
+		String expectedMessage = "DishId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
@@ -707,7 +707,7 @@ public class TestDish {
 
 			dishservice.delete(1, 1, 0);
 		});
-		String expectedMessage = "Invalid DishId";
+		String expectedMessage = "DishId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
@@ -722,7 +722,7 @@ public class TestDish {
 
 			dishservice.delete(1, 1, -2);
 		});
-		String expectedMessage = "Invalid DishId";
+		String expectedMessage = "DishId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 

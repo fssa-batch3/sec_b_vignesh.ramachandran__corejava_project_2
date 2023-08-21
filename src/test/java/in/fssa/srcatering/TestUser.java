@@ -149,6 +149,31 @@ public class TestUser {
 		String actualMessage = exception.getMessage();
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
+	
+	
+	@Test
+	public void testCreateUserWithWrongPasswordPattern() {
+		UserService userservice = new UserService();
+
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			// user 1
+			User newUser = new User();
+
+			newUser.setName("Vignesh");
+			newUser.setEmail("vignesh@gmail.com");
+			newUser.setPhone_number(9876545678L);
+			newUser.setPassword("fghjk34567");
+
+			userservice.create(newUser);
+		});
+		String expectedMessage = "Password doesn't matches with pattern. Password atleast contain one Uppercase,"
+				+ "one Lowercase,one Special character,one number";
+		String actualMessage = exception.getMessage();
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	
+	
+	
 
 	@Test
 	public void testCreateUserWithInvalidPhoneNumber() {
@@ -211,7 +236,30 @@ public class TestUser {
 		String actualMessage = exception.getMessage();
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
+	
+	
+	@Test
+	public void testCreateUserWithInvalidName() {
+		UserService userservice = new UserService();
 
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			// user 1
+			User newUser = new User();
+
+			newUser.setName("12345sdfg");
+			newUser.setEmail("vignesh@gmail.com");
+			newUser.setPhone_number(9876545678L);
+			newUser.setPassword("Vig@1234");
+
+			userservice.create(newUser);
+		});
+		String expectedMessage = "UserName should contain only alphabetic characters";
+		String actualMessage = exception.getMessage();
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	
+	
+	// update
 	@Test
 	public void testUpdateUserWithValidInputAndId() {
 		UserService userservice = new UserService();
@@ -227,6 +275,132 @@ public class TestUser {
 			userservice.update(1, user);
 		});
 	}
+	
+	@Test
+	public void testUpdateUserWithNameNull() {
+		UserService userservice = new UserService();
+
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			// user 1
+			User newUser = new User();
+
+			newUser.setName(null);
+			newUser.setEmail("vignesh@gmail.com");
+			newUser.setPhone_number(9876545678L);
+			newUser.setPassword("Vig@1234");
+
+			userservice.update(1, newUser);
+		});
+		String expectedMessage = "Name cannot be null or empty";
+		String actualMessage = exception.getMessage();
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	
+	
+	@Test
+	public void testUpdateUserWithNameEmpty() {
+		UserService userservice = new UserService();
+
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			// user 1
+			User newUser = new User();
+
+			newUser.setName("");
+			newUser.setEmail("vignesh@gmail.com");
+			newUser.setPhone_number(9876545678L);
+			newUser.setPassword("Vig@1234");
+
+			userservice.update(1, newUser);
+		});
+		String expectedMessage = "Name cannot be null or empty";
+		String actualMessage = exception.getMessage();
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	
+	
+	@Test
+	public void testUpdateUserWithInvalidName() {
+		UserService userservice = new UserService();
+
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			// user 1
+			User newUser = new User();
+
+			newUser.setName("12sdf123");
+			newUser.setEmail("vignesh@gmail.com");
+			newUser.setPhone_number(9876545678L);
+			newUser.setPassword("Vig@1234");
+
+			userservice.update(1, newUser);
+		});
+		String expectedMessage = "UserName should contain only alphabetic characters";
+		String actualMessage = exception.getMessage();
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	
+	@Test
+	public void testUpdateUserWithPasswordNull() {
+		UserService userservice = new UserService();
+
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			// user 1
+			User newUser = new User();
+
+			newUser.setName("Vignesh");
+			newUser.setEmail("vignesh@gmail.com");
+			newUser.setPhone_number(9876545678L);
+			newUser.setPassword(null);
+
+			userservice.update(1,newUser);
+		});
+		String expectedMessage = "Password cannot be null or empty";
+		String actualMessage = exception.getMessage();
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	
+	
+	@Test
+	public void testUpdateUserWithPasswordEmpty() {
+		UserService userservice = new UserService();
+
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			// user 1
+			User newUser = new User();
+
+			newUser.setName("Vignesh");
+			newUser.setEmail("vignesh@gmail.com");
+			newUser.setPhone_number(9876545678L);
+			newUser.setPassword("");
+
+			userservice.update(1,newUser);
+		});
+		String expectedMessage = "Password cannot be null or empty";
+		String actualMessage = exception.getMessage();
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	
+	
+	@Test
+	public void testUpdateUserWithWrongPasswordPattern() {
+		UserService userservice = new UserService();
+
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			// user 1
+			User newUser = new User();
+
+			newUser.setName("Vignesh");
+			newUser.setEmail("vignesh@gmail.com");
+			newUser.setPhone_number(9876545678L);
+			newUser.setPassword("kljdbfka12");
+
+			userservice.update(1,newUser);
+		});
+		String expectedMessage = "Password doesn't matches with pattern. Password atleast contain one Uppercase,"
+				+ "one Lowercase,one Special character,one number";
+		String actualMessage = exception.getMessage();
+		assertTrue(expectedMessage.equals(actualMessage));
+	}
+	
 
 	@Test
 	public void testUpdateUserWithIdZero() {
@@ -244,7 +418,7 @@ public class TestUser {
 			userservice.update(0, newUser);
 		});
 
-		String expectedMessage = "Invalid UserId";
+		String expectedMessage = "UserId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 		assertTrue(expectedMessage.equals(actualMessage));
 
@@ -293,7 +467,7 @@ public class TestUser {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			userservice.delete(0);
 		});
-		String expectedMessage = "Invalid UserId";
+		String expectedMessage = "UserId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
