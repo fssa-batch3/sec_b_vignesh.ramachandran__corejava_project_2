@@ -8,9 +8,10 @@ import in.fssa.srcatering.util.IntUtil;
 public class MenuValidator {
 
 	/**
-	 * 
-	 * @param menu_id
-	 * @throws ValidationException
+	 * Validates whether the provided Menu ID is valid.
+	 *
+	 * @param menu_id The Menu ID to validate.
+	 * @throws ValidationException If the Menu ID is invalid or not found.
 	 */
 	public static void isMenuIdIsValid(int menu_id) throws ValidationException {
 

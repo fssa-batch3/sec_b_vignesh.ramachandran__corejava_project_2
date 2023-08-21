@@ -11,12 +11,13 @@ import in.fssa.srcatering.util.IntUtil;
 public class CategoryDishValidator {
 
 	/**
-	 * 
-	 * @param menu_id
-	 * @param category_id
-	 * @param dish_id
-	 * @throws ValidationException
-	 */
+     * Validates menu, category, and dish IDs.
+     *
+     * @param menu_id     The menu ID to validate.
+     * @param category_id The category ID to validate.
+     * @param dish_id     The dish ID to validate.
+     * @throws ValidationException If any of the IDs are invalid.
+     */
 	public static void Validate(int menu_id, int category_id, int dish_id) throws ValidationException {
 
 //		try {
@@ -51,10 +52,11 @@ public class CategoryDishValidator {
 	}
 
 	/**
-	 * 
-	 * @param menu_id
-	 * @throws ValidationException
-	 */
+     * Validates if the provided menu ID is valid.
+     *
+     * @param menu_id The menu ID to validate.
+     * @throws ValidationException If the menu ID is invalid.
+     */
 	public static void isMenuIdIsValid(int menu_id) throws ValidationException {
 
 		try {
@@ -70,11 +72,12 @@ public class CategoryDishValidator {
 	}
 
 	/**
-	 * 
-	 * @param menu_id
-	 * @param category_id
-	 * @throws ValidationException
-	 */
+     * Validates if the provided category ID is valid within the context of the given menu ID.
+     *
+     * @param menu_id     The menu ID to validate against.
+     * @param category_id The category ID to validate.
+     * @throws ValidationException If the category ID is invalid.
+     */
 	public static void isCategoryIdIsValid(int menu_id, int category_id) throws ValidationException {
 
 		try {
@@ -91,10 +94,11 @@ public class CategoryDishValidator {
 	}
 
 	/**
-	 * 
-	 * @param dish_id
-	 * @throws ValidationException
-	 */
+     * Validates if the provided dish ID is valid.
+     *
+     * @param dish_id The dish ID to validate.
+     * @throws ValidationException If the dish ID is invalid.
+     */
 	public static void isDishIdIsValid(int dish_id) throws ValidationException {
 
 		try {

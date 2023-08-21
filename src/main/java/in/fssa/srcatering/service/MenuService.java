@@ -17,10 +17,11 @@ public class MenuService {
 	MenuDAO menudao = new MenuDAO();
 
 	/**
-	 * 
-	 * @return
-	 * @throws ServiceException
-	 */
+     * Retrieves a list of all menus.
+     *
+     * @return A list of all menus.
+     * @throws ServiceException If there's an issue with the service operation.
+     */
 	public List<Menu> getAll() throws ServiceException {
 
 		List<Menu> menuList = new ArrayList<Menu>();
@@ -42,12 +43,13 @@ public class MenuService {
 	}
 
 	/**
-	 * 
-	 * @param menu_id
-	 * @return
-	 * @throws ValidationException
-	 * @throws ServiceException
-	 */
+     * Finds a menu by its ID.
+     *
+     * @param menu_id The menu ID to search for.
+     * @return The menu object.
+     * @throws ValidationException If the provided menu ID is not valid.
+     * @throws ServiceException    If there's an issue with the service operation.
+     */
 	public Menu findById(int menu_id) throws ValidationException, ServiceException {
 
 		Menu menu = null;
@@ -68,10 +70,11 @@ public class MenuService {
 	}
 
 	/**
-	 * 
-	 * @param menu_id
-	 * @throws ValidationException
-	 */
+     * Validates if the provided menu ID is valid.
+     *
+     * @param menu_id The menu ID to validate.
+     * @throws ValidationException If the provided menu ID is not valid.
+     */
 	public void isMenuIdIsValid(int menu_id) throws ValidationException {
 
 		MenuValidator.isMenuIdIsValid(menu_id);

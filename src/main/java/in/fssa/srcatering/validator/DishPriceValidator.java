@@ -9,10 +9,11 @@ import in.fssa.srcatering.util.IntUtil;
 public class DishPriceValidator {
 
 	/**
-	 * 
-	 * @param dish_id
-	 * @throws ValidationException
-	 */
+     * Validates if the provided dish ID is valid.
+     *
+     * @param dish_id The dish ID to validate.
+     * @throws ValidationException If the dish ID is invalid or not found.
+     */
 	public static void isDishIdIsValid(int dish_id) throws ValidationException {
 
 		try {

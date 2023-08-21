@@ -17,12 +17,13 @@ public class DishPriceService {
 	DishPriceDAO dishpricedao = new DishPriceDAO();
 
 	/**
-	 * 
-	 * @param dish_id
-	 * @param price
-	 * @throws ValidationException
-	 * @throws ServiceException
-	 */
+     * Creates a new dish price entry.
+     *
+     * @param dish_id The ID of the dish for which the price is being created.
+     * @param price   The price of the dish.
+     * @throws ValidationException If the provided parameters are not valid.
+     * @throws ServiceException    If there's an issue with the service operation.
+     */
 	public void create(int dish_id, int price) throws ValidationException, ServiceException {
 
 		try {
@@ -43,12 +44,13 @@ public class DishPriceService {
 	}
 
 	/**
-	 * 
-	 * @param dish_id
-	 * @param dish_price
-	 * @throws ValidationException
-	 * @throws ServiceException
-	 */
+     * Updates the price of a dish.
+     *
+     * @param dish_id     The ID of the dish for which the price is being updated.
+     * @param dish_price  The new price for the dish.
+     * @throws ValidationException If the provided parameters are not valid.
+     * @throws ServiceException    If there's an issue with the service operation.
+     */
 	public void update(int dish_id, int dish_price) throws ValidationException, ServiceException {
 		
 		try {
@@ -74,14 +76,34 @@ public class DishPriceService {
 		} catch (DAOException e) {
 			throw new ServiceException("Invalid DishId");
 		}
-
+	}
+	
+	/**
+     * Retrieves the current price of a dish.
+     *
+     * @param dish_id The ID of the dish for which the price is being retrieved.
+     * @return The current price of the dish.
+     * @throws ValidationException If the provided dish ID is not valid.
+     * @throws ServiceException    If there's an issue with the service operation.
+     */
+	public int findPriceByDishId(int dish_id) throws ValidationException, ServiceException {
+		int price = -1;
+		try {
+			IntUtil.rejectIfInvalidInt(dish_id, "DishId");
+			 price = dishpricedao.findPriceByDishId(dish_id);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+		return price;
 	}
 
 	/**
-	 * 
-	 * @param dish_id
-	 * @throws ValidationException
-	 */
+     * Validates if the provided dish ID is valid.
+     *
+     * @param dish_id The dish ID to validate.
+     * @throws ValidationException If the provided dish ID is not valid.
+     */
 	public void isDishIdIsValid(int dish_id) throws ValidationException {
 
 		DishPriceValidator.isDishIdIsValid(dish_id);

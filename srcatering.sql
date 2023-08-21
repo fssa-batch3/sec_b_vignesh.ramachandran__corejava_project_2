@@ -2,13 +2,20 @@ USE vignesh_ramachandran_corejava_project;
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
     phone_number LONG,
     password VARCHAR(255) NOT NULL,
     status BOOLEAN NOT NULL DEFAULT true,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    
+
 );
+    -- Additional Constraints 
+--     CHECK (LENGTH(name) > 0),
+--     CHECK (status IN (0, 1)),
+--     CHECK (LENGTH(phone_number) = 10),
+--     CHECK (LENGTH(password) =8)
 
 INSERT INTO users (name, email, phone_number, password)
 VALUES ("Vignesh", "vignesh@gmail.com", 6379370482, "Vig@1234"),
@@ -17,6 +24,7 @@ VALUES ("Vignesh", "vignesh@gmail.com", 6379370482, "Vig@1234"),
 
 -- findall users
 SELECT * FROM users;
+
 
 
 CREATE TABLE IF NOT EXISTS menus (
@@ -91,7 +99,7 @@ VALUES (10, 1),
 (30,3),
 (10, 4);
 
-SELECT * From dish_price ;
+SELECT * From dish_price;
 
 
 CREATE TABLE IF NOT EXISTS category_dish(
@@ -117,8 +125,8 @@ SELECT * FROM category_dish;
 -- drop table dish_price;
 -- drop table dishes;
 
--- SELECT d.id, d.dish_name, d.quantity, d.quantity_unit, cd.menu_id, cd.category_id, dp.price FROM dishes d JOIN category_dish cd ON d.id = cd.dish_id
--- JOIN dish_price dp ON d.id = dp.dish_id WHERE cd.status = 1;
+SELECT d.id, d.dish_name, d.quantity, d.quantity_unit, cd.menu_id, cd.category_id, dp.price FROM dishes d JOIN category_dish cd ON d.id = cd.dish_id
+JOIN dish_price dp ON d.id = dp.dish_id WHERE d.id = 1;
 
 
 -- SELECT c.dish_id, dp.price FROM category_dish c INNER JOIN dish_price dp ON c.dish_id = dp.dish_id WHERE c.menu_id = 1 AND c.category_id =1;
@@ -128,18 +136,47 @@ SELECT * FROM category_dish;
 -- JOIN category_dish cd ON d.id = cd.dish_id
 -- WHERE cd.menu_id = 1 AND cd.category_id = 2;
 
-CREATE TABLE IF NOT EXISTS orders
+CREATE TABLE IF NOT EXISTS orders(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    no_of_guest INT,
+    total_cost INT,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    delivery_date TIMESTAMP NOT NULL,
+    order_status ENUM ("DELIVERED", "NOT_DELIVERED", "CANCELLED") NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+select * from orders;
 
 
 
--- CREATE TABLE IF NOT EXISTS order_price(
+-- CREATE TABLE IF NOT EXISTS order_product(
 -- 	id INT PRIMARY KEY AUTO_INCREMENT,
---     order_id INT,
+--     order_id INT, 
+--     menu_id INT,
+-- 	category_id INT,
+--     dish_id INT,
 --     price_id INT,
 --     FOREIGN KEY (order_id) REFERENCES orders(id),
+--     FOREIGN KEY (menu_id) REFERENCES menus(id),
+--     FOREIGN KEY (category_id) REFERENCES categories(id),
+--     FOREIGN KEY (dish_id) REFERENCES category_dish(dish_id),
 --     FOREIGN KEY (price_id) REFERENCES dish_price(id)
 -- );
 
--- select * from order_price;
+-- getting menu_id,category_id, dish_id and price for each dish
+SELECT cd.menu_id, cd.category_id, cd.dish_id, dp.id as price_id
+FROM category_dish cd 
+JOIN dish_price dp ON cd.dish_id = dp.dish_id 
+WHERE cd.menu_id=1 AND cd.category_id = 1 AND status = 1;
+
+-- getting total cost by menu_id and category_id
+SELECT SUM(dp.price) AS total_cost
+FROM dish_price AS dp
+JOIN category_dish cd ON cd.dish_id = dp.dish_id
+WHERE cd.menu_id = 1 AND cd.category_id = 1 AND status = 1;
+
+
 
 

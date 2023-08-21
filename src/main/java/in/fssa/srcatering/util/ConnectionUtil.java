@@ -48,10 +48,11 @@ public class ConnectionUtil {
 	}
 	
 	/**
-	 * 
-	 * @param connection
-	 * @param ps
-	 */
+     * Closes a database connection and a prepared statement.
+     *
+     * @param connection The database connection to close.
+     * @param ps         The prepared statement to close.
+     */
 	public static void close(Connection connection, PreparedStatement ps) {
 
 		try {
@@ -69,11 +70,12 @@ public class ConnectionUtil {
 	}
 	
 	/**
-	 * 
-	 * @param connection
-	 * @param ps
-	 * @param rs
-	 */
+     * Closes a database connection, a prepared statement, and a result set.
+     *
+     * @param connection The database connection to close.
+     * @param ps         The prepared statement to close.
+     * @param rs         The result set to close.
+     */
 	public static void close(Connection connection, PreparedStatement ps, ResultSet rs) {
 
 		try {

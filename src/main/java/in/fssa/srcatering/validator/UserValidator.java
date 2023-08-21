@@ -10,10 +10,11 @@ import in.fssa.srcatering.util.StringUtil;
 public class UserValidator {
 
 	/**
-	 * 
-	 * @param newUser
-	 * @throws ValidationException
-	 */
+     * Validates the provided User object.
+     *
+     * @param newUser The User object to validate.
+     * @throws ValidationException If the User object or its attributes are invalid.
+     */
 	public static void validate(User newUser) throws ValidationException {
 
 		if (newUser == null) {
@@ -23,16 +24,19 @@ public class UserValidator {
 		StringUtil.rejectIfInvalidString(newUser.getName(), "Name");
 		StringUtil.rejectIfInvalidString(newUser.getEmail(), "Email");
 		StringUtil.rejectIfInvalidString(newUser.getPassword(), "Password");
+		
+		StringUtil.rejectIfInvalidName(newUser.getName(), "UserName");
 		IntUtil.rejectIfInvalidPhoneNumber(newUser.getPhone_number());
 		StringUtil.rejectIfInvalidEmail(newUser.getEmail());
 		StringUtil.rejectIfIvalidPassword(newUser.getPassword());
 	}
 	
 	/**
-	 * 
-	 * @param email
-	 * @throws ValidationException
-	 */
+     * Validates if the provided email already exists in the system.
+     *
+     * @param email The email to validate.
+     * @throws ValidationException If the email already exists.
+     */
 	public static void isEmailAlreadyExists(String email) throws ValidationException {
 		
 		try {
@@ -50,10 +54,11 @@ public class UserValidator {
 	}
 
 	/**
-	 * 
-	 * @param id
-	 * @throws ValidationException
-	 */
+     * Validates if the provided user ID is valid and exists in the system.
+     *
+     * @param id The user ID to validate.
+     * @throws ValidationException If the user ID is invalid or not found.
+     */
 	public static void isUserIdIsValid(int id) throws ValidationException {
 		
 		try {

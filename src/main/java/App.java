@@ -16,6 +16,7 @@ import in.fssa.srcatering.service.UserService;
 public class App {
 
 	public static void main(String[] args) {
+		
 		UserService userservice = new UserService();
 		
 		MenuService menuservice = new MenuService();
@@ -25,44 +26,10 @@ public class App {
 
 
 		DishService dishservice = new DishService();
-//		List<Dish> dishes = new ArrayList<Dish>();
-//		
-//		Dish dish = new Dish();
-//		dish.setDish_name("VADA");
-//		dish.setMenu_id(1);
-//		dish.setCategory_id(1);
-//		dish.setQuantity(1);
-//		dish.setQuantity_unit(QuantityUnit.NOS);
-//		dish.setDish_price(10);
-//		
-//		try {
-//			dishservice.create(dish);
-//		} catch (ValidationException e) {
-//			e.printStackTrace();
-//			System.out.println(e.getMessage());
-//			
-//		} catch (ServiceException e) {
-//			e.printStackTrace();
-//			System.out.println(e.getMessage());
-//		}
+		
 
 		CategoryDishService categorydishservice = new CategoryDishService();
-		try {
-			categorydishservice.changeStatus(1, 1, 4);
-		} catch (ValidationException | ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//		try {
-//			System.out.println(categorydishservice.findDishNameByMenuIdAndCategoryId(1,1));
-//			
-//		} catch (ValidationException e) {
-//			
-//			e.printStackTrace();
-//		} catch (ServiceException e) {
-//			
-//			e.printStackTrace();
-//		}
+
 		
 
 	}

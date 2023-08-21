@@ -15,10 +15,11 @@ import in.fssa.srcatering.util.ConnectionUtil;
 public class MenuDAO {
 
 	/**
-	 * 
-	 * @return
-	 * @throws DAOException
-	 */
+     * Retrieves a list of all menus from the 'menus' table.
+     *
+     * @return A list of Menu objects representing all menus.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	public List<Menu> findAll() throws DAOException {
 
 		Connection con = null;
@@ -51,11 +52,12 @@ public class MenuDAO {
 	}
 
 	/**
-	 * 
-	 * @param menu_id
-	 * @return
-	 * @throws DAOException
-	 */
+     * Retrieves a menu based on the provided menu ID from the 'menus' table.
+     *
+     * @param menu_id The ID of the menu to retrieve.
+     * @return The Menu object with the specified menu ID.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	public Menu findById(int menu_id) throws DAOException {
 
 		Connection con = null;
@@ -91,10 +93,11 @@ public class MenuDAO {
 	}
 
 	/**
-	 * 
-	 * @param menu_id
-	 * @throws DAOException
-	 */
+     * Checks whether a menu ID exists in the 'menus' table.
+     *
+     * @param menu_id The ID of the menu to check.
+     * @throws DAOException If there's an issue with the database operation or if the menu ID is not found.
+     */
 	public static void IsMenuIdIsValid(int menu_id) throws DAOException {
 
 		Connection con = null;

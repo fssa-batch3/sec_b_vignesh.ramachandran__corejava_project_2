@@ -9,20 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.fssa.srcatering.exception.DAOException;
+import in.fssa.srcatering.exception.ServiceException;
+import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Dish;
 import in.fssa.srcatering.model.QuantityUnit;
+import in.fssa.srcatering.service.DishPriceService;
 import in.fssa.srcatering.util.ConnectionUtil;
 
 public class DishDAO {
 
 	/**
-	 * 
-	 * @param dish_name
-	 * @param quantity
-	 * @param quantity_unit
-	 * @return
-	 * @throws DAOException
-	 */
+     * Creates a new dish entry in the 'dishes' table.
+     *
+     * @param dish_name The name of the dish.
+     * @param quantity The quantity of the dish.
+     * @param quantity_unit The unit of measurement for the quantity.
+     * @return The generated ID of the newly created dish.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	public int create(String dish_name, int quantity, QuantityUnit quantity_unit) throws DAOException {
 
 		Connection con = null;
@@ -55,11 +59,12 @@ public class DishDAO {
 		return generatedId;
 	}
 	
-	/**
-	 * 
-	 * @param dish
-	 * @throws DAOException
-	 */
+	 /**
+     * Updates the quantity and quantity unit of a dish in the 'dishes' table.
+     *
+     * @param dish The Dish object containing updated information.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	public void update(Dish dish) throws DAOException {
 		
 		Connection con = null;
@@ -86,10 +91,11 @@ public class DishDAO {
 	}
 
 	/**
-	 * 
-	 * @param dish_id
-	 * @throws DAOException
-	 */
+     * Checks whether a dish ID exists in the 'dishes' table.
+     *
+     * @param dish_id The ID of the dish to check.
+     * @throws DAOException If there's an issue with the database operation or if the dish ID is not found.
+     */
 	public void isDishIdIsValid(int dish_id) throws DAOException {
 
 		Connection con = null;
@@ -117,12 +123,14 @@ public class DishDAO {
 	}
 	
 	/**
-	 * 
-	 * @param dish_id
-	 * @return
-	 * @throws DAOException
-	 */
-	public Dish findByDishId(int dish_id) throws DAOException {
+     * Retrieves a Dish object based on the provided dish ID by joining the 'dishes', 'category_dish', and 'dish_price' tables.
+     *
+     * @param dish_id The ID of the dish to retrieve.
+     * @return The Dish object with the specified dish ID.
+     * @throws DAOException If there's an issue with the database operation or data validation.
+     * @throws ValidationException If there's an issue with data validation.
+     */
+	public Dish findByDishId(int dish_id) throws DAOException, ValidationException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -131,13 +139,15 @@ public class DishDAO {
 		
 		try {
 			dish = new Dish();
-			String query = "SELECT * FROM dishes WHERE id = ?";
+			String query = "SELECT * FROM dishes d JOIN category_dish cd ON d.id = cd.dish_id WHERE d.id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, dish_id);
 			
 			rs = ps.executeQuery();
+			
 			if(rs.next()) {
+				
 				dish.setId(rs.getInt("id"));
 				dish.setDish_name(rs.getString("dish_name"));
 				dish.setQuantity(rs.getInt("quantity"));
@@ -146,6 +156,8 @@ public class DishDAO {
 				QuantityUnit quantityUnit = QuantityUnit.valueOf(quantityUnitString);
 				
 				dish.setQuantity_unit(quantityUnit);
+				dish.setMenu_id(rs.getInt("menu_id"));
+				dish.setCategory_id(rs.getInt("category_id"));
 			}
 			
 			
@@ -159,10 +171,11 @@ public class DishDAO {
 	}
 	
 	/**
-	 * 
-	 * @return
-	 * @throws DAOException
-	 */
+     * Retrieves a list of Dish objects containing information about all active dishes.
+     *
+     * @return A list of Dish objects representing all active dishes.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	public List<Dish> findAllDishes() throws DAOException{
 		Connection con = null;
 		PreparedStatement ps = null;

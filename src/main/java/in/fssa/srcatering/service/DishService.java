@@ -24,11 +24,12 @@ public class DishService {
 	CategoryDishService categorydishservice = new CategoryDishService();
 
 	/**
-	 * 
-	 * @param dish
-	 * @throws ValidationException
-	 * @throws ServiceException
-	 */
+     * Creates a new dish.
+     *
+     * @param dish The dish object containing dish details.
+     * @throws ValidationException If the provided dish data is not valid.
+     * @throws ServiceException    If there's an issue with the service operation.
+     */
 	public void create(Dish dish) throws ValidationException, ServiceException {
 
 		try {
@@ -56,11 +57,12 @@ public class DishService {
 	}
 
 	/**
-	 * 
-	 * @param dish
-	 * @throws ValidationException
-	 * @throws ServiceException
-	 */
+     * Updates an existing dish.
+     *
+     * @param dish The updated dish object.
+     * @throws ValidationException If the provided dish data is not valid.
+     * @throws ServiceException    If there's an issue with the service operation.
+     */
 	public void update(Dish dish) throws ValidationException, ServiceException {
 
 		try {
@@ -80,14 +82,15 @@ public class DishService {
 
 	}
 
-	/**
-	 * 
-	 * @param menu_id
-	 * @param category_id
-	 * @param dish_id
-	 * @throws ValidationException
-	 * @throws ServiceException
-	 */
+	 /**
+     * Deletes a dish by its IDs.
+     *
+     * @param menu_id     The menu ID of the dish.
+     * @param category_id The category ID of the dish.
+     * @param dish_id     The dish ID.
+     * @throws ValidationException If the provided IDs are not valid.
+     * @throws ServiceException    If there's an issue with the service operation.
+     */
 	public void delete(int menu_id, int category_id, int dish_id) throws ValidationException, ServiceException {
 
 		DishValidator.isDishIdIsValid(dish_id);
@@ -99,43 +102,53 @@ public class DishService {
 	}
 
 	/**
-	 * 
-	 * @param dish_id
-	 * @throws ValidationException
-	 */
+     * Validates if the provided dish ID is valid.
+     *
+     * @param dish_id The dish ID to validate.
+     * @throws ValidationException If the provided dish ID is not valid.
+     */
 	public void isDishIdIsValid(int dish_id) throws ValidationException {
 
 		DishValidator.isDishIdIsValid(dish_id);
 
 	}
 	
-	/**
-	 * 
-	 * @param dish_id
-	 * @throws ValidationException
-	 * @throws ServiceException
-	 */
-	public void findByDishId(int dish_id) throws ValidationException, ServiceException {
+	 /**
+     * Finds a dish by its ID.
+     *
+     * @param dish_id The dish ID to search for.
+     * @return The dish object.
+     * @throws ValidationException If the provided dish ID is not valid.
+     * @throws ServiceException    If there's an issue with the service operation.
+     */
+	public Dish findByDishId(int dish_id) throws ValidationException, ServiceException {
 
+		Dish dish = new Dish();
 		try {
 
 			CategoryDishValidator.isDishIdIsValid(dish_id);
 			DishValidator.isDishIdIsValid(dish_id);
-			dishdao.findByDishId(dish_id);
+			dish = dishdao.findByDishId(dish_id);
+			
+			DishPriceService dishpriceservice = new DishPriceService();
+			dish.setDish_price(dishpriceservice.findPriceByDishId(dish_id));
+			
 
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage());
 		}
+		return dish;
 	}
 
 	/**
-	 * 
-	 * @param menu_id
-	 * @param category_id
-	 * @return
-	 * @throws ValidationException
-	 * @throws ServiceException
-	 */
+     * Retrieves all dishes by a given menu ID and category ID.
+     *
+     * @param menu_id     The menu ID.
+     * @param category_id The category ID.
+     * @return A list of dishes matching the given menu and category.
+     * @throws ValidationException If the provided menu or category ID is not valid.
+     * @throws ServiceException    If there's an issue with the service operation.
+     */
 	public List<Dish> findAllDishesByMenuIdAndCategoryId(int menu_id, int category_id) throws ValidationException, ServiceException {
 
 		CategoryDishDAO categorydishdao = new CategoryDishDAO();
@@ -152,17 +165,17 @@ public class DishService {
 
 			for(int id: dishIds) {
 				
-				dishes.add(dishdao.findByDishId(id));
+				dishes.add(this.findByDishId(id));
 			}	 
 			
-			for(Dish dish: dishes) {
-				
-				int price_1 = dishpricedao.findPriceByDishId(dish.getId());
-				
-				dish.setDish_price(price_1);
-				dish.setMenu_id(menu_id);
-				dish.setCategory_id(category_id);
-			}
+//			for(Dish dish: dishes) {
+//				
+//				int price_1 = dishpricedao.findPriceByDishId(dish.getId());
+//				
+//				dish.setDish_price(price_1);
+//				dish.setMenu_id(menu_id);
+//				dish.setCategory_id(category_id);
+//			}
 			
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage());
@@ -170,11 +183,12 @@ public class DishService {
 		return dishes;
 	}
 	
-	/**
-	 * 
-	 * @return
-	 * @throws ServiceException
-	 */
+	 /**
+     * Retrieves all dishes.
+     *
+     * @return A list of all dishes.
+     * @throws ServiceException If there's an issue with the service operation.
+     */
 	public List<Dish> getAllDishes() throws ServiceException{
 		List<Dish> dishes;
 		try {

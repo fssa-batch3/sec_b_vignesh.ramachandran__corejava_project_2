@@ -16,10 +16,11 @@ import in.fssa.srcatering.util.ConnectionUtil;
 public class UserDAO implements UserInterface {
 
 	/**
-	 * 
-	 * @return
-	 * @throws DAOException
-	 */
+     * Retrieves a list of all active users from the 'users' table.
+     *
+     * @return A list of User objects representing all active users.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	@Override
 	public List<User> findAll() throws DAOException {
 		Connection con = null;
@@ -56,10 +57,11 @@ public class UserDAO implements UserInterface {
 	}
 
 	/**
-	 * 
-	 * @param new_User
-	 * @throws DAOException
-	 */
+     * Creates a new user in the 'users' table.
+     *
+     * @param newUser The User object containing user details to be created.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	@Override
 	public void create(User newUser) throws DAOException {
 		Connection con = null;
@@ -92,11 +94,12 @@ public class UserDAO implements UserInterface {
 	}
 
 	/**
-	 * 
-	 * @param id
-	 * @param newUser
-	 * @throws DAOException
-	 */
+     * Updates an existing user's information in the 'users' table.
+     *
+     * @param id      The ID of the user to be updated.
+     * @param newUser The User object containing updated user details.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	@Override
 	public void update(int id, User newUser) throws DAOException {
 
@@ -131,9 +134,11 @@ public class UserDAO implements UserInterface {
 	}
 
 	/**
-	 * 
-	 * @throws DAOException
-	 */
+     * Deactivates a user by changing its status to 0 in the 'users' table.
+     *
+     * @param id The ID of the user to be deactivated.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	@Override
 	public void delete(int id) throws DAOException {
 
@@ -166,10 +171,11 @@ public class UserDAO implements UserInterface {
 	}
 
 	/**
-	 * 
-	 * @param userId
-	 * @throws DAOException
-	 */
+     * Checks whether a user ID exists in the 'users' table and is active.
+     *
+     * @param userId The ID of the user to check.
+     * @throws DAOException If there's an issue with the database operation or if the user ID is not valid.
+     */
 	public void isIdAlreadyExists(int userId) throws DAOException {
 
 		Connection con = null;
@@ -199,10 +205,12 @@ public class UserDAO implements UserInterface {
 	}
 
 	/**
-	 * 
-	 * @return
-	 * @throws DAOException
-	 */
+     * Retrieves an active user based on the provided user ID from the 'users' table.
+     *
+     * @param id The ID of the user to retrieve.
+     * @return The User object with the specified user ID.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	@Override
 	public User findById(int id) throws DAOException {
 		Connection con = null;
@@ -234,15 +242,16 @@ public class UserDAO implements UserInterface {
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
-		System.out.println(user);
+
 		return user;
 	}
 
 	/**
-	 * 
-	 * @param email
-	 * @throws DAOException
-	 */
+     * Checks whether an email address already exists in the 'users' table.
+     *
+     * @param email The email address to check.
+     * @throws DAOException If there's an issue with the database operation or if the email already exists.
+     */
 	public void isEmailAlreadyExists(String email) throws DAOException {
 
 		Connection con = null;
@@ -271,10 +280,12 @@ public class UserDAO implements UserInterface {
 	}
 
 	/**
-	 * 
-	 * @return
-	 * @throws DAOException
-	 */
+     * Retrieves an active user based on the provided email address from the 'users' table.
+     *
+     * @param email The email address to retrieve the user.
+     * @return The User object with the specified email address.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	@Override
 	public User findByEmail(String email) throws DAOException {
 
@@ -307,7 +318,6 @@ public class UserDAO implements UserInterface {
 			ConnectionUtil.close(con, ps, rs);
 		}
 		
-		System.out.println(user);
 		return user;
 	}
 
@@ -317,7 +327,12 @@ public class UserDAO implements UserInterface {
 		return 0;
 	}
 	
-	
+	/**
+     * Changes the status of a user from deactivated (0) to active (1).
+     *
+     * @param id The ID of the user to be reactivated.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	public void changeStatus(int id) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;

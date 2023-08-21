@@ -14,9 +14,10 @@ import in.fssa.srcatering.util.ConnectionUtil;
 public class CategoryDishDAO {
 	
 	/**
-	 * 
-	 * @param menu_id
-	 * @throws DAOException
+	 * Checks whether a menu ID exists in the 'category_dish' table with an active status.
+	 *
+	 * @param menu_id The ID of the menu to check.
+	 * @throws DAOException If there's an issue with the database operation or if the menu ID is not found.
 	 */
 	public void isMenuIdIsValid(int menu_id)throws DAOException {
 		Connection con = null;
@@ -45,10 +46,11 @@ public class CategoryDishDAO {
 	}
 	
 	/**
-	 * 
-	 * @param menu_id
-	 * @param category_id
-	 * @throws DAOException
+	 * Checks whether a category ID exists for a given menu ID in the 'category_dish' table with an active status.
+	 *
+	 * @param menu_id The ID of the menu to check.
+	 * @param category_id The ID of the category to check.
+	 * @throws DAOException If there's an issue with the database operation or if the category ID is not found.
 	 */
 	public void isCategoryIdIsValid(int menu_id, int category_id) throws DAOException {
 		Connection con = null;
@@ -77,9 +79,10 @@ public class CategoryDishDAO {
 	}
 	
 	/**
-	 * 
-	 * @param dish_id
-	 * @throws DAOException
+	 * Checks whether a dish ID exists in the 'category_dish' table with an active status.
+	 *
+	 * @param dish_id The ID of the dish to check.
+	 * @throws DAOException If there's an issue with the database operation or if the dish ID is not found.
 	 */
 	public void isDishIdIsValid(int dish_id) throws DAOException {
 		Connection con = null;
@@ -106,11 +109,12 @@ public class CategoryDishDAO {
 	
 	
 	/**
-	 * 
-	 * @param menu_id
-	 * @param category_id
-	 * @return
-	 * @throws DAOException
+	 * Retrieves a list of dish names based on the provided menu ID and category ID from the 'dishes' and 'category_dish' tables.
+	 *
+	 * @param menu_id The ID of the menu to filter dishes.
+	 * @param category_id The ID of the category to filter dishes.
+	 * @return A list of dish names corresponding to the specified menu ID and category ID.
+	 * @throws DAOException If there's an issue with the database operation.
 	 */
 	public List<String> findDishNameByMenuIdAndCategoryId(int menu_id, int category_id) throws DAOException {
 		
@@ -143,11 +147,12 @@ public class CategoryDishDAO {
 	}
 		
 	/**
-	 * 
-	 * @param menu_id
-	 * @param category_id
-	 * @return
-	 * @throws DAOException
+	 * Retrieves a list of dish IDs based on the provided menu ID and category ID from the 'category_dish' table.
+	 *
+	 * @param menu_id The ID of the menu to filter dishes.
+	 * @param category_id The ID of the category to filter dishes.
+	 * @return A list of dish IDs corresponding to the specified menu ID and category ID.
+	 * @throws DAOException If there's an issue with the database operation.
 	 */
 	public List<Integer> findDishIdByMenuIdAndCategoryId(int menu_id, int category_id) throws DAOException{
 		Connection con1 = null;
@@ -181,11 +186,12 @@ public class CategoryDishDAO {
 	
 	
 	/**
-	 * 
-	 * @param menu_id
-	 * @param category_id
-	 * @param dish_id
-	 * @throws DAOException
+	 * Creates a new entry in the 'category_dish' table.
+	 *
+	 * @param menu_id The ID of the menu.
+	 * @param category_id The ID of the category.
+	 * @param dish_id The ID of the dish.
+	 * @throws DAOException If there's an issue with the database operation.
 	 */
 	public void create(int menu_id, int category_id, int dish_id) throws DAOException {
 		
@@ -214,11 +220,12 @@ public class CategoryDishDAO {
 	}
 	
 	/**
-	 * 
-	 * @param menu_id
-	 * @param category_id
-	 * @param dish_id
-	 * @throws DAOException
+	 * Deletes an entry in the 'category_dish' table.
+	 *
+	 * @param menu_id The ID of the menu.
+	 * @param category_id The ID of the category.
+	 * @param dish_id The ID of the dish.
+	 * @throws DAOException If there's an issue with the database operation.
 	 */
 	public void delete(int menu_id, int category_id, int dish_id) throws DAOException {
 		
@@ -245,7 +252,14 @@ public class CategoryDishDAO {
 		}
 	}
 	
-	
+	/**
+	 * Changes the status of an entry in the 'category_dish' table to active.
+	 *
+	 * @param menu_id The ID of the menu.
+	 * @param category_id The ID of the category.
+	 * @param dish_id The ID of the dish.
+	 * @throws DAOException If there's an issue with the database operation.
+	 */
 	public void changeStatus(int menu_id, int category_id, int dish_id) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;

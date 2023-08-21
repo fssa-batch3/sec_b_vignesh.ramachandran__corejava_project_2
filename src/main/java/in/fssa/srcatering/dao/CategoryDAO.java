@@ -19,9 +19,9 @@ import in.fssa.srcatering.util.IntUtil;
 public class CategoryDAO {
 
 	/**
-	 * 
-	 * @return
-	 * @throws DAOException
+	 * This method retrieves a list of all categories from the database.
+	 * @return A list of Category objects representing the categories retrieved from the database.
+	 * @throws DAOException If there's an issue with the database operation.
 	 */
 	public List<Category> findAll() throws DAOException {
 
@@ -54,10 +54,11 @@ public class CategoryDAO {
 	}
 
 	/**
-	 * 
-	 * @param category_id
-	 * @return
-	 * @throws DAOException
+	 * Retrieves a Category object from the database based on the provided category ID.
+	 *
+	 * @param category_id The ID of the category to search for.
+	 * @return A Category object representing the category with the specified ID, or null if not found.
+	 * @throws DAOException If there's an issue with the database operation.
 	 */
 	public Category findById(int category_id) throws DAOException {
 
@@ -89,16 +90,17 @@ public class CategoryDAO {
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
-		System.out.println(newCategory);
+
 		return newCategory;
 
 	}
 	
 	
 	/**
-	 * 
-	 * @param category_id
-	 * @throws DAOException
+	 * Checks whether a category with the specified ID exists in the database.
+	 *
+	 * @param category_id The ID of the category to check.
+	 * @throws DAOException If there's an issue with the database operation or if the category ID is not found.
 	 */
 	public void isCategoryIdIsValid(int category_id)throws DAOException {
 		

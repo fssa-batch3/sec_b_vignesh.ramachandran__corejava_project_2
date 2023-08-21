@@ -12,12 +12,13 @@ import in.fssa.srcatering.util.ConnectionUtil;
 public class DishPriceDAO {
 	
 	/**
-	 * 
-	 * @param dish_id
-	 * @param price
-	 * @param dateTime
-	 * @throws DAOException
-	 */
+     * Creates a new dish price entry in the 'dish_price' table.
+     *
+     * @param dish_id The ID of the dish for which the price is being created.
+     * @param price The price of the dish.
+     * @param dateTime The start date and time of the price.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	public void create(int dish_id, int price, Timestamp dateTime) throws DAOException {
 		
 		Connection con = null;
@@ -44,11 +45,12 @@ public class DishPriceDAO {
 	}
 	
 	/**
-	 * 
-	 * @param price_id
-	 * @param dateTime
-	 * @throws DAOException
-	 */
+     * Updates the end date of a dish price entry in the 'dish_price' table.
+     *
+     * @param price_id The ID of the dish price entry to update.
+     * @param dateTime The end date and time of the price.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	public void update(int price_id, Timestamp dateTime) throws DAOException {
 		
 		Connection con = null;
@@ -78,11 +80,12 @@ public class DishPriceDAO {
 	}
 	
 	/**
-	 * 
-	 * @param dish_id
-	 * @return
-	 * @throws DAOException
-	 */
+     * Retrieves the active price of a dish based on the provided dish ID from the 'dish_price' table.
+     *
+     * @param dish_id The ID of the dish for which to retrieve the price.
+     * @return The active price of the dish.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	public int findPriceByDishId(int dish_id) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -112,11 +115,12 @@ public class DishPriceDAO {
 	}
 	
 	/**
-	 * 
-	 * @param dish_id
-	 * @return
-	 * @throws DAOException
-	 */
+     * Retrieves the ID of the active price entry for a dish based on the provided dish ID from the 'dish_price' table.
+     *
+     * @param dish_id The ID of the dish for which to retrieve the price entry ID.
+     * @return The ID of the active price entry for the dish.
+     * @throws DAOException If there's an issue with the database operation.
+     */
 	public int findPriceIdByDishId(int dish_id) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -145,10 +149,11 @@ public class DishPriceDAO {
 	}
 	
 	/**
-	 * 
-	 * @param dish_id
-	 * @throws DAOException
-	 */
+     * Checks whether a dish ID exists in the 'dish_price' table.
+     *
+     * @param dish_id The ID of the dish to check.
+     * @throws DAOException If there's an issue with the database operation or if the dish ID is not found.
+     */
 	public void iDishIdIsValid(int dish_id)throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -173,6 +178,4 @@ public class DishPriceDAO {
 		}
 	}
 	
-	
-
 }

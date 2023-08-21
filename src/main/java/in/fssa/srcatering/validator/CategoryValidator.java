@@ -8,10 +8,11 @@ import in.fssa.srcatering.util.IntUtil;
 public class CategoryValidator {
 
 	/**
-	 * 
-	 * @param category_id
-	 * @throws ValidationException
-	 */
+     * Validates if the provided category ID is valid.
+     *
+     * @param category_id The category ID to validate.
+     * @throws ValidationException If the category ID is invalid or not found.
+     */
 	public static void isCategoryIdIsValid(int category_id) throws ValidationException {
 
 		try {
