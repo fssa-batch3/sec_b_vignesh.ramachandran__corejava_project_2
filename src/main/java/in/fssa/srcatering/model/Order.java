@@ -12,14 +12,14 @@ public class Order extends OrderEntity {
 			LocalDateTime delivery_date, OrderStatus order_status){
 		
 		super.setId(id);
-		super.setMenu_id(menu_id);
-		super.setCategory_id(category_id);
-		super.setUser_id(user_id);
-		super.setNo_of_guest(no_of_guest);
-		super.setTotal_cost(total_cost);
-		super.setOrder_date(order_date);
-		super.setDelivery_date(delivery_date);
-		super.setOrder_status(order_status);
+		super.setMenuId(menu_id);
+		super.setCategoryId(category_id);
+		super.setUserId(user_id);
+		super.setNoOfGuest(no_of_guest);
+		super.setTotalCost(total_cost);
+		super.setOrderDate(order_date);
+		super.setDeliveryDate(delivery_date);
+		super.setOrderStatus(order_status);
 		
 	}
 }

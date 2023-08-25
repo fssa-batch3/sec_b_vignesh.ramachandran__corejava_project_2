@@ -17,28 +17,28 @@ public class TestDish {
 
 	@Test
 	public void testCreateDishWithValidInput() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Dish dish = new Dish();
 
-		dish.setMenu_id(1);
-		dish.setCategory_id(1);
-		dish.setDish_name(generateRandomDishName());
-		dish.setDish_price(30);
+		dish.setMenuId(1);
+		dish.setCategoryId(1);
+		dish.setDishName(generateRandomDishName());
+		dish.setDishPrice(30);
 		dish.setQuantity(2);
-		dish.setQuantity_unit(QuantityUnit.NOS);
+		dish.setQuantityUnit(QuantityUnit.NOS);
 
 		assertDoesNotThrow(() -> {
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 	}
 
 	@Test
 	public void testCreateDishWithNull() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			dishservice.create(null);
+			dishService.createDish(null);
 		});
 		String expectedMessage = "Invalid Dish Input";
 		String actualMessage = exception.getMessage();
@@ -48,24 +48,22 @@ public class TestDish {
 
 	@Test
 	public void testCreateDishWithDishNameNull() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setCategory_id(1);
-			dish.setMenu_id(1);
-			dish.setDish_name(null);
-			dish.setDish_price(10);
+			dish.setCategoryId(1);
+			dish.setMenuId(1);
+			dish.setDishName(null);
+			dish.setDishPrice(10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		String expectedMessage = "Dish Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
-		exception.printStackTrace();
-		System.out.println(actualMessage);
 
 		assertTrue(expectedMessage.equals(actualMessage));
 
@@ -73,19 +71,19 @@ public class TestDish {
 
 	@Test
 	public void testCreateDishWithDishNameEmpty() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setCategory_id(1);
-			dish.setMenu_id(1);
-			dish.setDish_name("");
-			dish.setDish_price(10);
+			dish.setCategoryId(1);
+			dish.setMenuId(1);
+			dish.setDishName("");
+			dish.setDishPrice(10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		String expectedMessage = "Dish Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -95,19 +93,19 @@ public class TestDish {
 
 	@Test
 	public void testCreateDishWithAlreadyExistsDishName() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setCategory_id(1);
-			dish.setMenu_id(1);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setCategoryId(1);
+			dish.setMenuId(1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		String expectedMessage = "Dish name already Exists";
 		String actualMessage = exception.getMessage();
@@ -117,20 +115,20 @@ public class TestDish {
 
 	@Test
 	public void testCreateDishWithMenuIdZero() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
 
-			dish.setMenu_id(0);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI UTTAPPAM");
-			dish.setDish_price(30);
+			dish.setMenuId(0);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI UTTAPPAM");
+			dish.setDishPrice(30);
 			dish.setQuantity(2);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -140,20 +138,20 @@ public class TestDish {
 
 	@Test
 	public void testCreateDishWithNegativeMenuId() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
 
-			dish.setMenu_id(-1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI UTTAPPAM");
-			dish.setDish_price(30);
+			dish.setMenuId(-1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI UTTAPPAM");
+			dish.setDishPrice(30);
 			dish.setQuantity(2);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -164,20 +162,20 @@ public class TestDish {
 	@Test
 	public void testCreateDishWithInvalidMenuId() {
 
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
 
-			dish.setMenu_id(10);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI UTTAPPAM");
-			dish.setDish_price(30);
+			dish.setMenuId(10);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI UTTAPPAM");
+			dish.setDishPrice(30);
 			dish.setQuantity(2);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		String expectedMessage = "MenuId not found";
 		String actualMessage = exception.getMessage();
@@ -189,20 +187,20 @@ public class TestDish {
 
 	@Test
 	public void testCreateDishWithCategoryIdZero() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
 
-			dish.setMenu_id(1);
-			dish.setCategory_id(0);
-			dish.setDish_name("MINI UTTAPPAM");
-			dish.setDish_price(30);
+			dish.setMenuId(1);
+			dish.setCategoryId(0);
+			dish.setDishName("MINI UTTAPPAM");
+			dish.setDishPrice(30);
 			dish.setQuantity(2);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -212,20 +210,20 @@ public class TestDish {
 
 	@Test
 	public void testCreateDishWithNegativeCategoryId() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
 
-			dish.setMenu_id(1);
-			dish.setCategory_id(-1);
-			dish.setDish_name("MINI UTTAPPAM");
-			dish.setDish_price(30);
+			dish.setMenuId(1);
+			dish.setCategoryId(-1);
+			dish.setDishName("MINI UTTAPPAM");
+			dish.setDishPrice(30);
 			dish.setQuantity(2);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -236,20 +234,20 @@ public class TestDish {
 	@Test
 	public void testCreateDishWithInvalidCategoryId() {
 
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
 
-			dish.setMenu_id(1);
-			dish.setCategory_id(10);
-			dish.setDish_name("MINI UTTAPPAM");
-			dish.setDish_price(30);
+			dish.setMenuId(1);
+			dish.setCategoryId(10);
+			dish.setDishName("MINI UTTAPPAM");
+			dish.setDishPrice(30);
 			dish.setQuantity(2);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		String expectedMessage = "CategoryId not found";
 		String actualMessage = exception.getMessage();
@@ -261,25 +259,24 @@ public class TestDish {
 	@Test
 	public void testCreateDishWithNegativeDishPrice() {
 
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(Exception.class, () -> {
 
 			Dish dish = new Dish();
 
-			dish.setMenu_id(1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI UTTAPPAM");
-			dish.setDish_price(-30);
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI UTTAPPAM");
+			dish.setDishPrice(-30);
 			dish.setQuantity(2);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		String expectedMessage = "Price cannot be less than zero";
 		String actualMessage = exception.getMessage();
-		System.out.println(actualMessage);
-		exception.printStackTrace();
+		
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
@@ -287,20 +284,20 @@ public class TestDish {
 	@Test
 	public void testCreateDishWithNegativeQuantity() {
 
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
 
-			dish.setMenu_id(1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI UTTAPPAM");
-			dish.setDish_price(30);
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI UTTAPPAM");
+			dish.setDishPrice(30);
 			dish.setQuantity(-2);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		String expectedMessage = "Quantity cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -312,20 +309,20 @@ public class TestDish {
 	@Test
 	public void testCreateDishWithQuantityZero() {
 
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
 
-			dish.setMenu_id(1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI UTTAPPAM");
-			dish.setDish_price(30);
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI UTTAPPAM");
+			dish.setDishPrice(30);
 			dish.setQuantity(0);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		String expectedMessage = "Quantity cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -335,19 +332,19 @@ public class TestDish {
 
 	@Test
 	public void testCreateDishWithWrongQuantityAndQuantityUnit() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Dish dish = new Dish();
 
-			dish.setMenu_id(1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI UTTAPPAM");
-			dish.setDish_price(30);
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI UTTAPPAM");
+			dish.setDishPrice(30);
 			dish.setQuantity(2);
-			dish.setQuantity_unit(QuantityUnit.GRAMS);
+			dish.setQuantityUnit(QuantityUnit.GRAMS);
 
-			dishservice.create(dish);
+			dishService.createDish(dish);
 		});
 		
 		String expectedMessage = "Check Quantity and QuantityUnit";
@@ -360,20 +357,20 @@ public class TestDish {
 	
 	@Test
 	public void testUpdatedDishWithNegativeQuantity() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			
 			Dish dish = new Dish();
-			dish.setMenu_id(1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(-1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(1);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		String expectedMessage = "Quantity cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -386,20 +383,20 @@ public class TestDish {
 	@Test
 	public void testUpdateDishWithQuantityZero() {
 
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenu_id(1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(0);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(1);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		String expectedMessage = "Quantity cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -410,20 +407,20 @@ public class TestDish {
 	
 	@Test
 	public void testUpdateDishWithWrongQuantityAndQuantityUnit() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			
 			Dish dish = new Dish();
-			dish.setMenu_id(1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(100);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(1);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		
 		String expectedMessage = "Check Quantity and QuantityUnit";
@@ -435,20 +432,20 @@ public class TestDish {
 	
 	@Test
 	public void testUpdateDishWithMenuIdZero() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenu_id(0);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setMenuId(0);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(1);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -460,20 +457,20 @@ public class TestDish {
 	
 	@Test
 	public void testUpdateDishWithNegativeMenuId() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenu_id(-1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setMenuId(-1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(1);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -484,20 +481,20 @@ public class TestDish {
 	@Test
 	public void testUpdateDishWithInvalidMenuId() {
 
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenu_id(10);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setMenuId(10);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(1);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		String expectedMessage = "MenuId not found";
 		String actualMessage = exception.getMessage();
@@ -509,20 +506,20 @@ public class TestDish {
 
 	@Test
 	public void testUpdateDishWithCategoryIdZero() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenu_id(1);
-			dish.setCategory_id(0);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setMenuId(1);
+			dish.setCategoryId(0);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(1);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -532,20 +529,20 @@ public class TestDish {
 
 	@Test
 	public void testUpdateDishWithNegativeCategoryId() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenu_id(1);
-			dish.setCategory_id(-1);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setMenuId(1);
+			dish.setCategoryId(-1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(1);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -556,20 +553,20 @@ public class TestDish {
 	@Test
 	public void testUpdateDishWithInvalidCategoryId() {
 
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenu_id(1);
-			dish.setCategory_id(10);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setMenuId(1);
+			dish.setCategoryId(10);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(1);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		String expectedMessage = "CategoryId not found";
 		String actualMessage = exception.getMessage();
@@ -581,20 +578,20 @@ public class TestDish {
 	
 	@Test
 	public void testUpdateDishWithNegativeDishPrice() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenu_id(1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(-10);
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(-10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(1);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		String expectedMessage = "Price cannot be less than zero";
 		String actualMessage = exception.getMessage();
@@ -607,20 +604,20 @@ public class TestDish {
 	
 	@Test
 	public void testUpdateDishWithDishIdZero() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenu_id(1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(0);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		String expectedMessage = "DishId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -632,20 +629,20 @@ public class TestDish {
 	
 	@Test
 	public void testUpdateDishWithNegativeDishId() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenu_id(1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(-1);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		String expectedMessage = "DishId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -657,20 +654,20 @@ public class TestDish {
 	
 	@Test
 	public void testUpdateDishWithInvalidDishId() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenu_id(1);
-			dish.setCategory_id(1);
-			dish.setDish_name("MINI LADDU");
-			dish.setDish_price(10);
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(10);
 			dish.setQuantity(1);
-			dish.setQuantity_unit(QuantityUnit.NOS);
+			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(100);
 
-			dishservice.update(dish);
+			dishService.updateDish(dish);
 		});
 		String expectedMessage = "Invalid DishId";
 		String actualMessage = exception.getMessage();
@@ -683,15 +680,15 @@ public class TestDish {
 	// delete
 	@Test
 	public void testDeleteDishWithValidDishId() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 		
 		assertDoesNotThrow(() -> {
-			dishservice.delete(1, 1, 4);
+			dishService.deleteDish(1, 1, 4);
 		});
 		
-		CategoryDishService categorydishservice = new CategoryDishService();
+		CategoryDishService categorydishService = new CategoryDishService();
 		try {
-			categorydishservice.changeStatus(1, 1, 4);
+			categorydishService.changeCategoryDishStatus(1, 1, 4);
 		} catch (ValidationException | ServiceException e) {
 			e.printStackTrace();
 		}
@@ -701,11 +698,11 @@ public class TestDish {
 	
 	@Test
 	public void testDeleteDishWithDishIdZero() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 		
 		Exception exception = assertThrows(ValidationException.class, ()-> {
 
-			dishservice.delete(1, 1, 0);
+			dishService.deleteDish(1, 1, 0);
 		});
 		String expectedMessage = "DishId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -716,11 +713,11 @@ public class TestDish {
 	
 	@Test
 	public void testDeleteDishWithNegativeDishId() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 		
 		Exception exception = assertThrows(ValidationException.class, ()-> {
 
-			dishservice.delete(1, 1, -2);
+			dishService.deleteDish(1, 1, -2);
 		});
 		String expectedMessage = "DishId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -731,11 +728,11 @@ public class TestDish {
 	
 	@Test
 	public void testDeleteDishWithInvalidDishId() {
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 		
 		Exception exception = assertThrows(ValidationException.class, ()-> {
 
-			dishservice.delete(1, 1, 100);
+			dishService.deleteDish(1, 1, 100);
 		});
 		String expectedMessage = "DishId not found";
 		String actualMessage = exception.getMessage();

@@ -13,20 +13,20 @@ public class TestMenu {
 	
 	@Test
 	public void testFindMenuByIdWithValidMenuId() {
-		MenuService menuservice = new MenuService();
+		MenuService menuService = new MenuService();
 		
 		assertDoesNotThrow(() -> {
-			menuservice.findById(1);
+			menuService.findByMenuId(1);
 		});
 	}
 	
 	
 	@Test
 	public void testFindMenuByIdWithMenuIdZero() {
-		MenuService menuservice = new MenuService();
+		MenuService menuService = new MenuService();
 		
 		Exception exception = assertThrows(ValidationException.class, () ->{
-			menuservice.findById(0);
+			menuService.findByMenuId(0);
 		});
 		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -37,10 +37,10 @@ public class TestMenu {
 
 	@Test
 	public void testFindMenuByIdWithNegativeMenuId() {
-		MenuService menuservice = new MenuService();
+		MenuService menuService = new MenuService();
 		
 		Exception exception = assertThrows(ValidationException.class, () ->{
-			menuservice.findById(-1);
+			menuService.findByMenuId(-1);
 		});
 		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -50,10 +50,10 @@ public class TestMenu {
 	
 	@Test
 	public void testFindMenuByIdWithInvalidMenuId() {
-		MenuService menuservice = new MenuService();
+		MenuService menuService = new MenuService();
 		
 		Exception exception = assertThrows(ValidationException.class, () ->{
-			menuservice.findById(5);
+			menuService.findByMenuId(5);
 		});
 		String expectedMessage = "MenuId not found";
 		String actualMessage = exception.getMessage();

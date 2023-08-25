@@ -8,36 +8,36 @@ import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.util.IntUtil;
 import in.fssa.srcatering.validator.DishPriceValidator;
-import in.fssa.srcatering.validator.DishValidator;
 
 public class DishPriceService {
 
-	CategoryDishService categorydishservice = new CategoryDishService();
-	DishService dishservice = new DishService();
-	DishPriceDAO dishpricedao = new DishPriceDAO();
+	CategoryDishService categoryDishService = new CategoryDishService();
+	DishService dishService = new DishService();
+	DishPriceDAO dishPriceDAO = new DishPriceDAO();
 
 	/**
      * Creates a new dish price entry.
      *
-     * @param dish_id The ID of the dish for which the price is being created.
+     * @param dishId The ID of the dish for which the price is being created.
      * @param price   The price of the dish.
      * @throws ValidationException If the provided parameters are not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public void create(int dish_id, int price) throws ValidationException, ServiceException {
+	public void createDishPrice(int dishId, int price) throws ValidationException, ServiceException {
 
 		try {
 			
 			LocalDateTime localDateTime = LocalDateTime.now();
 			java.sql.Timestamp dateTime = java.sql.Timestamp.valueOf(localDateTime);
 
-			dishservice.isDishIdIsValid(dish_id);
+			dishService.isDishIdIsValid(dishId);
 
 			IntUtil.priceCheck(price, "Price");
 
-			dishpricedao.create(dish_id, price,dateTime);
+			dishPriceDAO.create(dishId, price,dateTime);
 
 		} catch (DAOException e) {
+			e.printStackTrace();
 			throw new ServiceException("Invalid DishId");
 		}
 
@@ -46,34 +46,35 @@ public class DishPriceService {
 	/**
      * Updates the price of a dish.
      *
-     * @param dish_id     The ID of the dish for which the price is being updated.
-     * @param dish_price  The new price for the dish.
+     * @param dishId     The ID of the dish for which the price is being updated.
+     * @param dishPrice  The new price for the dish.
      * @throws ValidationException If the provided parameters are not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public void update(int dish_id, int dish_price) throws ValidationException, ServiceException {
+	public void updateDishPrice(int dishId, int dishPrice) throws ValidationException, ServiceException {
 		
 		try {
-			IntUtil.rejectIfInvalidInt(dish_id, "Dish Id");
-			IntUtil.priceCheck(dish_price, "Price");
+			IntUtil.rejectIfInvalidInt(dishId, "Dish Id");
+			IntUtil.priceCheck(dishPrice, "Price");
 
-			categorydishservice.isDishIdIsValid(dish_id);
-			DishPriceValidator.isDishIdIsValid(dish_id);
+			categoryDishService.isDishIdIsValid(dishId);
+			DishPriceValidator.isDishIdIsValid(dishId);
 			
-			int price = dishpricedao.findPriceByDishId(dish_id);
-			int price_id = dishpricedao.findPriceIdByDishId(dish_id);
+			int price = dishPriceDAO.findPriceByDishId(dishId);
+			int priceId = dishPriceDAO.findPriceIdByDishId(dishId);
 			
-			IntUtil.rejectIfInvalidInt(price_id, "PriceId");
+			IntUtil.rejectIfInvalidInt(priceId, "PriceId");
 
 			LocalDateTime localDateTime = LocalDateTime.now();
 			java.sql.Timestamp dateTime = java.sql.Timestamp.valueOf(localDateTime);
 			
-			if (price != dish_price) {
-				dishpricedao.update(price_id, dateTime);
-				dishpricedao.create(dish_id, dish_price, dateTime);
+			if (price != dishPrice) {
+				dishPriceDAO.update(priceId, dateTime);
+				dishPriceDAO.create(dishId, dishPrice, dateTime);
 			}
 			
 		} catch (DAOException e) {
+			e.printStackTrace();
 			throw new ServiceException("Invalid DishId");
 		}
 	}
@@ -81,16 +82,16 @@ public class DishPriceService {
 	/**
      * Retrieves the current price of a dish.
      *
-     * @param dish_id The ID of the dish for which the price is being retrieved.
+     * @param dishId The ID of the dish for which the price is being retrieved.
      * @return The current price of the dish.
      * @throws ValidationException If the provided dish ID is not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public int findPriceByDishId(int dish_id) throws ValidationException, ServiceException {
+	public int findPriceByDishId(int dishId) throws ValidationException, ServiceException {
 		int price = -1;
 		try {
-			IntUtil.rejectIfInvalidInt(dish_id, "DishId");
-			 price = dishpricedao.findPriceByDishId(dish_id);
+			IntUtil.rejectIfInvalidInt(dishId, "DishId");
+			 price = dishPriceDAO.findPriceByDishId(dishId);
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
@@ -101,12 +102,12 @@ public class DishPriceService {
 	/**
      * Validates if the provided dish ID is valid.
      *
-     * @param dish_id The dish ID to validate.
+     * @param dishId The dish ID to validate.
      * @throws ValidationException If the provided dish ID is not valid.
      */
-	public void isDishIdIsValid(int dish_id) throws ValidationException {
+	public void isDishIdIsValid(int dishId) throws ValidationException {
 
-		DishPriceValidator.isDishIdIsValid(dish_id);
+		DishPriceValidator.isDishIdIsValid(dishId);
 
 	}
 

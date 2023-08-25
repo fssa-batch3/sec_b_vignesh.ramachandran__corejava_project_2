@@ -33,7 +33,7 @@ public class IntUtil {
      */
 	public static void rejectIfInvalidInt(int input, String inputName) throws ValidationException {
 		if(input <=0) {
-//			throw new ValidationException("Invalid ".concat(inputName));
+
 			throw new ValidationException(inputName +" cannot be less than or equal to zero");
 		}
 	}
@@ -58,7 +58,7 @@ public class IntUtil {
      * @param inputName The name of the input field for error messaging.
      * @throws ValidationException If the quantity value exceeds the limit.
      */
-	public void QuantityCheck(int input, String inputName) throws ValidationException {
+	public static void quantityCheck(int input, String inputName) throws ValidationException {
 		if(input > 500) {
 			throw new ValidationException("Quantity doesn't above 500");
 		}

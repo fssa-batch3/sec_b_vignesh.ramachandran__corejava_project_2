@@ -1,4 +1,4 @@
-package in.fssa.srcatering.interfacee;
+package in.fssa.srcatering.interfaces;
 
 import java.util.List;
 

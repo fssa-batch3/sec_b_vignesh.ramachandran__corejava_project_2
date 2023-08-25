@@ -8,9 +8,9 @@ public class OrderProduct extends OrderProductEntity {
 	
 	public OrderProduct(int id, int menu_id, int category_id, int dish_id, int price) {
 		super.setId(id);
-		super.setMenu_id(menu_id);
-		super.setCategory_id(category_id);
-		super.setDish_id(dish_id);
+		super.setMenuId(menu_id);
+		super.setCategoryId(category_id);
+		super.setDishId(dish_id);
 		super.setPrice(price);
 	}
 	

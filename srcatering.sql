@@ -19,6 +19,8 @@ VALUES ("Vignesh", "vignesh@gmail.com", 6379370482, "Vig@1234"),
 -- findall users
 SELECT * FROM users;
 
+SELECT id FROM users WHERE status = 1 && id =1;
+
 
 
 
@@ -53,6 +55,8 @@ VALUES("Ordinary"),
 ("VIP");
 
 SELECT * FROM categories;
+
+-- SELECT menu_id FROM category_dish WHERE menu_id=1 AND status = 1; 
 
 CREATE TABLE IF NOT EXISTS dishes (
   id INT AUTO_INCREMENT PRIMARY KEY,

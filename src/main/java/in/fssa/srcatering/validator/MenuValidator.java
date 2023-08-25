@@ -10,18 +10,18 @@ public class MenuValidator {
 	/**
 	 * Validates whether the provided Menu ID is valid.
 	 *
-	 * @param menu_id The Menu ID to validate.
+	 * @param menuId The Menu ID to validate.
 	 * @throws ValidationException If the Menu ID is invalid or not found.
 	 */
-	public static void isMenuIdIsValid(int menu_id) throws ValidationException {
+	public static void isMenuIdIsValid(int menuId) throws ValidationException {
 
 		try {
 
-			MenuDAO menudao = new MenuDAO();
+			MenuDAO menuDAO = new MenuDAO();
 
-			IntUtil.rejectIfInvalidInt(menu_id, "MenuId");
+			IntUtil.rejectIfInvalidInt(menuId, "MenuId");
 
-			menudao.IsMenuIdIsValid(menu_id);
+			menuDAO.isMenuIdIsValid(menuId);
 
 		} catch (DAOException e) {
 			throw new ValidationException("MenuId not found");

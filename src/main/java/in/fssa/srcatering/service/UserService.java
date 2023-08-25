@@ -14,7 +14,7 @@ import in.fssa.srcatering.validator.UserValidator;
 
 public class UserService {
 
-	UserDAO userdao = new UserDAO();
+	UserDAO userDAO = new UserDAO();
 
 	/**
      * Retrieves a list of all users.
@@ -22,18 +22,18 @@ public class UserService {
      * @return A list of all users.
      * @throws ServiceException If there's an issue with the service operation.
      */
-	public List<User> getAll() throws ServiceException {
+	public List<User> getAllUsers() throws ServiceException {
 
 		List<User> userList;
 		try {
-			userList = userdao.findAll();
+			userList = userDAO.findAll();
 			Iterator<User> iterator = userList.iterator();
 
 			while (iterator.hasNext()) {
 				System.out.println(iterator.next());
 			}
 
-			return userdao.findAll();
+			return userDAO.findAll();
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw new ServiceException("Failed to Getall User");
@@ -48,18 +48,18 @@ public class UserService {
      * @throws ValidationException If the provided user data is not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public void create(User newUser) throws ValidationException, ServiceException {
+	public void createUser(User newUser) throws ValidationException, ServiceException {
 
 		try {
 			UserValidator.validate(newUser);
 			UserValidator.isEmailAlreadyExists(newUser.getEmail());
-			userdao.create(newUser);
+			userDAO.create(newUser);
 		} catch (DAOException e) {
 			if(e.getMessage().contains("Email already exists")) {
-				e.printStackTrace();
+				
 				throw new ServiceException("Failed to Create User EmailId already exists");
 			}else {
-				e.printStackTrace();
+				
 				throw new ServiceException("Failed to Create User");
 			}
 		}
@@ -74,13 +74,13 @@ public class UserService {
      * @throws ValidationException If the provided user data or ID is not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public void update(int id, User newUser) throws ValidationException, ServiceException {
+	public void updateUser(int id, User newUser) throws ValidationException, ServiceException {
 
 		try {
 			UserValidator.validate(newUser);
 			UserValidator.isUserIdIsValid(id);
 
-			userdao.update(id, newUser);
+			userDAO.update(id, newUser);
 
 		} catch (DAOException e) {
 			e.printStackTrace();
@@ -96,12 +96,12 @@ public class UserService {
      * @throws ValidationException If the provided user ID is not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public void delete(int id) throws ValidationException, ServiceException {
+	public void deleteUser(int id) throws ValidationException, ServiceException {
 
 		try {
 			UserValidator.isUserIdIsValid(id);
 
-			userdao.delete(id);
+			userDAO.delete(id);
 
 		} catch (DAOException e) {
 			e.printStackTrace();
@@ -117,17 +117,21 @@ public class UserService {
      * @throws ValidationException If the provided user ID is not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public User findById(int id) throws ValidationException, ServiceException {
+	public User findByUserId(int id) throws ValidationException, ServiceException {
 
+		User user = null;
 		try {
+			user = new User();
 			UserValidator.isUserIdIsValid(id);
 
-			return userdao.findById(id);
+			user = userDAO.findById(id);
 
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw new ServiceException("Failed to findById");
 		}
+		System.out.println(user);
+		return user;
 	}
 
 	/**
@@ -140,16 +144,20 @@ public class UserService {
      */
 	public User findByEmail(String email) throws ValidationException, ServiceException {
 
+		User user = null;
 		try {
+			user = new User();
 
 			StringUtil.rejectIfInvalidString(email, "Email");
 
-			return userdao.findByEmail(email);
+			user = userDAO.findByEmail(email);
 
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw new ServiceException("Failed to findById");
 		}
+		System.out.println(user);
+		return user;
 	}
 	
 	 /**
@@ -159,12 +167,12 @@ public class UserService {
      * @throws ValidationException If the provided user ID is not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public void changeStatus(int id) throws ValidationException, ServiceException {
+	public void changeUserStatus(int id) throws ValidationException, ServiceException {
 		
 		
 		try {
 			IntUtil.rejectIfInvalidInt(id, "UserId");
-			userdao.changeStatus(id);
+			userDAO.changeStatus(id);
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());

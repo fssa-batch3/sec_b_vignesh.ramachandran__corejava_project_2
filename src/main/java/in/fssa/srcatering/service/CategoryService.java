@@ -3,8 +3,6 @@ package in.fssa.srcatering.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-
 import in.fssa.srcatering.dao.CategoryDAO;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
@@ -15,7 +13,7 @@ import in.fssa.srcatering.validator.CategoryValidator;
 
 public class CategoryService {
 
-	CategoryDAO categorydao = new CategoryDAO();
+	CategoryDAO categoryDAO = new CategoryDAO();
 
 	/**
      * Retrieves a list of all categories.
@@ -23,13 +21,13 @@ public class CategoryService {
      * @return A list of all categories.
      * @throws ServiceException If there's an issue with the service operation.
      */
-	public List<Category> getAll() throws ServiceException {
+	public List<Category> getAllCategories() throws ServiceException {
 		
 		List<Category> categoryList = new ArrayList<Category>();
 		
 		try {
 			
-			categoryList = categorydao.findAll();
+			categoryList = categoryDAO.findAll();
 
 			Iterator<Category> iterator = categoryList.iterator();
 
@@ -38,6 +36,7 @@ public class CategoryService {
 			}
 			
 		} catch (DAOException e) {
+			e.printStackTrace();
 			throw new ServiceException("Failed to GetAll Category");
 		}
 		return categoryList;
@@ -51,7 +50,7 @@ public class CategoryService {
      * @throws ValidationException If the provided category ID is not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public Category findById(int category_id) throws ValidationException, ServiceException {
+	public Category findByIdCategoryId(int category_id) throws ValidationException, ServiceException {
 		
 		Category category = null;
 		
@@ -60,9 +59,10 @@ public class CategoryService {
 			IntUtil.rejectIfInvalidInt(category_id, "CategoryId");
 			this.isCategoryIdIsValid(category_id);
 			
-			category =  categorydao.findById(category_id);
+			category =  categoryDAO.findById(category_id);
 			
 		} catch (DAOException e) {
+			e.printStackTrace();
 			throw new ServiceException("Failed to Get Category");
 		}
 		return category;
@@ -71,12 +71,12 @@ public class CategoryService {
 	/**
      * Validates if the provided category ID is valid.
      *
-     * @param category_id The category ID to validate.
+     * @param categoryId The category ID to validate.
      * @throws ValidationException If the provided category ID is not valid.
      */
-	public void isCategoryIdIsValid(int category_id) throws ValidationException {
+	public void isCategoryIdIsValid(int categoryId) throws ValidationException {
 		
-		CategoryValidator.isCategoryIdIsValid(category_id);
+		CategoryValidator.isCategoryIdIsValid(categoryId);
 	}
 
 }

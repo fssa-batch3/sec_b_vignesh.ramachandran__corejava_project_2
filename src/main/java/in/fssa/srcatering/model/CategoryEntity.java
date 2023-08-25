@@ -1,26 +1,28 @@
 package in.fssa.srcatering.model;
 
 public abstract class CategoryEntity implements Comparable<CategoryEntity> {
-	
 
 	private int id;
-	private String category_name;
-	
+	private String categoryName;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getCategory_name() {
-		return category_name;
+
+	public String getCategoryName() {
+		return categoryName;
 	}
-	public void setCategory_name(String category_name) {
-		this.category_name = category_name;
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "CategoryEntity [id=" + id + ", category_name=" + category_name + "]";
+		return "CategoryEntity [id=" + id + ", category_name=" + categoryName + "]";
 	}
 }

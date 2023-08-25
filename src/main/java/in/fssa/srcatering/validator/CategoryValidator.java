@@ -10,16 +10,16 @@ public class CategoryValidator {
 	/**
      * Validates if the provided category ID is valid.
      *
-     * @param category_id The category ID to validate.
+     * @param categoryId The category ID to validate.
      * @throws ValidationException If the category ID is invalid or not found.
      */
-	public static void isCategoryIdIsValid(int category_id) throws ValidationException {
+	public static void isCategoryIdIsValid(int categoryId) throws ValidationException {
 
 		try {
-			CategoryDAO categorydao = new CategoryDAO();
+			CategoryDAO categoryDAO = new CategoryDAO();
 
-			IntUtil.rejectIfInvalidInt(category_id, "CategoryId");
-			categorydao.isCategoryIdIsValid(category_id);
+			IntUtil.rejectIfInvalidInt(categoryId, "CategoryId");
+			categoryDAO.isCategoryIdIsValid(categoryId);
 
 		} catch (DAOException e) {
 			throw new ValidationException("CategoryId not found");

@@ -1,4 +1,4 @@
-package in.fssa.srcatering.interfacee;
+package in.fssa.srcatering.interfaces;
 
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.model.User;

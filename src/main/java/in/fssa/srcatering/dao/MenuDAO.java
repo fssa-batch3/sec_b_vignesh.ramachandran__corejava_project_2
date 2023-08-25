@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.fssa.srcatering.exception.DAOException;
-import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Menu;
 import in.fssa.srcatering.util.ConnectionUtil;
 
@@ -26,10 +25,10 @@ public class MenuDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		List<Menu> menuList = new ArrayList<Menu>();
+		List<Menu> menuList = new ArrayList<>();
 
 		try {
-			String query = "SELECT * FROM menus";
+			String query = "SELECT id, menu_name, description FROM menus";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -37,7 +36,7 @@ public class MenuDAO {
 			while (rs.next()) {
 				Menu menu = new Menu();
 				menu.setId(rs.getInt("id"));
-				menu.setMenu_name(rs.getString("menu_name"));
+				menu.setMenuName(rs.getString("menu_name"));
 				menu.setDescription(rs.getString("description"));
 				menuList.add(menu);
 			}
@@ -54,11 +53,11 @@ public class MenuDAO {
 	/**
      * Retrieves a menu based on the provided menu ID from the 'menus' table.
      *
-     * @param menu_id The ID of the menu to retrieve.
+     * @param menuId The ID of the menu to retrieve.
      * @return The Menu object with the specified menu ID.
      * @throws DAOException If there's an issue with the database operation.
      */
-	public Menu findById(int menu_id) throws DAOException {
+	public Menu findById(int menuId) throws DAOException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -68,18 +67,19 @@ public class MenuDAO {
 
 		try {
 
-			String query = "SELECT * FROM menus WHERE id =?";
+			String query = "SELECT id, menu_name, description FROM menus WHERE id =?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
-			ps.setInt(1, menu_id);
+			ps.setInt(1, menuId);
 
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
 				newMenu = new Menu();
 				newMenu.setId(rs.getInt("id"));
-				newMenu.setMenu_name(rs.getString("menu_name"));
+				newMenu.setMenuName(rs.getString("menu_name"));
+				newMenu.setDescription(rs.getString("description"));
 			}
 
 		} catch (SQLException e) {
@@ -95,21 +95,21 @@ public class MenuDAO {
 	/**
      * Checks whether a menu ID exists in the 'menus' table.
      *
-     * @param menu_id The ID of the menu to check.
+     * @param menuId The ID of the menu to check.
      * @throws DAOException If there's an issue with the database operation or if the menu ID is not found.
      */
-	public static void IsMenuIdIsValid(int menu_id) throws DAOException {
+	public static void isMenuIdIsValid(int menuId) throws DAOException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT * FROM menus WHERE id =? ";
+			String query = "SELECT id FROM menus WHERE id =? ";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
-			ps.setInt(1, menu_id);
+			ps.setInt(1, menuId);
 			rs = ps.executeQuery();
 
 			if (!rs.next()) {

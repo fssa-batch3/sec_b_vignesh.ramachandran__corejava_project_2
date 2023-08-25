@@ -17,18 +17,27 @@ public class App {
 
 	public static void main(String[] args) {
 		
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
+		try {
+			userService.findByUserId(1);
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		MenuService menuservice = new MenuService();
+		MenuService menuService = new MenuService();
 
 		
-		CategoryService categoryservice = new CategoryService();
+		CategoryService categoryService = new CategoryService();
 
 
-		DishService dishservice = new DishService();
+		DishService dishService = new DishService();
 		
 
-		CategoryDishService categorydishservice = new CategoryDishService();
+		CategoryDishService categoryDishService = new CategoryDishService();
 
 		
 

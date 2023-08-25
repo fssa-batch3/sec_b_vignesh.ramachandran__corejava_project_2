@@ -15,26 +15,26 @@ public class TestUser {
 
 	@Test
 	public void testCreateUserWithValidInput() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		// user object
 		User user = new User();
 		user.setName("Varun");
 		user.setEmail(generateRandomEmail());
 		user.setPassword("Var@1234");
-		user.setPhone_number(9876545678L);
+		user.setPhoneNumber(9876545678L);
 
 		assertDoesNotThrow(() -> {
-			userservice.create(user);
+			userService.createUser(user);
 		});
 	}
 
 	@Test
 	public void testCreateUserWithInvalidInput() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			userservice.create(null);
+			userService.createUser(null);
 		});
 		String expectedMessage = "Invalid user Input";
 		String actualMessage = exception.getMessage();
@@ -44,7 +44,7 @@ public class TestUser {
 
 	@Test
 	public void testCreateUserWithExistingEmail() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -52,10 +52,10 @@ public class TestUser {
 
 			newUser.setName("Vignesh");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("Vig@1234");
 
-			userservice.create(newUser);
+			userService.createUser(newUser);
 		});
 		String expectedMessage = "Email already exists";
 		String actualMessage = exception.getMessage();
@@ -65,7 +65,7 @@ public class TestUser {
 
 	@Test
 	public void testCreateUserWithEmailNull() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -73,22 +73,22 @@ public class TestUser {
 
 			newUser.setName("Vignesh");
 			newUser.setEmail(null);
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("Vig@1234");
 			
-			userservice.create(newUser);
+			userService.createUser(newUser);
 
 		});
 
 		String expectedMessage = "Email cannot be null or empty";
 		String actualMessage = exception.getMessage();
-		exception.printStackTrace();
+		
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 
 	@Test
 	public void testCreateUserWithEmailEmpty() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -96,10 +96,10 @@ public class TestUser {
 
 			newUser.setName("Vignesh");
 			newUser.setEmail("");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("Vig@1234");
 
-			userservice.create(newUser);
+			userService.createUser(newUser);
 
 		});
 
@@ -112,7 +112,7 @@ public class TestUser {
 	// password test case
 	@Test
 	public void testCreateUserWithPasswordNull() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			// user 1
@@ -120,10 +120,10 @@ public class TestUser {
 
 			newUser.setName("Vignesh");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword(null);
 
-			userservice.create(newUser);
+			userService.createUser(newUser);
 		});
 		String expectedMessage = "Password cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -132,7 +132,7 @@ public class TestUser {
 
 	@Test
 	public void testCreateUserWithPasswordEmpty() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			// user 1
@@ -140,10 +140,10 @@ public class TestUser {
 
 			newUser.setName("Vignesh");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("");
 
-			userservice.create(newUser);
+			userService.createUser(newUser);
 		});
 		String expectedMessage = "Password cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -153,7 +153,7 @@ public class TestUser {
 	
 	@Test
 	public void testCreateUserWithWrongPasswordPattern() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			// user 1
@@ -161,10 +161,10 @@ public class TestUser {
 
 			newUser.setName("Vignesh");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("fghjk34567");
 
-			userservice.create(newUser);
+			userService.createUser(newUser);
 		});
 		String expectedMessage = "Password doesn't matches with pattern. Password atleast contain one Uppercase,"
 				+ "one Lowercase,one Special character,one number";
@@ -177,7 +177,7 @@ public class TestUser {
 
 	@Test
 	public void testCreateUserWithInvalidPhoneNumber() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -185,10 +185,10 @@ public class TestUser {
 
 			newUser.setName("Vignesh");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(1237649873L);
+			newUser.setPhoneNumber(1237649873L);
 			newUser.setPassword("Vig@1234");
 
-			userservice.create(newUser);
+			userService.createUser(newUser);
 		});
 
 		String expectedMessage = "Invalid phone number";
@@ -199,7 +199,7 @@ public class TestUser {
 	// name test case
 	@Test
 	public void testCreateUserWithNameNull() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			// user 1
@@ -207,10 +207,10 @@ public class TestUser {
 
 			newUser.setName(null);
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("Vig@1234");
 
-			userservice.create(newUser);
+			userService.createUser(newUser);
 		});
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -219,7 +219,7 @@ public class TestUser {
 
 	@Test
 	public void testCreateUserWithNameEmpty() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			// user 1
@@ -227,10 +227,10 @@ public class TestUser {
 
 			newUser.setName("");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("Vig@1234");
 
-			userservice.create(newUser);
+			userService.createUser(newUser);
 		});
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -240,7 +240,7 @@ public class TestUser {
 	
 	@Test
 	public void testCreateUserWithInvalidName() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			// user 1
@@ -248,10 +248,10 @@ public class TestUser {
 
 			newUser.setName("12345sdfg");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("Vig@1234");
 
-			userservice.create(newUser);
+			userService.createUser(newUser);
 		});
 		String expectedMessage = "UserName should contain only alphabetic characters";
 		String actualMessage = exception.getMessage();
@@ -262,23 +262,23 @@ public class TestUser {
 	// update
 	@Test
 	public void testUpdateUserWithValidInputAndId() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		// user object
 		User user = new User();
 		user.setName("Vignesh");
 		user.setEmail("vignesh@gmail.com");
 		user.setPassword("Var@1234");
-		user.setPhone_number(9876545678L);
+		user.setPhoneNumber(9876545678L);
 
 		assertDoesNotThrow(() -> {
-			userservice.update(1, user);
+			userService.updateUser(1, user);
 		});
 	}
 	
 	@Test
 	public void testUpdateUserWithNameNull() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			// user 1
@@ -286,10 +286,10 @@ public class TestUser {
 
 			newUser.setName(null);
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("Vig@1234");
 
-			userservice.update(1, newUser);
+			userService.updateUser(1, newUser);
 		});
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -299,7 +299,7 @@ public class TestUser {
 	
 	@Test
 	public void testUpdateUserWithNameEmpty() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			// user 1
@@ -307,10 +307,10 @@ public class TestUser {
 
 			newUser.setName("");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("Vig@1234");
 
-			userservice.update(1, newUser);
+			userService.updateUser(1, newUser);
 		});
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -320,7 +320,7 @@ public class TestUser {
 	
 	@Test
 	public void testUpdateUserWithInvalidName() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			// user 1
@@ -328,10 +328,10 @@ public class TestUser {
 
 			newUser.setName("12sdf123");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("Vig@1234");
 
-			userservice.update(1, newUser);
+			userService.updateUser(1, newUser);
 		});
 		String expectedMessage = "UserName should contain only alphabetic characters";
 		String actualMessage = exception.getMessage();
@@ -340,7 +340,7 @@ public class TestUser {
 	
 	@Test
 	public void testUpdateUserWithPasswordNull() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			// user 1
@@ -348,10 +348,10 @@ public class TestUser {
 
 			newUser.setName("Vignesh");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword(null);
 
-			userservice.update(1,newUser);
+			userService.updateUser(1,newUser);
 		});
 		String expectedMessage = "Password cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -361,7 +361,7 @@ public class TestUser {
 	
 	@Test
 	public void testUpdateUserWithPasswordEmpty() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			// user 1
@@ -369,10 +369,10 @@ public class TestUser {
 
 			newUser.setName("Vignesh");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("");
 
-			userservice.update(1,newUser);
+			userService.updateUser(1,newUser);
 		});
 		String expectedMessage = "Password cannot be null or empty";
 		String actualMessage = exception.getMessage();
@@ -382,7 +382,7 @@ public class TestUser {
 	
 	@Test
 	public void testUpdateUserWithWrongPasswordPattern() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			// user 1
@@ -390,10 +390,10 @@ public class TestUser {
 
 			newUser.setName("Vignesh");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("kljdbfka12");
 
-			userservice.update(1,newUser);
+			userService.updateUser(1,newUser);
 		});
 		String expectedMessage = "Password doesn't matches with pattern. Password atleast contain one Uppercase,"
 				+ "one Lowercase,one Special character,one number";
@@ -404,7 +404,7 @@ public class TestUser {
 
 	@Test
 	public void testUpdateUserWithIdZero() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -412,10 +412,10 @@ public class TestUser {
 
 			newUser.setName("Vignesh");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("Vig@1234");
 
-			userservice.update(0, newUser);
+			userService.updateUser(0, newUser);
 		});
 
 		String expectedMessage = "UserId cannot be less than or equal to zero";
@@ -426,7 +426,7 @@ public class TestUser {
 
 	@Test
 	public void testUpdateUserWithInvalidId() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
@@ -434,10 +434,10 @@ public class TestUser {
 
 			newUser.setName("Vignesh");
 			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhone_number(9876545678L);
+			newUser.setPhoneNumber(9876545678L);
 			newUser.setPassword("Vig@1234");
 
-			userservice.update(100, newUser);
+			userService.updateUser(100, newUser);
 		});
 
 		String expectedMessage = "Invalid UserId";
@@ -447,14 +447,14 @@ public class TestUser {
 
 	@Test
 	public void testDeleteUserWithValidId() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		assertDoesNotThrow(() -> {
-			userservice.delete(3);
+			userService.deleteUser(3);
 		});
 		
 		try {
-			userservice.changeStatus(3);
+			userService.changeUserStatus(3);
 		} catch (ValidationException | ServiceException e) {
 			e.printStackTrace();
 		}
@@ -462,10 +462,10 @@ public class TestUser {
 
 	@Test
 	public void testDeleteUserWithIdZero() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			userservice.delete(0);
+			userService.deleteUser(0);
 		});
 		String expectedMessage = "UserId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -474,13 +474,14 @@ public class TestUser {
 
 	@Test
 	public void testDeleteUserWithInvalidId() {
-		UserService userservice = new UserService();
+		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			userservice.delete(100);
+			userService.deleteUser(100);
 		});
 		String expectedMessage = "Invalid UserId";
 		String actualMessage = exception.getMessage();
+		
 		assertTrue(expectedMessage.equals(actualMessage));
 	}
 	

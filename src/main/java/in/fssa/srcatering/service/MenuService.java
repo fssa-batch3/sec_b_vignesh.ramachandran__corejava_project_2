@@ -9,12 +9,11 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Menu;
-import in.fssa.srcatering.util.IntUtil;
 import in.fssa.srcatering.validator.MenuValidator;
 
 public class MenuService {
 
-	MenuDAO menudao = new MenuDAO();
+	MenuDAO menuDAO = new MenuDAO();
 
 	/**
      * Retrieves a list of all menus.
@@ -22,12 +21,12 @@ public class MenuService {
      * @return A list of all menus.
      * @throws ServiceException If there's an issue with the service operation.
      */
-	public List<Menu> getAll() throws ServiceException {
+	public List<Menu> getAllMenus() throws ServiceException {
 
-		List<Menu> menuList = new ArrayList<Menu>();
+		List<Menu> menuList = new ArrayList<>();
 		try {
 
-			menuList = menudao.findAll();
+			menuList = menuDAO.findAll();
 
 			Iterator<Menu> iterator = menuList.iterator();
 
@@ -45,21 +44,21 @@ public class MenuService {
 	/**
      * Finds a menu by its ID.
      *
-     * @param menu_id The menu ID to search for.
+     * @param menuId The menu ID to search for.
      * @return The menu object.
      * @throws ValidationException If the provided menu ID is not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public Menu findById(int menu_id) throws ValidationException, ServiceException {
+	public Menu findByMenuId(int menuId) throws ValidationException, ServiceException {
 
 		Menu menu = null;
 		try {
 
-			MenuValidator.isMenuIdIsValid(menu_id);
+			MenuValidator.isMenuIdIsValid(menuId);
 
-			System.out.println(menudao.findById(menu_id));
+			System.out.println(menuDAO.findById(menuId));
 
-			menu = menudao.findById(menu_id);
+			menu = menuDAO.findById(menuId);
 
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage());
@@ -72,12 +71,12 @@ public class MenuService {
 	/**
      * Validates if the provided menu ID is valid.
      *
-     * @param menu_id The menu ID to validate.
+     * @param menuId The menu ID to validate.
      * @throws ValidationException If the provided menu ID is not valid.
      */
-	public void isMenuIdIsValid(int menu_id) throws ValidationException {
+	public void isMenuIdIsValid(int menuId) throws ValidationException {
 
-		MenuValidator.isMenuIdIsValid(menu_id);
+		MenuValidator.isMenuIdIsValid(menuId);
 	}
 
 }

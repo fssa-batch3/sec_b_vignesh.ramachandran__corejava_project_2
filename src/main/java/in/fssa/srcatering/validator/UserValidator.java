@@ -26,7 +26,7 @@ public class UserValidator {
 		StringUtil.rejectIfInvalidString(newUser.getPassword(), "Password");
 		
 		StringUtil.rejectIfInvalidName(newUser.getName(), "UserName");
-		IntUtil.rejectIfInvalidPhoneNumber(newUser.getPhone_number());
+		IntUtil.rejectIfInvalidPhoneNumber(newUser.getPhoneNumber());
 		StringUtil.rejectIfInvalidEmail(newUser.getEmail());
 		StringUtil.rejectIfIvalidPassword(newUser.getPassword());
 	}
@@ -44,8 +44,8 @@ public class UserValidator {
 			StringUtil.rejectIfInvalidString(email, "Email");
 			StringUtil.rejectIfInvalidEmail(email);
 			
-			UserDAO userdao = new UserDAO();
-			userdao.isEmailAlreadyExists(email);
+			UserDAO userDAO = new UserDAO();
+			userDAO.isEmailAlreadyExists(email);
 			
 		} catch (DAOException e) {
 			throw new ValidationException("Email already exists");
@@ -63,8 +63,8 @@ public class UserValidator {
 		
 		try {
 			IntUtil.rejectIfInvalidInt(id, "UserId");
-			UserDAO userdao = new UserDAO();
-			userdao.isIdAlreadyExists(id);
+			UserDAO userDAO = new UserDAO();
+			userDAO.isIdAlreadyExists(id);
 			
 		} catch (DAOException e) {
 			throw new ValidationException("Invalid UserId");

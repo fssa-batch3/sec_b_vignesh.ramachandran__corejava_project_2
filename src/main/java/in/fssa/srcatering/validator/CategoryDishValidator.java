@@ -11,59 +11,43 @@ import in.fssa.srcatering.util.IntUtil;
 public class CategoryDishValidator {
 
 	/**
-     * Validates menu, category, and dish IDs.
-     *
-     * @param menu_id     The menu ID to validate.
-     * @param category_id The category ID to validate.
-     * @param dish_id     The dish ID to validate.
-     * @throws ValidationException If any of the IDs are invalid.
-     */
-	public static void Validate(int menu_id, int category_id, int dish_id) throws ValidationException {
+	 * Validates menu, category, and dish IDs.
+	 *
+	 * @param menuId     The menu ID to validate.
+	 * @param categoryId The category ID to validate.
+	 * @param dishId     The dish ID to validate.
+	 * @throws ValidationException If any of the IDs are invalid.
+	 */
+	public static void validate(int menuId, int categoryId, int dishId) throws ValidationException {
 
-//		try {
+		IntUtil.rejectIfInvalidInt(menuId, "MenuId");
+		IntUtil.rejectIfInvalidInt(categoryId, "CategoryId");
+		IntUtil.rejectIfInvalidInt(dishId, "DishId");
 
-			IntUtil.rejectIfInvalidInt(menu_id, "MenuId");
-			IntUtil.rejectIfInvalidInt(category_id, "CategoryId");
-			IntUtil.rejectIfInvalidInt(dish_id, "DishId");
+		MenuService menuService = new MenuService();
+		menuService.isMenuIdIsValid(menuId);
 
-			MenuService menuservice = new MenuService();
-			menuservice.isMenuIdIsValid(menu_id);
+		CategoryService categoryService = new CategoryService();
+		categoryService.isCategoryIdIsValid(categoryId);
 
-			CategoryService categoryservice = new CategoryService();
-			categoryservice.isCategoryIdIsValid(category_id);
-
-			DishService dishservice = new DishService();
-			dishservice.isDishIdIsValid(dish_id);
-
-//		} catch (DAOException e) {
-//			if (e.getMessage().contains("Invaid MenuId")) {
-//				throw new ValidationException("Invalid MenuId");
-//			}
-//
-//			else if (e.getMessage().contains("Invalid CategoryId")) {
-//				throw new ValidationException("Invalid CategoryId");
-//			}
-//
-//			else if (e.getMessage().contains("Invalid DishId")) {
-//				throw new ValidationException("Invalid DishId");
-//			}
-//		}
+		DishService dishService = new DishService();
+		dishService.isDishIdIsValid(dishId);
 
 	}
 
 	/**
-     * Validates if the provided menu ID is valid.
-     *
-     * @param menu_id The menu ID to validate.
-     * @throws ValidationException If the menu ID is invalid.
-     */
-	public static void isMenuIdIsValid(int menu_id) throws ValidationException {
+	 * Validates if the provided menu ID is valid.
+	 *
+	 * @param menuId The menu ID to validate.
+	 * @throws ValidationException If the menu ID is invalid.
+	 */
+	public static void isMenuIdIsValid(int menuId) throws ValidationException {
 
 		try {
-			CategoryDishDAO categorydishdao = new CategoryDishDAO();
+			CategoryDishDAO categoryDishDAO = new CategoryDishDAO();
 
-			IntUtil.rejectIfInvalidInt(menu_id, "MenuId");
-			categorydishdao.isMenuIdIsValid(menu_id);
+			IntUtil.rejectIfInvalidInt(menuId, "MenuId");
+			categoryDishDAO.isMenuIdIsValid(menuId);
 
 		} catch (DAOException e) {
 			throw new ValidationException("Invalid MenuId");
@@ -72,20 +56,21 @@ public class CategoryDishValidator {
 	}
 
 	/**
-     * Validates if the provided category ID is valid within the context of the given menu ID.
-     *
-     * @param menu_id     The menu ID to validate against.
-     * @param category_id The category ID to validate.
-     * @throws ValidationException If the category ID is invalid.
-     */
-	public static void isCategoryIdIsValid(int menu_id, int category_id) throws ValidationException {
+	 * Validates if the provided category ID is valid within the context of the
+	 * given menu ID.
+	 *
+	 * @param menuId     The menu ID to validate against.
+	 * @param categoryId The category ID to validate.
+	 * @throws ValidationException If the category ID is invalid.
+	 */
+	public static void isCategoryIdIsValid(int menuId, int categoryId) throws ValidationException {
 
 		try {
 
-			CategoryDishDAO categorydishdao = new CategoryDishDAO();
+			CategoryDishDAO categoryDishDAO = new CategoryDishDAO();
 
-			IntUtil.rejectIfInvalidInt(category_id, "CategoryId");
-			categorydishdao.isCategoryIdIsValid(menu_id, category_id);
+			IntUtil.rejectIfInvalidInt(categoryId, "CategoryId");
+			categoryDishDAO.isCategoryIdIsValid(menuId, categoryId);
 
 		} catch (DAOException e) {
 			throw new ValidationException("Invalid CategoryId");
@@ -94,19 +79,19 @@ public class CategoryDishValidator {
 	}
 
 	/**
-     * Validates if the provided dish ID is valid.
-     *
-     * @param dish_id The dish ID to validate.
-     * @throws ValidationException If the dish ID is invalid.
-     */
-	public static void isDishIdIsValid(int dish_id) throws ValidationException {
+	 * Validates if the provided dish ID is valid.
+	 *
+	 * @param dishId The dish ID to validate.
+	 * @throws ValidationException If the dish ID is invalid.
+	 */
+	public static void isDishIdIsValid(int dishId) throws ValidationException {
 
 		try {
 
-			CategoryDishDAO categorydishdao = new CategoryDishDAO();
+			CategoryDishDAO categoryDishDAO = new CategoryDishDAO();
 
-			IntUtil.rejectIfInvalidInt(dish_id, "DishId");
-			categorydishdao.isDishIdIsValid(dish_id);
+			IntUtil.rejectIfInvalidInt(dishId, "DishId");
+			categoryDishDAO.isDishIdIsValid(dishId);
 
 		} catch (DAOException e) {
 			throw new ValidationException("Invalid DishId");

@@ -7,7 +7,7 @@ public class User extends UserEntity {
 		super.setId(id);
 		super.setName(name);
 		super.setEmail(email);
-		super.setPhone_number(phone_number);
+		super.setPhoneNumber(phone_number);
 		super.setPassword(password);
 		super.setStatus(status);
 	}

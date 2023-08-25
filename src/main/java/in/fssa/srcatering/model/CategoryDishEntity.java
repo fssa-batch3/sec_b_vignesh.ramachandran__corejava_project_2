@@ -3,11 +3,11 @@ package in.fssa.srcatering.model;
 public class CategoryDishEntity implements Comparable<DishEntity> {
 
 	private int id;
-	private int menu_id;
-	private int category_id;
-	private int dish_id;
+	private int menuId;
+	private int categoryId;
+	private int dishId;
 	private boolean status;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -16,31 +16,31 @@ public class CategoryDishEntity implements Comparable<DishEntity> {
 		this.id = id;
 	}
 
-	public int getMenu_id() {
-		return menu_id;
+	public int getMenuId() {
+		return menuId;
 	}
 
-	public void setMenu_id(int menu_id) {
-		this.menu_id = menu_id;
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
 	}
 
-	public int getCategory_id() {
-		return category_id;
+	public int getCategoryId() {
+		return categoryId;
 	}
 
-	public void setCategory_id(int category_id) {
-		this.category_id = category_id;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
-	public int getDish_id() {
-		return dish_id;
+	public int getDishId() {
+		return dishId;
 	}
 
-	public void setDish_id(int dish_id) {
-		this.dish_id = dish_id;
+	public void setDishId(int dishId) {
+		this.dishId = dishId;
 	}
-	
-	public boolean getStatus() {
+
+	public boolean isStatus() {
 		return status;
 	}
 
@@ -50,7 +50,7 @@ public class CategoryDishEntity implements Comparable<DishEntity> {
 
 	@Override
 	public int compareTo(DishEntity o) {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 

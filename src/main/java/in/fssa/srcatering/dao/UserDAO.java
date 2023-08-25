@@ -8,12 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.fssa.srcatering.exception.DAOException;
-import in.fssa.srcatering.exception.ValidationException;
-import in.fssa.srcatering.interfacee.UserInterface;
+import in.fssa.srcatering.interfaces.UserInterface;
 import in.fssa.srcatering.model.User;
 import in.fssa.srcatering.util.ConnectionUtil;
 
 public class UserDAO implements UserInterface {
+	
+	
+	private static final String COLUMN_NAME = "name";
+	private static final String COLUMN_EMAIL = "email";
+	private static final String COLUMN_PASSWORD = "password";
+	private static final String COLUMN_PHONENUMBER = "phone_number";
+	private static final String COLUMN_STATUS = "status";
+	private static final String COLUMN_ID = "id";
 
 	/**
      * Retrieves a list of all active users from the 'users' table.
@@ -27,23 +34,23 @@ public class UserDAO implements UserInterface {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		List<User> userList = new ArrayList<User>();
+		List<User> userList = new ArrayList<>();
 
 		try {
 
-			String query = "SELECT * FROM users WHERE status = 1";
+			String query = "SELECT id, name, email, phone_number, password, status FROM users WHERE status = 1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				User newUser = new User();
-				newUser.setId(rs.getInt("id"));
-				newUser.setName(rs.getString("name"));
-				newUser.setEmail(rs.getString("email"));
-				newUser.setPhone_number(rs.getLong("phone_number"));
-				newUser.setPassword(rs.getString("password"));
-				newUser.setStatus(rs.getBoolean("status"));
+				newUser.setId(rs.getInt(COLUMN_ID));
+				newUser.setName(rs.getString(COLUMN_NAME));
+				newUser.setEmail(rs.getString(COLUMN_EMAIL));
+				newUser.setPhoneNumber(rs.getLong(COLUMN_PHONENUMBER));
+				newUser.setPassword(rs.getString(COLUMN_PASSWORD));
+				newUser.setStatus(rs.getBoolean(COLUMN_STATUS));
 				userList.add(newUser);
 			}
 
@@ -74,7 +81,7 @@ public class UserDAO implements UserInterface {
 
 			ps.setString(1, newUser.getName().trim());
 			ps.setString(2, newUser.getEmail().trim());
-			ps.setLong(3, newUser.getPhone_number());
+			ps.setLong(3, newUser.getPhoneNumber());
 			ps.setString(4, newUser.getPassword());
 
 			ps.executeUpdate();
@@ -183,7 +190,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT * FROM users WHERE status = 1 && id =? ";
+			String query = "SELECT id FROM users WHERE status = 1 && id =? ";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
@@ -220,7 +227,7 @@ public class UserDAO implements UserInterface {
 		User user = null;
 
 		try {
-			String query = "SELECT * FROM users WHERE status = 1 && id = ?";
+			String query = "SELECT id, name, email, phone_number, password, status FROM users WHERE status = 1 && id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
@@ -229,12 +236,12 @@ public class UserDAO implements UserInterface {
 
 			if (rs.next()) {
 				user = new User();
-				user.setId(rs.getInt("id"));
-				user.setName(rs.getString("name"));
-				user.setEmail(rs.getString("email"));
-				user.setPassword(rs.getString("password"));
-				user.setPhone_number(rs.getLong("phone_number"));
-				user.setStatus(rs.getBoolean("status"));
+				user.setId(rs.getInt(COLUMN_ID));
+				user.setName(rs.getString(COLUMN_NAME));
+				user.setEmail(rs.getString(COLUMN_EMAIL));
+				user.setPassword(rs.getString(COLUMN_PASSWORD));
+				user.setPhoneNumber(rs.getLong(COLUMN_PHONENUMBER));
+				user.setStatus(rs.getBoolean(COLUMN_STATUS));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -259,7 +266,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT * FROM users WHERE email = ?";
+			String query = "SELECT email FROM users WHERE email = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
@@ -296,7 +303,7 @@ public class UserDAO implements UserInterface {
 		User user = null;
 
 		try {
-			String query = "SELECT * FROM users WHERE status = 1 AND email = ?";
+			String query = "SELECT id, name, email, phone_number, password, status FROM users WHERE status = 1 AND email = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setString(1, email);
@@ -304,12 +311,12 @@ public class UserDAO implements UserInterface {
 
 			if (rs.next()) {
 				user = new User();
-				user.setId(rs.getInt("id"));
-				user.setName(rs.getString("name"));
-				user.setPhone_number(rs.getLong("phone_number"));
-				user.setEmail(rs.getString("email"));
-				user.setPassword(rs.getString("password"));
-				user.setStatus(rs.getBoolean("status"));
+				user.setId(rs.getInt(COLUMN_ID));
+				user.setName(rs.getString(COLUMN_NAME));
+				user.setPhoneNumber(rs.getLong(COLUMN_PHONENUMBER));
+				user.setEmail(rs.getString(COLUMN_EMAIL));
+				user.setPassword(rs.getString(COLUMN_PASSWORD));
+				user.setStatus(rs.getBoolean(COLUMN_STATUS));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

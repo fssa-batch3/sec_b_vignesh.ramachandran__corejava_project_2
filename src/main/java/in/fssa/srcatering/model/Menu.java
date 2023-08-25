@@ -9,7 +9,7 @@ public class Menu extends MenuEntity {
 	
 	public Menu(int id, String menu_name,String description) {
 		super.setId(id);
-		super.setMenu_name(menu_name);
+		super.setMenuName(menu_name);
 		super.setDescription(description);
 	}
 

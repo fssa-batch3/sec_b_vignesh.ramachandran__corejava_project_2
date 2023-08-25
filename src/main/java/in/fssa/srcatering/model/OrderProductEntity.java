@@ -3,42 +3,40 @@ package in.fssa.srcatering.model;
 public class OrderProductEntity {
 	
 	private int id;
-	private int order_id;
-	private int menu_id;
-	private int category_id;
-	private int dish_id;
+	private int orderId;
+	private int menuId;
+	private int categoryId;
+	private int dishId;
 	private int price;
-	
-	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getOrder_id() {
-		return order_id;
+	public int getOrderId() {
+		return orderId;
 	}
-	public void setOrder_id(int order_id) {
-		this.order_id = order_id;
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
-	public int getMenu_id() {
-		return menu_id;
+	public int getMenuId() {
+		return menuId;
 	}
-	public void setMenu_id(int menu_id) {
-		this.menu_id = menu_id;
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
 	}
-	public int getCategory_id() {
-		return category_id;
+	public int getCategoryId() {
+		return categoryId;
 	}
-	public void setCategory_id(int category_id) {
-		this.category_id = category_id;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
-	public int getDish_id() {
-		return dish_id;
+	public int getDishId() {
+		return dishId;
 	}
-	public void setDish_id(int dish_id) {
-		this.dish_id = dish_id;
+	public void setDishId(int dishId) {
+		this.dishId = dishId;
 	}
 	public int getPrice() {
 		return price;
@@ -46,5 +44,8 @@ public class OrderProductEntity {
 	public void setPrice(int price) {
 		this.price = price;
 	}
+	
+	
+	
 	
 }

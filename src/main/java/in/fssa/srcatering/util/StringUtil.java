@@ -79,35 +79,4 @@ public class StringUtil {
 		}
 	}
 
-	/**
-     * Checks if a string is valid (not null or empty after trimming).
-     *
-     * @param newString The string to check.
-     * @return True if the string is valid, otherwise false.
-     */
-	public static boolean isValidString(String newString) {
-
-		if (newString == null || "".equals(newString.trim())) {
-
-			return false;
-		}
-		return true;
-
-	}
-
-	/**
-     * Checks if a string is invalid (null or empty after trimming).
-     *
-     * @param newString The string to check.
-     * @return True if the string is invalid, otherwise false.
-     */
-	public static boolean isInvalidString(String newString) {
-
-		if (!isValidString(newString)) {
-
-			return true;
-		}
-		return false;
-	}
-
 }

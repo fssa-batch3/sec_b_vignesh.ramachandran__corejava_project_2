@@ -23,22 +23,23 @@ public class DishValidator {
      * @param dish The Dish object to validate.
      * @throws ValidationException If the Dish object is invalid.
      */
-	public static void Validate(Dish dish) throws ValidationException {
+	public static void validate(Dish dish) throws ValidationException {
 
 		if (dish == null) {
 			throw new ValidationException("Invalid Dish Input");
 		}
 
-		StringUtil.rejectIfInvalidString(dish.getDish_name(), "Dish Name");
+		StringUtil.rejectIfInvalidString(dish.getDishName(), "Dish Name");
 		IntUtil.rejectIfInvalidInt(dish.getQuantity(), "Quantity");
-		IntUtil.priceCheck(dish.getDish_price(), "Price");
+		IntUtil.quantityCheck(dish.getQuantity(), "Quantity");
+		IntUtil.priceCheck(dish.getDishPrice(), "Price");
 		
 		
-		if(dish.getQuantity_unit().name().equals("NOS") && dish.getQuantity() > 5 ) {
+		if(dish.getQuantityUnit().name().equals("NOS") && dish.getQuantity() > 5 ) {
 			throw new ValidationException("Check Quantity and QuantityUnit");
 		}
 		
-		if(dish.getQuantity_unit().name().equals("GRAMS") && dish.getQuantity() < 20){
+		if(dish.getQuantityUnit().name().equals("GRAMS") && dish.getQuantity() < 20){
 			throw new ValidationException("Check Quantity and QuantityUnit");
 		}
 
@@ -54,19 +55,19 @@ public class DishValidator {
 
 		try {
 			
-			MenuService menuservice = new MenuService();
-			menuservice.isMenuIdIsValid(dish.getMenu_id());
+			MenuService menuService = new MenuService();
+			menuService.isMenuIdIsValid(dish.getMenuId());
 
-			CategoryService categoryservice = new CategoryService();
-			categoryservice.isCategoryIdIsValid(dish.getCategory_id());
+			CategoryService categoryService = new CategoryService();
+			categoryService.isCategoryIdIsValid(dish.getCategoryId());
 			
 
-			CategoryDishService categorydishservice = new CategoryDishService();
+			CategoryDishService categoryDishService = new CategoryDishService();
 
-			List<String> dishNames = categorydishservice.findDishNameByMenuIdAndCategoryId(dish.getMenu_id(),
-					dish.getCategory_id());
+			List<String> dishNames = categoryDishService.findDishNameByMenuIdAndCategoryId(dish.getMenuId(),
+					dish.getCategoryId());
 
-			if (dishNames.contains(dish.getDish_name().trim())) {
+			if (dishNames.contains(dish.getDishName().trim())) {
 				throw new ValidationException("Dish name already Exists");
 			}
 
@@ -86,44 +87,28 @@ public class DishValidator {
      */
 	public static void ValidateIds(int menu_id, int category_id, int dish_id) throws ValidationException {
 
-//		try {
-
 			IntUtil.rejectIfInvalidInt(menu_id, "MenuId");
 			IntUtil.rejectIfInvalidInt(category_id, "CategoryId");
 			IntUtil.rejectIfInvalidInt(dish_id, "DishId");
 
-			MenuService menuservice = new MenuService();
-			menuservice.isMenuIdIsValid(menu_id);
+			MenuService menuService = new MenuService();
+			menuService.isMenuIdIsValid(menu_id);
 
-			CategoryService categoryservice = new CategoryService();
-			categoryservice.isCategoryIdIsValid(category_id);
+			CategoryService categoryService = new CategoryService();
+			categoryService.isCategoryIdIsValid(category_id);
 
 			// validate menu_id , category_id, dish_id in category_dish table
-			CategoryDishService categorydishservice = new CategoryDishService();
-			categorydishservice.isCategoryIdIsValid(menu_id, category_id);
-			categorydishservice.isDishIdIsValid(dish_id);
+			CategoryDishService categoryDishService = new CategoryDishService();
+			categoryDishService.isCategoryIdIsValid(menu_id, category_id);
+			categoryDishService.isDishIdIsValid(dish_id);
 
 			// validate dish_id in dish table
-			DishService dishservice = new DishService();
-			dishservice.isDishIdIsValid(dish_id);
+			DishService dishService = new DishService();
+			dishService.isDishIdIsValid(dish_id);
 
 			// validate dish_id in dish_price table
-			DishPriceService dishpriceservice = new DishPriceService();
-			dishpriceservice.isDishIdIsValid(dish_id);
-
-//		} catch (DAOException e) {
-//			if (e.getMessage().contains("Invaid MenuId")) {
-//				throw new ValidationException("Invalid MenuId");
-//			}
-//
-//			else if (e.getMessage().contains("Invalid CategoryId")) {
-//				throw new ValidationException("Invalid CategoryId");
-//			}
-//
-//			else if (e.getMessage().contains("Invalid DishId")) {
-//				throw new ValidationException("Invalid DishId");
-//			}
-//		}
+			DishPriceService dishPriceService = new DishPriceService();
+			dishPriceService.isDishIdIsValid(dish_id);
 
 	}
 
@@ -136,10 +121,10 @@ public class DishValidator {
 	public static void isDishIdIsValid(int dish_id) throws ValidationException {
 
 		try {
-			DishDAO dishdao = new DishDAO();
+			DishDAO dishDAO = new DishDAO();
 
 			IntUtil.rejectIfInvalidInt(dish_id, "DishId");
-			dishdao.isDishIdIsValid(dish_id);
+			dishDAO.isDishIdIsValid(dish_id);
 
 		} catch (DAOException e) {
 			throw new ValidationException("DishId not found");

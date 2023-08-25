@@ -4,7 +4,7 @@ public class DishPriceEntity implements Comparable<DishEntity> {
 
 	int id;
 	int price;
-	int dish_id;
+	int dishId;
 
 	public int getId() {
 		return id;
@@ -22,17 +22,19 @@ public class DishPriceEntity implements Comparable<DishEntity> {
 		this.price = price;
 	}
 
-	public int getDish_id() {
-		return dish_id;
+	public int getDishId() {
+		return dishId;
 	}
 
-	public void setDish_id(int dish_id) {
-		this.dish_id = dish_id;
+	public void setDishId(int dishId) {
+		this.dishId = dishId;
 	}
+
 	
+
 	@Override
 	public String toString() {
-		return "DishPriceEntity [id=" + id + ", price=" + price + ", dish_id=" + dish_id + "]";
+		return "DishPriceEntity [id=" + id + ", price=" + price + ", dishId=" + dishId + "]";
 	}
 
 	@Override

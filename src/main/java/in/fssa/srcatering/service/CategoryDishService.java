@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.fssa.srcatering.dao.CategoryDishDAO;
-import in.fssa.srcatering.dao.DishDAO;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
@@ -13,69 +12,67 @@ import in.fssa.srcatering.validator.CategoryDishValidator;
 
 public class CategoryDishService {
 
-	private CategoryDishDAO categorydishdao = new CategoryDishDAO();
-	private DishDAO dishdao = new DishDAO();
+	private CategoryDishDAO categoryDishDAO = new CategoryDishDAO();
 
 	/**
      * Validates if the provided menu ID is valid.
      *
-     * @param menu_id The menu ID to validate.
+     * @param menuId The menu ID to validate.
      * @throws ValidationException If the provided menu ID is not valid.
      */
-	public void isMenuIdIsValid(int menu_id) throws ValidationException {
+	public void isMenuIdIsValid(int menuId) throws ValidationException {
 
-		CategoryDishValidator.isMenuIdIsValid(menu_id);
+		CategoryDishValidator.isMenuIdIsValid(menuId);
 
 	}
 
 	/**
      * Validates if the provided category ID is valid within a given menu.
      *
-     * @param menu_id     The menu ID containing the category.
-     * @param category_id The category ID to validate.
+     * @param menuId     The menu ID containing the category.
+     * @param categoryId The category ID to validate.
      * @throws ValidationException If the provided category ID is not valid.
      */
-	public void isCategoryIdIsValid(int menu_id, int category_id) throws ValidationException {
+	public void isCategoryIdIsValid(int menuId, int categoryId) throws ValidationException {
 
-		this.isMenuIdIsValid(menu_id);
+		this.isMenuIdIsValid(menuId);
 
-		CategoryDishValidator.isCategoryIdIsValid(menu_id, category_id);
+		CategoryDishValidator.isCategoryIdIsValid(menuId, categoryId);
 
 	}
 
 	 /**
      * Validates if the provided dish ID is valid.
      *
-     * @param dish_id The dish ID to validate.
+     * @param dishId The dish ID to validate.
      * @throws ValidationException If the provided dish ID is not valid.
      */
-	public void isDishIdIsValid(int dish_id) throws ValidationException {
+	public void isDishIdIsValid(int dishId) throws ValidationException {
 
-		CategoryDishValidator.isDishIdIsValid(dish_id);
+		CategoryDishValidator.isDishIdIsValid(dishId);
 
 	}
 
 	/**
      * Retrieves a list of dish names based on the provided menu ID and category ID.
      *
-     * @param menu_id     The menu ID.
-     * @param category_id The category ID.
+     * @param menuId     The menu ID.
+     * @param categoryId The category ID.
      * @return A list of dish names.
      * @throws ValidationException If the provided IDs are not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public List<String> findDishNameByMenuIdAndCategoryId(int menu_id, int category_id)
+	public List<String> findDishNameByMenuIdAndCategoryId(int menuId, int categoryId)
 			throws ValidationException, ServiceException {
 
-		List<String> dishNames = new ArrayList<String>();
+		List<String> dishNames = new ArrayList<>();
 		
 		try {
 
-			//this.isCategoryIdIsValid(menu_id, category_id);
-
-			dishNames = categorydishdao.findDishNameByMenuIdAndCategoryId(menu_id, category_id);
+			dishNames = categoryDishDAO.findDishNameByMenuIdAndCategoryId(menuId, categoryId);
 
 		} catch (DAOException e) {
+			e.printStackTrace();
 			throw new ServiceException("Failed to Find Dish Name By MenuId & CategoryId");
 		}
 		return dishNames;
@@ -84,16 +81,16 @@ public class CategoryDishService {
 	/**
      * Retrieves a list of dish IDs based on the provided menu ID and category ID.
      *
-     * @param menu_id     The menu ID.
-     * @param category_id The category ID.
+     * @param menuId     The menu ID.
+     * @param categoryId The category ID.
      * @return A list of dish IDs.
      * @throws ServiceException If there's an issue with the service operation.
      */
-	public List<Integer> findDishIdByMenuIdAndCategoryId(int menu_id, int category_id) throws ServiceException{
+	public List<Integer> findDishIdByMenuIdAndCategoryId(int menuId, int categoryId) throws ServiceException{
 		
 		List<Integer> dishIds;
 		try {
-			dishIds = categorydishdao.findDishIdByMenuIdAndCategoryId(menu_id, category_id);
+			dishIds = categoryDishDAO.findDishIdByMenuIdAndCategoryId(menuId, categoryId);
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage());
 		}
@@ -103,18 +100,19 @@ public class CategoryDishService {
 	/**
      * Creates a new relationship between a menu, category, and dish.
      *
-     * @param menu_id     The menu ID.
-     * @param category_id The category ID.
-     * @param dish_id     The dish ID.
+     * @param menuId     The menu ID.
+     * @param categoryId The category ID.
+     * @param dishId     The dish ID.
      * @throws ValidationException If the provided IDs are not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public void create(int menu_id, int category_id, int dish_id) throws ValidationException, ServiceException {
+	public void createCategoryDish(int menuId, int categoryId, int dishId) throws ValidationException, ServiceException {
 
 		try {
-			CategoryDishValidator.Validate(menu_id, category_id, dish_id);
-			categorydishdao.create(menu_id, category_id, dish_id);
+			CategoryDishValidator.validate(menuId, categoryId, dishId);
+			categoryDishDAO.create(menuId, categoryId, dishId);
 		} catch (DAOException e) {
+			e.printStackTrace();
 			throw new ServiceException("Failed to Create Dish");
 		}
 
@@ -123,23 +121,24 @@ public class CategoryDishService {
 	/**
      * Deletes a relationship between a menu, category, and dish.
      *
-     * @param menu_id     The menu ID.
-     * @param category_id The category ID.
-     * @param dish_id     The dish ID.
+     * @param menuId     The menu ID.
+     * @param categoryId The category ID.
+     * @param dishId     The dish ID.
      * @throws ValidationException If the provided IDs are not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public void delete(int menu_id, int category_id, int dish_id) throws ValidationException, ServiceException {
+	public void deleteCategoryDish(int menuId, int categoryId, int dishId) throws ValidationException, ServiceException {
 
 		try {
 
-			IntUtil.rejectIfInvalidInt(menu_id, "Menu Id");
-			IntUtil.rejectIfInvalidInt(category_id, "Category Id");
-			IntUtil.rejectIfInvalidInt(dish_id, "Dish Id");
+			IntUtil.rejectIfInvalidInt(menuId, "Menu Id");
+			IntUtil.rejectIfInvalidInt(categoryId, "Category Id");
+			IntUtil.rejectIfInvalidInt(dishId, "Dish Id");
 
-			categorydishdao.delete(menu_id, category_id, dish_id);
+			categoryDishDAO.delete(menuId, categoryId, dishId);
 
 		} catch (DAOException e) {
+			e.printStackTrace();
 			throw new ServiceException("Failed to Delete Dish");
 		}
 	}
@@ -147,21 +146,21 @@ public class CategoryDishService {
 	/**
      * Changes the status of a relationship between a menu, category, and dish.
      *
-     * @param menu_id     The menu ID.
-     * @param category_id The category ID.
-     * @param dish_id     The dish ID.
+     * @param menuId     The menu ID.
+     * @param categoryId The category ID.
+     * @param dishId     The dish ID.
      * @throws ValidationException If the provided IDs are not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public void changeStatus(int menu_id, int category_id, int dish_id) throws ValidationException, ServiceException {
+	public void changeCategoryDishStatus(int menuId, int categoryId, int dishId) throws ValidationException, ServiceException {
 		
 		
 		try {
-			IntUtil.rejectIfInvalidInt(menu_id, "Menu Id");
-			IntUtil.rejectIfInvalidInt(category_id, "Category Id");
-			IntUtil.rejectIfInvalidInt(dish_id, "Dish Id");
+			IntUtil.rejectIfInvalidInt(menuId, "Menu Id");
+			IntUtil.rejectIfInvalidInt(categoryId, "Category Id");
+			IntUtil.rejectIfInvalidInt(dishId, "Dish Id");
 			
-			categorydishdao.changeStatus(menu_id, category_id, dish_id);
+			categoryDishDAO.changeStatus(menuId, categoryId, dishId);
 			
 		} catch (DAOException e) {
 			e.printStackTrace();

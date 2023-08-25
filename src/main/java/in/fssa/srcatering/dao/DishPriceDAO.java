@@ -14,12 +14,12 @@ public class DishPriceDAO {
 	/**
      * Creates a new dish price entry in the 'dish_price' table.
      *
-     * @param dish_id The ID of the dish for which the price is being created.
+     * @param dishId The ID of the dish for which the price is being created.
      * @param price The price of the dish.
      * @param dateTime The start date and time of the price.
      * @throws DAOException If there's an issue with the database operation.
      */
-	public void create(int dish_id, int price, Timestamp dateTime) throws DAOException {
+	public void create(int dishId, int price, Timestamp dateTime) throws DAOException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -28,7 +28,7 @@ public class DishPriceDAO {
 			String query = "INSERT INTO dish_price(dish_id, price,start_date) VALUES (?,?,?)";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
-			ps.setInt(1, dish_id);
+			ps.setInt(1, dishId);
 			ps.setInt(2, price);
 			ps.setTimestamp(3, dateTime);
 			ps.executeUpdate();
@@ -47,11 +47,11 @@ public class DishPriceDAO {
 	/**
      * Updates the end date of a dish price entry in the 'dish_price' table.
      *
-     * @param price_id The ID of the dish price entry to update.
+     * @param priceId The ID of the dish price entry to update.
      * @param dateTime The end date and time of the price.
      * @throws DAOException If there's an issue with the database operation.
      */
-	public void update(int price_id, Timestamp dateTime) throws DAOException {
+	public void update(int priceId, Timestamp dateTime) throws DAOException {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -62,13 +62,13 @@ public class DishPriceDAO {
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setTimestamp(1, dateTime);
-			ps.setInt(2, price_id);
+			ps.setInt(2, priceId);
 			int rowsUpdated = ps.executeUpdate();
 			
 			if (rowsUpdated > 0) {
-				System.out.println("Price with ID " + price_id + " has been updated successfully.");
+				System.out.println("Price with ID " + priceId + " has been updated successfully.");
 			} else {
-				System.out.println("Price with ID " + price_id + " not found.");
+				System.out.println("Price with ID " + priceId + " not found.");
 			}
 			
 		} catch (SQLException e) {
@@ -82,21 +82,21 @@ public class DishPriceDAO {
 	/**
      * Retrieves the active price of a dish based on the provided dish ID from the 'dish_price' table.
      *
-     * @param dish_id The ID of the dish for which to retrieve the price.
+     * @param dishId The ID of the dish for which to retrieve the price.
      * @return The active price of the dish.
      * @throws DAOException If there's an issue with the database operation.
      */
-	public int findPriceByDishId(int dish_id) throws DAOException {
+	public int findPriceByDishId(int dishId) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int price = -1;
 		
 		try {
-			String query = "SELECT * FROM dish_price WHERE dish_id=? AND end_date IS NULL";
+			String query = "SELECT price FROM dish_price WHERE dish_id=? AND end_date IS NULL";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
-			ps.setInt(1, dish_id);
+			ps.setInt(1, dishId);
 			
 			rs = ps.executeQuery();
 			
@@ -117,26 +117,26 @@ public class DishPriceDAO {
 	/**
      * Retrieves the ID of the active price entry for a dish based on the provided dish ID from the 'dish_price' table.
      *
-     * @param dish_id The ID of the dish for which to retrieve the price entry ID.
+     * @param dishId The ID of the dish for which to retrieve the price entry ID.
      * @return The ID of the active price entry for the dish.
      * @throws DAOException If there's an issue with the database operation.
      */
-	public int findPriceIdByDishId(int dish_id) throws DAOException {
+	public int findPriceIdByDishId(int dishId) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
-		int price_id = 0;
+		int priceId = 0;
 		
 		try {
-			String query = "SELECT * FROM dish_price WHERE dish_id = ? AND end_date IS NULL";
+			String query = "SELECT id FROM dish_price WHERE dish_id = ? AND end_date IS NULL";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
-			ps.setInt(1, dish_id);
+			ps.setInt(1, dishId);
 			rs = ps.executeQuery();
 			
 			if (rs.next()) {
-				price_id = rs.getInt("id");
+				priceId = rs.getInt("id");
 			}
 			
 		} catch (SQLException e) {
@@ -145,25 +145,25 @@ public class DishPriceDAO {
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
-		return price_id;
+		return priceId;
 	}
 	
 	/**
      * Checks whether a dish ID exists in the 'dish_price' table.
      *
-     * @param dish_id The ID of the dish to check.
+     * @param dishId The ID of the dish to check.
      * @throws DAOException If there's an issue with the database operation or if the dish ID is not found.
      */
-	public void iDishIdIsValid(int dish_id)throws DAOException {
+	public void iDishIdIsValid(int dishId)throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
 		try {
-			String query = "SELECT * FROM dish_price WHERE dish_id = ?";
+			String query = "SELECT dish_id FROM dish_price WHERE dish_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
-			ps.setInt(1, dish_id);
+			ps.setInt(1, dishId);
 			rs = ps.executeQuery();
 
 			if (!rs.next()) {

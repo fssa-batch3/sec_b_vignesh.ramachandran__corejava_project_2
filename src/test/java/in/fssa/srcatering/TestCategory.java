@@ -13,20 +13,20 @@ public class TestCategory {
 	
 	@Test
 	public void testFindMenuByIdWithValidCategoryId() {
-		CategoryService categoryservice = new CategoryService();
+		CategoryService categoryService = new CategoryService();
 		
 		assertDoesNotThrow(() -> {
-			categoryservice.findById(1);
+			categoryService.findByIdCategoryId(1);
 		});
 	}
 	
 	
 	@Test
 	public void testFindMenuByIdWithCategoryIdZero() {
-		CategoryService categoryservice = new CategoryService();
+		CategoryService categoryService = new CategoryService();
 		
 		Exception exception = assertThrows(ValidationException.class, () ->{
-			categoryservice.findById(0);
+			categoryService.findByIdCategoryId(0);
 		});
 		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -37,10 +37,10 @@ public class TestCategory {
 
 	@Test
 	public void testFindMenuByIdWithNegativeCategoryId() {
-		CategoryService categoryservice = new CategoryService();
+		CategoryService categoryService = new CategoryService();
 		
 		Exception exception = assertThrows(ValidationException.class, () ->{
-			categoryservice.findById(-1);
+			categoryService.findByIdCategoryId(-1);
 		});
 		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
@@ -50,10 +50,10 @@ public class TestCategory {
 	
 	@Test
 	public void testFindMenuByIdWithInvalidCategoryId() {
-		CategoryService categoryservice = new CategoryService();
+		CategoryService categoryService = new CategoryService();
 		
 		Exception exception = assertThrows(ValidationException.class, () ->{
-			categoryservice.findById(5);
+			categoryService.findByIdCategoryId(5);
 		});
 		String expectedMessage = "CategoryId not found";
 		String actualMessage = exception.getMessage();
