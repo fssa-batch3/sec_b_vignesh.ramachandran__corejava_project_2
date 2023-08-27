@@ -57,25 +57,10 @@ public abstract class UserEntity implements Comparable<UserEntity> {
 		this.status = status;
 	}
 
-	
-
 	@Override
 	public String toString() {
 		return "UserEntity [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password
 				+ ", phoneNumber=" + phoneNumber + ", status=" + status + "]";
-	}
-
-	@Override
-	public int compareTo(UserEntity o) {
-		if (this.getId() == o.getId()) {
-			return 0;
-		} else {
-			if (this.getId() < (o.getId())) {
-				return -1;
-			} else {
-				return 1;
-			}
-		}
 	}
 
 }

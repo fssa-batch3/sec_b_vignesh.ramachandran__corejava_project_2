@@ -21,12 +21,7 @@ public class ConnectionUtil {
 
             url = System.getenv("DATABASE_HOSTNAME");
             userName = System.getenv("DATABASE_USERNAME");
-            passWord = System.getenv("DATABASE_PASSWORD");
-
-//        	url = "jdbc:mysql://164.52.216.41:3306/vignesh_ramachandran_corejava_project";
-//        	userName = "tF1BRRcYo1rI";
-//        	passWord = "ba81ad1d-f04e-48e2-b565-70309e45e575";
-        
+            passWord = System.getenv("DATABASE_PASSWORD");        
 
 		Connection con = null;
 

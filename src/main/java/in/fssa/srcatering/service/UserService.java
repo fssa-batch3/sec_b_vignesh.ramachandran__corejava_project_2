@@ -121,7 +121,7 @@ public class UserService {
 
 		User user = null;
 		try {
-			user = new User();
+			
 			UserValidator.isUserIdIsValid(id);
 
 			user = userDAO.findById(id);
@@ -146,8 +146,6 @@ public class UserService {
 
 		User user = null;
 		try {
-			user = new User();
-
 			StringUtil.rejectIfInvalidString(email, "Email");
 
 			user = userDAO.findByEmail(email);

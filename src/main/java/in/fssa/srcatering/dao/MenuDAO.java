@@ -14,11 +14,11 @@ import in.fssa.srcatering.util.ConnectionUtil;
 public class MenuDAO {
 
 	/**
-     * Retrieves a list of all menus from the 'menus' table.
-     *
-     * @return A list of Menu objects representing all menus.
-     * @throws DAOException If there's an issue with the database operation.
-     */
+	 * Retrieves a list of all menus from the 'menus' table.
+	 *
+	 * @return A list of Menu objects representing all menus.
+	 * @throws DAOException If there's an issue with the database operation.
+	 */
 	public List<Menu> findAll() throws DAOException {
 
 		Connection con = null;
@@ -51,12 +51,70 @@ public class MenuDAO {
 	}
 
 	/**
-     * Retrieves a menu based on the provided menu ID from the 'menus' table.
-     *
-     * @param menuId The ID of the menu to retrieve.
-     * @return The Menu object with the specified menu ID.
-     * @throws DAOException If there's an issue with the database operation.
-     */
+	 * Creates a new menu in the database using the provided Menu object.
+	 *
+	 * @param menu The Menu object representing the menu to be created.
+	 * @throws DAOException If a database error occurs during the creation.
+	 */
+	public void create(Menu menu) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			String query = "INSERT INTO menus(menu_name, description, image) VALUES(?,?,?)";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			ps.setString(1, menu.getMenuName());
+			ps.setString(2, menu.getDescription());
+			ps.setString(3, menu.getImage());
+
+			ps.executeUpdate();
+
+			System.out.println("Menu created sucessfully");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps);
+		}
+	}
+
+	/**
+	 * Updates an existing menu in the database using the provided Menu object.
+	 *
+	 * @param menu The Menu object representing the menu with updated information.
+	 * @throws DAOException If a database error occurs during the update.
+	 */
+	public void update(Menu menu) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			String query = "UPDATE menus SET description = ?, image = ? WHERE id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+
+			ps.setString(1, menu.getDescription());
+			ps.setString(2, menu.getImage());
+			ps.setInt(3, menu.getId());
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps);
+		}
+	}
+
+	/**
+	 * Retrieves a menu based on the provided menu ID from the 'menus' table.
+	 *
+	 * @param menuId The ID of the menu to retrieve.
+	 * @return The Menu object with the specified menu ID.
+	 * @throws DAOException If there's an issue with the database operation.
+	 */
 	public Menu findById(int menuId) throws DAOException {
 
 		Connection con = null;
@@ -93,12 +151,13 @@ public class MenuDAO {
 	}
 
 	/**
-     * Checks whether a menu ID exists in the 'menus' table.
-     *
-     * @param menuId The ID of the menu to check.
-     * @throws DAOException If there's an issue with the database operation or if the menu ID is not found.
-     */
-	public static void isMenuIdIsValid(int menuId) throws DAOException {
+	 * Checks whether a menu ID exists in the 'menus' table.
+	 *
+	 * @param menuId The ID of the menu to check.
+	 * @throws DAOException If there's an issue with the database operation or if
+	 *                      the menu ID is not found.
+	 */
+	public void isMenuIdIsValid(int menuId) throws DAOException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -122,6 +181,39 @@ public class MenuDAO {
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
+	}
+
+	/**
+	 * Retrieves a list of all menu names from the database.
+	 *
+	 * @return A List of String objects containing all menu names.
+	 * @throws DAOException If a database error occurs during the retrieval.
+	 */
+	public List<String> findAllMenuNames() throws DAOException {
+		List<String> menuNames = new ArrayList<>();
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			String query = "SELECT menu_name FROM menus";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				menuNames.add(rs.getString("menu_name").trim().toLowerCase());
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		return menuNames;
 
 	}
 

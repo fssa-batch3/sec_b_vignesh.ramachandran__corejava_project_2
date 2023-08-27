@@ -9,11 +9,31 @@ import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Category;
 import in.fssa.srcatering.util.IntUtil;
+import in.fssa.srcatering.util.StringUtil;
 import in.fssa.srcatering.validator.CategoryValidator;
 
 public class CategoryService {
 
 	CategoryDAO categoryDAO = new CategoryDAO();
+	
+	/**
+	 * Creates a new category in the database using the provided Category object,
+	 * after performing validation checks on the category name.
+	 *
+	 * @param category The Category object representing the category to be created.
+	 * @throws ValidationException If the provided category name is invalid or already exists.
+	 */
+	public void createCategory(Category category) throws ValidationException {
+		
+		try {
+			StringUtil.rejectIfInvalidString(category.getCategoryName(), "CategoryName");
+			StringUtil.rejectIfInvalidName(category.getCategoryName(), "CategoryName");
+			CategoryValidator.isCategoryNameAlreadyExists(category.getCategoryName());
+			categoryDAO.createCategory(category);
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
      * Retrieves a list of all categories.
@@ -23,7 +43,7 @@ public class CategoryService {
      */
 	public List<Category> getAllCategories() throws ServiceException {
 		
-		List<Category> categoryList = new ArrayList<Category>();
+		List<Category> categoryList = new ArrayList<>();
 		
 		try {
 			
@@ -45,21 +65,21 @@ public class CategoryService {
 	/**
      * Retrieves a category by its ID.
      *
-     * @param category_id The ID of the category to retrieve.
+     * @param categoryId The ID of the category to retrieve.
      * @return The retrieved category.
      * @throws ValidationException If the provided category ID is not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public Category findByIdCategoryId(int category_id) throws ValidationException, ServiceException {
+	public Category findByIdCategoryId(int categoryId) throws ValidationException, ServiceException {
 		
 		Category category = null;
 		
 		try {
-			category = new Category();
-			IntUtil.rejectIfInvalidInt(category_id, "CategoryId");
-			this.isCategoryIdIsValid(category_id);
 			
-			category =  categoryDAO.findById(category_id);
+			IntUtil.rejectIfInvalidInt(categoryId, "CategoryId");
+			this.isCategoryIdIsValid(categoryId);
+			
+			category =  categoryDAO.findById(categoryId);
 			
 		} catch (DAOException e) {
 			e.printStackTrace();

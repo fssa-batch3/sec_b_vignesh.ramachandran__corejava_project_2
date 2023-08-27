@@ -5,6 +5,7 @@ public abstract class MenuEntity implements Comparable<MenuEntity> {
 	private int id;
 	private String menuName;
 	private String description;
+	private String image;
 
 	public int getId() {
 		return id;
@@ -30,11 +31,17 @@ public abstract class MenuEntity implements Comparable<MenuEntity> {
 		this.description = description;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	@Override
 	public String toString() {
 		return "MenuEntity [id=" + id + ", menuName=" + menuName + ", description=" + description + "]";
 	}
-	
-	
 
 }

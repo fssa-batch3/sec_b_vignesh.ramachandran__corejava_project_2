@@ -8,18 +8,18 @@ public class Order extends OrderEntity {
 		
 	}
 
-	public Order(int id, int user_id, int menu_id, int category_id, int no_of_guest, int total_cost, LocalDateTime order_date,
-			LocalDateTime delivery_date, OrderStatus order_status){
+	public Order(int id, int userId, int menuId, int categoryId, int noOfGuest, int totalCost, LocalDateTime orderDate,
+			LocalDateTime deliveryDate, OrderStatus orderStatus){
 		
 		super.setId(id);
-		super.setMenuId(menu_id);
-		super.setCategoryId(category_id);
-		super.setUserId(user_id);
-		super.setNoOfGuest(no_of_guest);
-		super.setTotalCost(total_cost);
-		super.setOrderDate(order_date);
-		super.setDeliveryDate(delivery_date);
-		super.setOrderStatus(order_status);
+		super.setMenuId(menuId);
+		super.setCategoryId(categoryId);
+		super.setUserId(userId);
+		super.setNoOfGuest(noOfGuest);
+		super.setTotalCost(totalCost);
+		super.setOrderDate(orderDate);
+		super.setDeliveryDate(deliveryDate);
+		super.setOrderStatus(orderStatus);
 		
 	}
 }

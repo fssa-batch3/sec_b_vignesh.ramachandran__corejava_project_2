@@ -13,8 +13,8 @@ public class Category extends CategoryEntity {
 
 	@Override
 	public int compareTo(CategoryEntity o) {
-		
-		return 0;
+
+		return Integer.compare(this.getId(), o.getId());
 	}
 
 }

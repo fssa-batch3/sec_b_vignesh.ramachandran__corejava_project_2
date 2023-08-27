@@ -1,6 +1,6 @@
 package in.fssa.srcatering.model;
 
-public class DishPriceEntity implements Comparable<DishEntity> {
+public abstract class DishPriceEntity implements Comparable<DishEntity> {
 
 	int id;
 	int price;
@@ -30,17 +30,9 @@ public class DishPriceEntity implements Comparable<DishEntity> {
 		this.dishId = dishId;
 	}
 
-	
-
 	@Override
 	public String toString() {
 		return "DishPriceEntity [id=" + id + ", price=" + price + ", dishId=" + dishId + "]";
-	}
-
-	@Override
-	public int compareTo(DishEntity o) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }

@@ -60,7 +60,7 @@ public class IntUtil {
      */
 	public static void quantityCheck(int input, String inputName) throws ValidationException {
 		if(input > 500) {
-			throw new ValidationException("Quantity doesn't above 500");
+			throw new ValidationException(inputName+" doesn't above 500");
 		}
 	}
 }

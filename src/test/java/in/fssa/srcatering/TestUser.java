@@ -1,9 +1,8 @@
 package in.fssa.srcatering;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 
 import in.fssa.srcatering.exception.ServiceException;
@@ -11,10 +10,10 @@ import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.User;
 import in.fssa.srcatering.service.UserService;
 
-public class TestUser {
+ class TestUser {
 
 	@Test
-	public void testCreateUserWithValidInput() {
+	 void testCreateUserWithValidInput() {
 		UserService userService = new UserService();
 
 		// user object
@@ -30,7 +29,7 @@ public class TestUser {
 	}
 
 	@Test
-	public void testCreateUserWithInvalidInput() {
+	 void testCreateUserWithInvalidInput() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -39,11 +38,11 @@ public class TestUser {
 		String expectedMessage = "Invalid user Input";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateUserWithExistingEmail() {
+	 void testCreateUserWithExistingEmail() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -60,11 +59,11 @@ public class TestUser {
 		String expectedMessage = "Email already exists";
 		String actualMessage = exception.getMessage();
 		
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateUserWithEmailNull() {
+	 void testCreateUserWithEmailNull() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -83,11 +82,11 @@ public class TestUser {
 		String expectedMessage = "Email cannot be null or empty";
 		String actualMessage = exception.getMessage();
 		
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateUserWithEmailEmpty() {
+	 void testCreateUserWithEmailEmpty() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -106,12 +105,12 @@ public class TestUser {
 		String expectedMessage = "Email cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	// password test case
 	@Test
-	public void testCreateUserWithPasswordNull() {
+	 void testCreateUserWithPasswordNull() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -127,11 +126,11 @@ public class TestUser {
 		});
 		String expectedMessage = "Password cannot be null or empty";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateUserWithPasswordEmpty() {
+	 void testCreateUserWithPasswordEmpty() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -147,12 +146,12 @@ public class TestUser {
 		});
 		String expectedMessage = "Password cannot be null or empty";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	@Test
-	public void testCreateUserWithWrongPasswordPattern() {
+	 void testCreateUserWithWrongPasswordPattern() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -169,14 +168,14 @@ public class TestUser {
 		String expectedMessage = "Password doesn't matches with pattern. Password atleast contain one Uppercase,"
 				+ "one Lowercase,one Special character,one number";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	
 
 	@Test
-	public void testCreateUserWithInvalidPhoneNumber() {
+	 void testCreateUserWithInvalidPhoneNumber() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -193,12 +192,12 @@ public class TestUser {
 
 		String expectedMessage = "Invalid phone number";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	// name test case
 	@Test
-	public void testCreateUserWithNameNull() {
+	 void testCreateUserWithNameNull() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -214,11 +213,11 @@ public class TestUser {
 		});
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateUserWithNameEmpty() {
+	 void testCreateUserWithNameEmpty() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -234,12 +233,12 @@ public class TestUser {
 		});
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	@Test
-	public void testCreateUserWithInvalidName() {
+	 void testCreateUserWithInvalidName() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -255,13 +254,13 @@ public class TestUser {
 		});
 		String expectedMessage = "UserName should contain only alphabetic characters";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	// update
 	@Test
-	public void testUpdateUserWithValidInputAndId() {
+	 void testUpdateUserWithValidInputAndId() {
 		UserService userService = new UserService();
 
 		// user object
@@ -277,7 +276,7 @@ public class TestUser {
 	}
 	
 	@Test
-	public void testUpdateUserWithNameNull() {
+	 void testUpdateUserWithNameNull() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -293,12 +292,12 @@ public class TestUser {
 		});
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	@Test
-	public void testUpdateUserWithNameEmpty() {
+	 void testUpdateUserWithNameEmpty() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -314,12 +313,12 @@ public class TestUser {
 		});
 		String expectedMessage = "Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	@Test
-	public void testUpdateUserWithInvalidName() {
+	 void testUpdateUserWithInvalidName() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -335,11 +334,11 @@ public class TestUser {
 		});
 		String expectedMessage = "UserName should contain only alphabetic characters";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	@Test
-	public void testUpdateUserWithPasswordNull() {
+	 void testUpdateUserWithPasswordNull() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -355,12 +354,12 @@ public class TestUser {
 		});
 		String expectedMessage = "Password cannot be null or empty";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	@Test
-	public void testUpdateUserWithPasswordEmpty() {
+	 void testUpdateUserWithPasswordEmpty() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -376,12 +375,12 @@ public class TestUser {
 		});
 		String expectedMessage = "Password cannot be null or empty";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	@Test
-	public void testUpdateUserWithWrongPasswordPattern() {
+	 void testUpdateUserWithWrongPasswordPattern() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -398,12 +397,12 @@ public class TestUser {
 		String expectedMessage = "Password doesn't matches with pattern. Password atleast contain one Uppercase,"
 				+ "one Lowercase,one Special character,one number";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 
 	@Test
-	public void testUpdateUserWithIdZero() {
+	 void testUpdateUserWithIdZero() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -420,12 +419,12 @@ public class TestUser {
 
 		String expectedMessage = "UserId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 
 	}
 
 	@Test
-	public void testUpdateUserWithInvalidId() {
+	 void testUpdateUserWithInvalidId() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -442,11 +441,11 @@ public class TestUser {
 
 		String expectedMessage = "Invalid UserId";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testDeleteUserWithValidId() {
+	 void testDeleteUserWithValidId() {
 		UserService userService = new UserService();
 
 		assertDoesNotThrow(() -> {
@@ -461,7 +460,7 @@ public class TestUser {
 	}
 
 	@Test
-	public void testDeleteUserWithIdZero() {
+	 void testDeleteUserWithIdZero() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -469,11 +468,11 @@ public class TestUser {
 		});
 		String expectedMessage = "UserId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testDeleteUserWithInvalidId() {
+	 void testDeleteUserWithInvalidId() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -482,7 +481,7 @@ public class TestUser {
 		String expectedMessage = "Invalid UserId";
 		String actualMessage = exception.getMessage();
 		
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	

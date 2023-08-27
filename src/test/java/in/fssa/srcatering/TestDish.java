@@ -1,9 +1,8 @@
 package in.fssa.srcatering;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 
 import in.fssa.srcatering.exception.ServiceException;
@@ -13,10 +12,10 @@ import in.fssa.srcatering.model.QuantityUnit;
 import in.fssa.srcatering.service.CategoryDishService;
 import in.fssa.srcatering.service.DishService;
 
-public class TestDish {
+ class TestDish {
 
 	@Test
-	public void testCreateDishWithValidInput() {
+	 void testCreateDishWithValidInput() {
 		DishService dishService = new DishService();
 
 		Dish dish = new Dish();
@@ -34,7 +33,7 @@ public class TestDish {
 	}
 
 	@Test
-	public void testCreateDishWithNull() {
+	 void testCreateDishWithNull() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -43,11 +42,11 @@ public class TestDish {
 		String expectedMessage = "Invalid Dish Input";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateDishWithDishNameNull() {
+	 void testCreateDishWithDishNameNull() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -65,12 +64,12 @@ public class TestDish {
 		String expectedMessage = "Dish Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 
 	}
 
 	@Test
-	public void testCreateDishWithDishNameEmpty() {
+	 void testCreateDishWithDishNameEmpty() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -88,11 +87,11 @@ public class TestDish {
 		String expectedMessage = "Dish Name cannot be null or empty";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateDishWithAlreadyExistsDishName() {
+	 void testCreateDishWithAlreadyExistsDishName() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -100,7 +99,7 @@ public class TestDish {
 			Dish dish = new Dish();
 			dish.setCategoryId(1);
 			dish.setMenuId(1);
-			dish.setDishName("MINI LADDU");
+			dish.setDishName("mini LADDU");
 			dish.setDishPrice(10);
 			dish.setQuantity(1);
 			dish.setQuantityUnit(QuantityUnit.NOS);
@@ -110,11 +109,11 @@ public class TestDish {
 		String expectedMessage = "Dish name already Exists";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateDishWithMenuIdZero() {
+	 void testCreateDishWithMenuIdZero() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -133,11 +132,11 @@ public class TestDish {
 		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateDishWithNegativeMenuId() {
+	 void testCreateDishWithNegativeMenuId() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -156,11 +155,11 @@ public class TestDish {
 		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateDishWithInvalidMenuId() {
+	 void testCreateDishWithInvalidMenuId() {
 
 		DishService dishService = new DishService();
 
@@ -181,12 +180,12 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 
 	}
 
 	@Test
-	public void testCreateDishWithCategoryIdZero() {
+	 void testCreateDishWithCategoryIdZero() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -205,11 +204,11 @@ public class TestDish {
 		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateDishWithNegativeCategoryId() {
+	 void testCreateDishWithNegativeCategoryId() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -228,11 +227,11 @@ public class TestDish {
 		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateDishWithInvalidCategoryId() {
+	 void testCreateDishWithInvalidCategoryId() {
 
 		DishService dishService = new DishService();
 
@@ -253,11 +252,11 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateDishWithNegativeDishPrice() {
+	 void testCreateDishWithNegativeDishPrice() {
 
 		DishService dishService = new DishService();
 
@@ -277,12 +276,12 @@ public class TestDish {
 		String expectedMessage = "Price cannot be less than zero";
 		String actualMessage = exception.getMessage();
 		
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	// Quantity
 	@Test
-	public void testCreateDishWithNegativeQuantity() {
+	 void testCreateDishWithNegativeQuantity() {
 
 		DishService dishService = new DishService();
 
@@ -303,11 +302,11 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateDishWithQuantityZero() {
+	 void testCreateDishWithQuantityZero() {
 
 		DishService dishService = new DishService();
 
@@ -327,11 +326,11 @@ public class TestDish {
 		String expectedMessage = "Quantity cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testCreateDishWithWrongQuantityAndQuantityUnit() {
+	 void testCreateDishWithWrongQuantityAndQuantityUnit() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -350,13 +349,13 @@ public class TestDish {
 		String expectedMessage = "Check Quantity and QuantityUnit";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 
 	
 	@Test
-	public void testUpdatedDishWithNegativeQuantity() {
+	 void testUpdatedDishWithNegativeQuantity() {
 		DishService dishService = new DishService();
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -376,12 +375,12 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	@Test
-	public void testUpdateDishWithQuantityZero() {
+	 void testUpdateDishWithQuantityZero() {
 
 		DishService dishService = new DishService();
 
@@ -401,12 +400,12 @@ public class TestDish {
 		String expectedMessage = "Quantity cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	@Test
-	public void testUpdateDishWithWrongQuantityAndQuantityUnit() {
+	 void testUpdateDishWithWrongQuantityAndQuantityUnit() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -426,12 +425,12 @@ public class TestDish {
 		String expectedMessage = "Check Quantity and QuantityUnit";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	@Test
-	public void testUpdateDishWithMenuIdZero() {
+	 void testUpdateDishWithMenuIdZero() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -451,12 +450,12 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	@Test
-	public void testUpdateDishWithNegativeMenuId() {
+	 void testUpdateDishWithNegativeMenuId() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -475,11 +474,11 @@ public class TestDish {
 		String expectedMessage = "MenuId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testUpdateDishWithInvalidMenuId() {
+	 void testUpdateDishWithInvalidMenuId() {
 
 		DishService dishService = new DishService();
 
@@ -500,12 +499,12 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		//System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 
 	}
 
 	@Test
-	public void testUpdateDishWithCategoryIdZero() {
+	 void testUpdateDishWithCategoryIdZero() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -524,11 +523,11 @@ public class TestDish {
 		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testUpdateDishWithNegativeCategoryId() {
+	 void testUpdateDishWithNegativeCategoryId() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -547,11 +546,11 @@ public class TestDish {
 		String expectedMessage = "CategoryId cannot be less than or equal to zero";
 		String actualMessage = exception.getMessage();
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	@Test
-	public void testUpdateDishWithInvalidCategoryId() {
+	 void testUpdateDishWithInvalidCategoryId() {
 
 		DishService dishService = new DishService();
 
@@ -572,12 +571,12 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	@Test
-	public void testUpdateDishWithNegativeDishPrice() {
+	 void testUpdateDishWithNegativeDishPrice() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -597,13 +596,13 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	
 	@Test
-	public void testUpdateDishWithDishIdZero() {
+	 void testUpdateDishWithDishIdZero() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -623,12 +622,12 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	@Test
-	public void testUpdateDishWithNegativeDishId() {
+	 void testUpdateDishWithNegativeDishId() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -648,12 +647,12 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 
 	
 	@Test
-	public void testUpdateDishWithInvalidDishId() {
+	 void testUpdateDishWithInvalidDishId() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -673,13 +672,13 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
 	// delete
 	@Test
-	public void testDeleteDishWithValidDishId() {
+	 void testDeleteDishWithValidDishId() {
 		DishService dishService = new DishService();
 		
 		assertDoesNotThrow(() -> {
@@ -697,7 +696,7 @@ public class TestDish {
 	
 	
 	@Test
-	public void testDeleteDishWithDishIdZero() {
+	 void testDeleteDishWithDishIdZero() {
 		DishService dishService = new DishService();
 		
 		Exception exception = assertThrows(ValidationException.class, ()-> {
@@ -708,11 +707,11 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	@Test
-	public void testDeleteDishWithNegativeDishId() {
+	 void testDeleteDishWithNegativeDishId() {
 		DishService dishService = new DishService();
 		
 		Exception exception = assertThrows(ValidationException.class, ()-> {
@@ -723,11 +722,11 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	@Test
-	public void testDeleteDishWithInvalidDishId() {
+	 void testDeleteDishWithInvalidDishId() {
 		DishService dishService = new DishService();
 		
 		Exception exception = assertThrows(ValidationException.class, ()-> {
@@ -738,7 +737,7 @@ public class TestDish {
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
-		assertTrue(expectedMessage.equals(actualMessage));
+		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	

@@ -78,5 +78,8 @@ public class StringUtil {
 					+ "one Lowercase,one Special character,one number");
 		}
 	}
+	
+	
+	
 
 }

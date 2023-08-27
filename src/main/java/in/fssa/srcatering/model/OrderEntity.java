@@ -2,7 +2,7 @@ package in.fssa.srcatering.model;
 
 import java.time.LocalDateTime;
 
-public class OrderEntity {
+public abstract class OrderEntity {
 
 	private int id;
 	private int userId;

@@ -154,7 +154,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 
 		try {
-			String query = "UPDATE users SET status =0 WHERE id = ? AND status = 1";
+			String query = "UPDATE users SET status =1 WHERE id = ? AND status = 0";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
@@ -190,11 +190,12 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT id FROM users WHERE status = 1 && id =? ";
+			String query = "SELECT id FROM users WHERE id = ? AND status = 1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
 			ps.setInt(1, userId);
+			
 			rs = ps.executeQuery();
 
 			if (!rs.next()) {
@@ -328,11 +329,6 @@ public class UserDAO implements UserInterface {
 		return user;
 	}
 
-	@Override
-	public int count() {
-
-		return 0;
-	}
 	
 	/**
      * Changes the status of a user from deactivated (0) to active (1).

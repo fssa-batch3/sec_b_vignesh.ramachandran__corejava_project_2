@@ -35,10 +35,10 @@ public class DishService {
 			int generatedDishId = -1;
 
 			DishValidator.validate(dish);
-			DishValidator.ValidateAllIdsAndDishName(dish);
+			DishValidator.validateAllIdsAndDishName(dish);
 
 			// dish
-			generatedDishId = dishDAO.create(dish.getDishName().trim(), dish.getQuantity(), dish.getQuantityUnit());
+			generatedDishId = dishDAO.create(dish.getDishName().trim().toUpperCase(), dish.getQuantity(), dish.getQuantityUnit());
 
 			// dish price
 			dishPriceService.createDishPrice(generatedDishId, dish.getDishPrice());
@@ -67,7 +67,7 @@ public class DishService {
 			DishPriceService dishPriceService = new DishPriceService();
 
 			DishValidator.validate(dish);
-			DishValidator.ValidateIds(dish.getMenuId(), dish.getCategoryId(), dish.getId());
+			DishValidator.validateIds(dish.getMenuId(), dish.getCategoryId(), dish.getId());
 
 			dishDAO.update(dish);
 

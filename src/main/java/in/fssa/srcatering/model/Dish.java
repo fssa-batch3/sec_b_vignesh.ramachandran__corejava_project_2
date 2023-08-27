@@ -6,14 +6,20 @@ public class Dish extends DishEntity {
 		
 	}
 	
-	public Dish(int id, String dish_name, int quantity, QuantityUnit quantity_unit, int menu_id, int category_id, int dish_price) {
+	public Dish(int id, String dishName, int quantity, QuantityUnit quantityUnit, int menuId, int categoryId, int dishPrice) {
 		super.setId(id);
-		super.setDishName(dish_name);
+		super.setDishName(dishName);
 		super.setQuantity(quantity);
-		super.setQuantityUnit(quantity_unit);
-		super.setMenuId(menu_id);
-		super.setCategoryId(category_id);
-		super.setDishPrice(dish_price);
+		super.setQuantityUnit(quantityUnit);
+		super.setMenuId(menuId);
+		super.setCategoryId(categoryId);
+		super.setDishPrice(dishPrice);
+	}
+
+	@Override
+	public int compareTo(DishEntity o) {
+	
+		return Integer.compare(this.getId(), o.getId());
 	}
 
 }

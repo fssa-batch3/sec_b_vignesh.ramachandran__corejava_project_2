@@ -1,6 +1,6 @@
 package in.fssa.srcatering.model;
 
-public class OrderProductEntity {
+public abstract class OrderProductEntity {
 	
 	private int id;
 	private int orderId;

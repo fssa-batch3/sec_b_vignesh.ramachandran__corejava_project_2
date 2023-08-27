@@ -6,10 +6,16 @@ public class DishPrice extends DishPriceEntity {
 		
 	}
 	
-	public DishPrice(int id, int price, int dish_id) {
+	public DishPrice(int id, int price, int dishId) {
 		super.setId(id);
 		super.setPrice(price);
-		super.setDishId(dish_id);
+		super.setDishId(dishId);
+	}
+
+	@Override
+	public int compareTo(DishEntity o) {
+		
+		return Integer.compare(this.getId(), o.getId());
 	}
 
 }

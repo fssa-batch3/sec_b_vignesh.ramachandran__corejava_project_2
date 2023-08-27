@@ -1,6 +1,6 @@
 package in.fssa.srcatering.model;
 
-public class CategoryDishEntity implements Comparable<DishEntity> {
+public abstract class CategoryDishEntity implements Comparable<CategoryDishEntity> {
 
 	private int id;
 	private int menuId;
@@ -48,10 +48,5 @@ public class CategoryDishEntity implements Comparable<DishEntity> {
 		this.status = status;
 	}
 
-	@Override
-	public int compareTo(DishEntity o) {
-
-		return 0;
-	}
 
 }
