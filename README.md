@@ -7,7 +7,7 @@
 - [ ] Create an ER diagram of the database
 - [ ] Write Create table scripts [script](/src/main/resources/db/migration/V1__create_users.sql)
 
-![ER Diagram](path/to/ER/diagram)
+![ER Diagram](https://iili.io/HtI76ga.png)
 
 ## Project Setup
 
