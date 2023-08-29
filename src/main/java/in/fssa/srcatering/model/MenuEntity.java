@@ -41,7 +41,10 @@ public abstract class MenuEntity implements Comparable<MenuEntity> {
 
 	@Override
 	public String toString() {
-		return "MenuEntity [id=" + id + ", menuName=" + menuName + ", description=" + description + "]";
+		return "MenuEntity [id=" + id + ", menuName=" + menuName + ", description=" + description + ", image=" + image
+				+ "]";
 	}
+
+
 
 }

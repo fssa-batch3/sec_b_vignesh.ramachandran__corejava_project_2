@@ -216,10 +216,10 @@ public class DishPriceDAO {
 	/**
 	 * Deletes dish prices from the database associated with the provided dish ID.
 	 *
-	 * @param dish_id The ID of the dish for which dish prices are to be deleted.
+	 * @param dishId The ID of the dish for which dish prices are to be deleted.
 	 * @throws DAOException If a database error occurs during the deletion.
 	 */
-	void deleteDishPriceByDishId(int dish_id) throws DAOException {
+	void deleteDishPriceByDishId(int dishId) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
@@ -229,7 +229,7 @@ public class DishPriceDAO {
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			
-			ps.setInt(1, dish_id);
+			ps.setInt(1, dishId);
 			
 			int rowsAffected = ps.executeUpdate();
 

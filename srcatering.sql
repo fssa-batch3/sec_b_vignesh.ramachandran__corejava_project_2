@@ -20,6 +20,7 @@ VALUES ("Vignesh", "vignesh@gmail.com", 6379370482, "Vig@1234"),
 SELECT * FROM users;
 
 
+
 CREATE TABLE IF NOT EXISTS menus (
 id INT auto_increment primary KEY,
 menu_name VARCHAR(50) NOT NULL,

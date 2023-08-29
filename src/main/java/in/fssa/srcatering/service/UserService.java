@@ -17,11 +17,11 @@ public class UserService {
 	UserDAO userDAO = new UserDAO();
 
 	/**
-     * Retrieves a list of all users.
-     *
-     * @return A list of all users.
-     * @throws ServiceException If there's an issue with the service operation.
-     */
+	 * Retrieves a list of all users.
+	 *
+	 * @return A list of all users.
+	 * @throws ServiceException If there's an issue with the service operation.
+	 */
 	public List<User> getAllUsers() throws ServiceException {
 
 		List<User> userList;
@@ -41,13 +41,13 @@ public class UserService {
 
 	}
 
-	 /**
-     * Creates a new user.
-     *
-     * @param newUser The user object to create.
-     * @throws ValidationException If the provided user data is not valid.
-     * @throws ServiceException    If there's an issue with the service operation.
-     */
+	/**
+	 * Creates a new user.
+	 *
+	 * @param newUser The user object to create.
+	 * @throws ValidationException If the provided user data is not valid.
+	 * @throws ServiceException    If there's an issue with the service operation.
+	 */
 	public void createUser(User newUser) throws ValidationException, ServiceException {
 
 		try {
@@ -55,11 +55,11 @@ public class UserService {
 			UserValidator.isEmailAlreadyExists(newUser.getEmail());
 			userDAO.create(newUser);
 		} catch (DAOException e) {
-			if(e.getMessage().contains("Email already exists")) {
-				
+			if (e.getMessage().contains("Email already exists")) {
+
 				throw new ServiceException("Failed to Create User EmailId already exists");
-			}else {
-				
+			} else {
+
 				throw new ServiceException("Failed to Create User");
 			}
 		}
@@ -67,13 +67,13 @@ public class UserService {
 	}
 
 	/**
-     * Updates an existing user.
-     *
-     * @param id      The ID of the user to update.
-     * @param newUser The updated user object.
-     * @throws ValidationException If the provided user data or ID is not valid.
-     * @throws ServiceException    If there's an issue with the service operation.
-     */
+	 * Updates an existing user.
+	 *
+	 * @param id      The ID of the user to update.
+	 * @param newUser The updated user object.
+	 * @throws ValidationException If the provided user data or ID is not valid.
+	 * @throws ServiceException    If there's an issue with the service operation.
+	 */
 	public void updateUser(int id, User newUser) throws ValidationException, ServiceException {
 
 		try {
@@ -90,12 +90,12 @@ public class UserService {
 	}
 
 	/**
-     * Deletes a user by ID.
-     *
-     * @param id The ID of the user to delete.
-     * @throws ValidationException If the provided user ID is not valid.
-     * @throws ServiceException    If there's an issue with the service operation.
-     */
+	 * Deletes a user by ID.
+	 *
+	 * @param id The ID of the user to delete.
+	 * @throws ValidationException If the provided user ID is not valid.
+	 * @throws ServiceException    If there's an issue with the service operation.
+	 */
 	public void deleteUser(int id) throws ValidationException, ServiceException {
 
 		try {
@@ -110,18 +110,18 @@ public class UserService {
 	}
 
 	/**
-     * Finds a user by ID.
-     *
-     * @param id The ID of the user to find.
-     * @return The user object.
-     * @throws ValidationException If the provided user ID is not valid.
-     * @throws ServiceException    If there's an issue with the service operation.
-     */
+	 * Finds a user by ID.
+	 *
+	 * @param id The ID of the user to find.
+	 * @return The user object.
+	 * @throws ValidationException If the provided user ID is not valid.
+	 * @throws ServiceException    If there's an issue with the service operation.
+	 */
 	public User findByUserId(int id) throws ValidationException, ServiceException {
 
 		User user = null;
 		try {
-			
+
 			UserValidator.isUserIdIsValid(id);
 
 			user = userDAO.findById(id);
@@ -135,13 +135,13 @@ public class UserService {
 	}
 
 	/**
-     * Finds a user by email.
-     *
-     * @param email The email of the user to find.
-     * @return The user object.
-     * @throws ValidationException If the provided email is not valid.
-     * @throws ServiceException    If there's an issue with the service operation.
-     */
+	 * Finds a user by email.
+	 *
+	 * @param email The email of the user to find.
+	 * @return The user object.
+	 * @throws ValidationException If the provided email is not valid.
+	 * @throws ServiceException    If there's an issue with the service operation.
+	 */
 	public User findByEmail(String email) throws ValidationException, ServiceException {
 
 		User user = null;
@@ -157,24 +157,45 @@ public class UserService {
 		System.out.println(user);
 		return user;
 	}
+
+	/**
+	 * 
+	 * @param email
+	 * @param password
+	 * @throws ValidationException
+	 */
+	public void loginUser(String email, String password) throws ValidationException {
+		try {
+			StringUtil.rejectIfInvalidString(email, "Email");
+			StringUtil.rejectIfInvalidString(password, "Password");
+			StringUtil.rejectIfInvalidEmail(email);
+			StringUtil.rejectIfIvalidPassword(password);
+
+			userDAO.findByEmail(email);
+			userDAO.passwordChecker(email, password);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ValidationException(e.getMessage());
+		}
+	}
 	
-	 /**
-     * Changes the status of a user by ID.
-     *
-     * @param id The ID of the user whose status to change.
-     * @throws ValidationException If the provided user ID is not valid.
-     * @throws ServiceException    If there's an issue with the service operation.
-     */
+
+	/**
+	 * Changes the status of a user by ID.
+	 *
+	 * @param id The ID of the user whose status to change 0 to 1.
+	 * @throws ValidationException If the provided user ID is not valid.
+	 * @throws ServiceException    If there's an issue with the service operation.
+	 */
 	public void changeUserStatus(int id) throws ValidationException, ServiceException {
-		
-		
+
 		try {
 			IntUtil.rejectIfInvalidInt(id, "UserId");
 			userDAO.changeStatus(id);
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
-			
+
 		}
 	}
 

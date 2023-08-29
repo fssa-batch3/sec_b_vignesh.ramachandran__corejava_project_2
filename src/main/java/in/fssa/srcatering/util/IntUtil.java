@@ -49,6 +49,9 @@ public class IntUtil {
 		if(input < 0) {
 			throw new ValidationException(inputName +" cannot be less than zero");
 		}
+		if(input > 150) {
+			throw new ValidationException( inputName+ " cannot be above 150");
+		}
 	}
 	
 	/**

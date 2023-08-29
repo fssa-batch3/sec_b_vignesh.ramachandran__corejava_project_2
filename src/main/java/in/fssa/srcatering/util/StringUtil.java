@@ -64,7 +64,7 @@ public class StringUtil {
      */
 	public static void rejectIfIvalidPassword(String password) throws ValidationException {
 
-		final String regexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+		final String regexPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=])(?=\\S+$).{8}$";
 
 		// Create a Pattern object
 		Pattern pattern = Pattern.compile(regexPattern);
@@ -74,8 +74,8 @@ public class StringUtil {
 
 		if (!matcher.matches()) {
 
-			throw new ValidationException("Password doesn't matches with pattern. Password atleast contain one Uppercase,"
-					+ "one Lowercase,one Special character,one number");
+			throw new ValidationException("Password atleast contain one Uppercase, one Lowercase,one Special character,"
+					+ "one number, must contains 8 characters. Eg: Abc@1234");
 		}
 	}
 	

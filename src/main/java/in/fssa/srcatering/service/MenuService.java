@@ -9,7 +9,6 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Menu;
-import in.fssa.srcatering.util.StringUtil;
 import in.fssa.srcatering.validator.MenuValidator;
 
 public class MenuService {

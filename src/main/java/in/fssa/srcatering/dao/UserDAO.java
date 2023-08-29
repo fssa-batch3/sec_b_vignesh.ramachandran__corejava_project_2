@@ -15,12 +15,12 @@ import in.fssa.srcatering.util.ConnectionUtil;
 public class UserDAO implements UserInterface {
 	
 	
-	private static final String COLUMN_NAME = "name";
-	private static final String COLUMN_EMAIL = "email";
-	private static final String COLUMN_PASSWORD = "password";
-	private static final String COLUMN_PHONENUMBER = "phone_number";
-	private static final String COLUMN_STATUS = "status";
-	private static final String COLUMN_ID = "id";
+	private static final String USERNAME = "name";
+	private static final String USEREMAIL = "email";
+	private static final String USERPASSWORD = "password";
+	private static final String USERPHONENUMBER = "phone_number";
+	private static final String USERSTATUS = "status";
+	private static final String USERID = "id";
 
 	/**
      * Retrieves a list of all active users from the 'users' table.
@@ -45,12 +45,12 @@ public class UserDAO implements UserInterface {
 
 			while (rs.next()) {
 				User newUser = new User();
-				newUser.setId(rs.getInt(COLUMN_ID));
-				newUser.setName(rs.getString(COLUMN_NAME));
-				newUser.setEmail(rs.getString(COLUMN_EMAIL));
-				newUser.setPhoneNumber(rs.getLong(COLUMN_PHONENUMBER));
-				newUser.setPassword(rs.getString(COLUMN_PASSWORD));
-				newUser.setStatus(rs.getBoolean(COLUMN_STATUS));
+				newUser.setId(rs.getInt(USERID));
+				newUser.setName(rs.getString(USERNAME));
+				newUser.setEmail(rs.getString(USEREMAIL));
+				newUser.setPhoneNumber(rs.getLong(USERPHONENUMBER));
+				newUser.setPassword(rs.getString(USERPASSWORD));
+				newUser.setStatus(rs.getBoolean(USERSTATUS));
 				userList.add(newUser);
 			}
 
@@ -99,6 +99,9 @@ public class UserDAO implements UserInterface {
 			ConnectionUtil.close(con, ps);
 		}
 	}
+	
+	
+	
 
 	/**
      * Updates an existing user's information in the 'users' table.
@@ -154,7 +157,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 
 		try {
-			String query = "UPDATE users SET status =1 WHERE id = ? AND status = 0";
+			String query = "UPDATE users SET status = 1 WHERE id = ? AND status = 0";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
@@ -237,12 +240,12 @@ public class UserDAO implements UserInterface {
 
 			if (rs.next()) {
 				user = new User();
-				user.setId(rs.getInt(COLUMN_ID));
-				user.setName(rs.getString(COLUMN_NAME));
-				user.setEmail(rs.getString(COLUMN_EMAIL));
-				user.setPassword(rs.getString(COLUMN_PASSWORD));
-				user.setPhoneNumber(rs.getLong(COLUMN_PHONENUMBER));
-				user.setStatus(rs.getBoolean(COLUMN_STATUS));
+				user.setId(rs.getInt(USERID));
+				user.setName(rs.getString(USERNAME));
+				user.setEmail(rs.getString(USEREMAIL));
+				user.setPassword(rs.getString(USERPASSWORD));
+				user.setPhoneNumber(rs.getLong(USERPHONENUMBER));
+				user.setStatus(rs.getBoolean(USERSTATUS));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -312,12 +315,12 @@ public class UserDAO implements UserInterface {
 
 			if (rs.next()) {
 				user = new User();
-				user.setId(rs.getInt(COLUMN_ID));
-				user.setName(rs.getString(COLUMN_NAME));
-				user.setPhoneNumber(rs.getLong(COLUMN_PHONENUMBER));
-				user.setEmail(rs.getString(COLUMN_EMAIL));
-				user.setPassword(rs.getString(COLUMN_PASSWORD));
-				user.setStatus(rs.getBoolean(COLUMN_STATUS));
+				user.setId(rs.getInt(USERID));
+				user.setName(rs.getString(USERNAME));
+				user.setPhoneNumber(rs.getLong(USERPHONENUMBER));
+				user.setEmail(rs.getString(USEREMAIL));
+				user.setPassword(rs.getString(USERPASSWORD));
+				user.setStatus(rs.getBoolean(USERSTATUS));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -327,6 +330,37 @@ public class UserDAO implements UserInterface {
 		}
 		
 		return user;
+	}
+	
+	/**
+	 * 
+	 * @param email
+	 * @param password
+	 * @throws DAOException
+	 */
+	public void passwordChecker(String email, String password) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			String query = "SELECT password FROM users WHERE email = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setString(1, email);
+			
+			rs = ps.executeQuery();
+			if(rs.next() && (!rs.getString(USERPASSWORD).equals(password))) {
+					throw new DAOException("Password mismatch");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
 	}
 
 	

@@ -12,6 +12,8 @@ import in.fssa.srcatering.model.Menu;
 import in.fssa.srcatering.util.ConnectionUtil;
 
 public class MenuDAO {
+	
+	private static final String MENUNAME = "menu_name";
 
 	/**
 	 * Retrieves a list of all menus from the 'menus' table.
@@ -28,7 +30,7 @@ public class MenuDAO {
 		List<Menu> menuList = new ArrayList<>();
 
 		try {
-			String query = "SELECT id, menu_name, description FROM menus";
+			String query = "SELECT id, menu_name, description,image FROM menus";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -36,8 +38,9 @@ public class MenuDAO {
 			while (rs.next()) {
 				Menu menu = new Menu();
 				menu.setId(rs.getInt("id"));
-				menu.setMenuName(rs.getString("menu_name"));
+				menu.setMenuName(rs.getString(MENUNAME));
 				menu.setDescription(rs.getString("description"));
+				menu.setImage("image");
 				menuList.add(menu);
 			}
 
@@ -125,7 +128,7 @@ public class MenuDAO {
 
 		try {
 
-			String query = "SELECT id, menu_name, description FROM menus WHERE id =?";
+			String query = "SELECT id, menu_name, description,image FROM menus WHERE id =?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
@@ -136,8 +139,9 @@ public class MenuDAO {
 			if (rs.next()) {
 				newMenu = new Menu();
 				newMenu.setId(rs.getInt("id"));
-				newMenu.setMenuName(rs.getString("menu_name"));
+				newMenu.setMenuName(rs.getString(MENUNAME));
 				newMenu.setDescription(rs.getString("description"));
+				newMenu.setImage("image");
 			}
 
 		} catch (SQLException e) {
@@ -204,7 +208,7 @@ public class MenuDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				menuNames.add(rs.getString("menu_name").trim().toLowerCase());
+				menuNames.add(rs.getString(MENUNAME).trim().toLowerCase());
 			}
 
 		} catch (SQLException e) {

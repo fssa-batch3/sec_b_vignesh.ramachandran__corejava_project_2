@@ -12,6 +12,8 @@ import in.fssa.srcatering.model.Category;
 import in.fssa.srcatering.util.ConnectionUtil;
 
 public class CategoryDAO {
+	
+	private static final String CATEGORYNAME = "category_name";
 
 	/**
 	 * Creates a new category in the database.
@@ -64,7 +66,7 @@ public class CategoryDAO {
 			while (rs.next()) {
 				Category category = new Category();
 				category.setId(rs.getInt("id"));
-				category.setCategoryName(rs.getString("category_name"));
+				category.setCategoryName(rs.getString(CATEGORYNAME));
 				categoryList.add(category);
 			}
 
@@ -107,7 +109,7 @@ public class CategoryDAO {
 			if (rs.next()) {
 				newCategory = new Category();
 				newCategory.setId(rs.getInt("id"));
-				newCategory.setCategoryName(rs.getString("category_name"));
+				newCategory.setCategoryName(rs.getString(CATEGORYNAME));
 			}
 
 		} catch (SQLException e) {
@@ -175,7 +177,7 @@ public class CategoryDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				categoryNames.add(rs.getString("category_name").trim().toLowerCase());
+				categoryNames.add(rs.getString(CATEGORYNAME).trim().toLowerCase());
 			}
 
 		} catch (SQLException e) {

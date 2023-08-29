@@ -165,8 +165,8 @@ import in.fssa.srcatering.service.UserService;
 
 			userService.createUser(newUser);
 		});
-		String expectedMessage = "Password doesn't matches with pattern. Password atleast contain one Uppercase,"
-				+ "one Lowercase,one Special character,one number";
+		String expectedMessage = "Password atleast contain one Uppercase, one Lowercase,one Special character,"
+				+ "one number, must contains 8 characters. Eg: Abc@1234";
 		String actualMessage = exception.getMessage();
 		assertEquals(expectedMessage,actualMessage);
 	}
@@ -394,8 +394,8 @@ import in.fssa.srcatering.service.UserService;
 
 			userService.updateUser(1,newUser);
 		});
-		String expectedMessage = "Password doesn't matches with pattern. Password atleast contain one Uppercase,"
-				+ "one Lowercase,one Special character,one number";
+		String expectedMessage = "Password atleast contain one Uppercase, one Lowercase,one Special character,"
+				+ "one number, must contains 8 characters. Eg: Abc@1234";
 		String actualMessage = exception.getMessage();
 		assertEquals(expectedMessage,actualMessage);
 	}

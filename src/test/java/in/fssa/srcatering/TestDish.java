@@ -167,7 +167,7 @@ import in.fssa.srcatering.service.DishService;
 
 			Dish dish = new Dish();
 
-			dish.setMenuId(10);
+			dish.setMenuId(20);
 			dish.setCategoryId(1);
 			dish.setDishName("MINI UTTAPPAM");
 			dish.setDishPrice(30);
@@ -240,7 +240,7 @@ import in.fssa.srcatering.service.DishService;
 			Dish dish = new Dish();
 
 			dish.setMenuId(1);
-			dish.setCategoryId(10);
+			dish.setCategoryId(20);
 			dish.setDishName("MINI UTTAPPAM");
 			dish.setDishPrice(30);
 			dish.setQuantity(2);
@@ -274,6 +274,29 @@ import in.fssa.srcatering.service.DishService;
 			dishService.createDish(dish);
 		});
 		String expectedMessage = "Price cannot be less than zero";
+		String actualMessage = exception.getMessage();
+		
+		assertEquals(expectedMessage,actualMessage);
+	}
+	
+	@Test
+	void testCreateDishWithInvalidPrice() {
+		DishService dishService = new DishService();
+		
+		Exception exception = assertThrows(Exception.class, () -> {
+
+			Dish dish = new Dish();
+
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI UTTAPPAM");
+			dish.setDishPrice(151);
+			dish.setQuantity(2);
+			dish.setQuantityUnit(QuantityUnit.NOS);
+
+			dishService.createDish(dish);
+		});
+		String expectedMessage = "Price cannot be above 150";
 		String actualMessage = exception.getMessage();
 		
 		assertEquals(expectedMessage,actualMessage);
@@ -485,7 +508,7 @@ import in.fssa.srcatering.service.DishService;
 		Exception exception = assertThrows(ValidationException.class, () -> {
 
 			Dish dish = new Dish();
-			dish.setMenuId(10);
+			dish.setMenuId(20);
 			dish.setCategoryId(1);
 			dish.setDishName("MINI LADDU");
 			dish.setDishPrice(10);
@@ -558,7 +581,7 @@ import in.fssa.srcatering.service.DishService;
 
 			Dish dish = new Dish();
 			dish.setMenuId(1);
-			dish.setCategoryId(10);
+			dish.setCategoryId(20);
 			dish.setDishName("MINI LADDU");
 			dish.setDishPrice(10);
 			dish.setQuantity(1);
@@ -599,6 +622,30 @@ import in.fssa.srcatering.service.DishService;
 		assertEquals(expectedMessage,actualMessage);
 	}
 	
+	
+	@Test
+	 void testUpdateDishWithInvalidDishPrice() {
+		DishService dishService = new DishService();
+
+		Exception exception = assertThrows(ValidationException.class, () -> {
+
+			Dish dish = new Dish();
+			dish.setMenuId(1);
+			dish.setCategoryId(1);
+			dish.setDishName("MINI LADDU");
+			dish.setDishPrice(151);
+			dish.setQuantity(1);
+			dish.setQuantityUnit(QuantityUnit.NOS);
+			dish.setId(1);
+
+			dishService.updateDish(dish);
+		});
+		String expectedMessage = "Price cannot be above 150";
+		String actualMessage = exception.getMessage();
+		System.out.println(actualMessage);
+
+		assertEquals(expectedMessage,actualMessage);
+	}
 	
 	
 	@Test

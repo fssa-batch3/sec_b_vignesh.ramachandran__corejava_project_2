@@ -12,6 +12,8 @@ import in.fssa.srcatering.util.IntUtil;
 import in.fssa.srcatering.util.StringUtil;
 
 public class MenuValidator {
+	
+	public static final String MENUNAME = "MenuName";
 
 	/**
 	 * Validates whether the provided Menu ID is valid.
@@ -43,8 +45,8 @@ public class MenuValidator {
 	 */
 	public static void validateMenu(Menu menu) throws ValidationException {
 
-		StringUtil.rejectIfInvalidString(menu.getMenuName(), "MenuName");
-		StringUtil.rejectIfInvalidName(menu.getMenuName(), "MenuName");
+		StringUtil.rejectIfInvalidString(menu.getMenuName(), MENUNAME);
+		StringUtil.rejectIfInvalidName(menu.getMenuName(), MENUNAME);
 		StringUtil.rejectIfInvalidString(menu.getDescription(), "Description");
 		StringUtil.rejectIfInvalidString(menu.getImage(), "Image");
 
@@ -81,8 +83,8 @@ public class MenuValidator {
 
 			MenuDAO menuDAO = new MenuDAO();
 
-			StringUtil.rejectIfInvalidString(menuName, "MenuName");
-			StringUtil.rejectIfInvalidName(menuName, "MenuName");
+			StringUtil.rejectIfInvalidString(menuName, MENUNAME);
+			StringUtil.rejectIfInvalidName(menuName, MENUNAME);
 
 			List<String> menuNames;
 
