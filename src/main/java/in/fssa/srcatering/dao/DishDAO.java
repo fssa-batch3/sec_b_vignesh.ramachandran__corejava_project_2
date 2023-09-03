@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ValidationException;
@@ -141,8 +143,9 @@ public class DishDAO {
 
 		try {
 			dish = new Dish();
-			String query = "SELECT d.id, d.dish_name, d.quantity, d.quantity_unit, cd.menu_id, cd.category_id"
-					+ " FROM dishes d JOIN category_dish cd ON d.id = cd.dish_id WHERE d.id = ?";
+			String query = "SELECT d.id, d.dish_name, d.quantity, d.quantity_unit, cd.menu_id, cd.category_id,cd.status,dp.price "
+					+ " FROM dishes d JOIN category_dishes cd ON d.id = cd.dish_id "
+					+ "JOIN dish_price dp ON d.id = dp.dish_id WHERE d.id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, dishId);
@@ -161,6 +164,7 @@ public class DishDAO {
 				dish.setQuantityUnit(quantityUnit);
 				dish.setMenuId(rs.getInt("menu_id"));
 				dish.setCategoryId(rs.getInt("category_id"));
+				dish.setStatus(rs.getInt("status"));
 			}
 
 		} catch (SQLException e) {
@@ -179,19 +183,22 @@ public class DishDAO {
 	 * @return A list of Dish objects representing all active dishes.
 	 * @throws DAOException If there's an issue with the database operation.
 	 */
-	public List<Dish> findAllDishes() throws DAOException {
+	public Set<Dish> findAllDishesByMenuIdCategoryId(int menuId, int categoryId) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		List<Dish> dishes = new ArrayList<>();
+		Set<Dish> dishes = new TreeSet<>();
 
 		try {
-			String query = "SELECT d.id, d.dish_name, d.quantity, d.quantity_unit, cd.menu_id, cd.category_id, dp.price "
-					+ "FROM dishes d JOIN category_dish cd ON d.id = cd.dish_id "
-					+ "JOIN dish_price dp ON d.id = dp.dish_id WHERE cd.status = 1";
+			String query = "SELECT d.id, d.dish_name, d.quantity, d.quantity_unit, cd.menu_id, cd.category_id, dp.price,cd.status "
+					+ "FROM dishes d JOIN category_dishes cd ON d.id = cd.dish_id "
+					+ "JOIN dish_price dp ON d.id = dp.dish_id WHERE dp.end_date IS NULL AND cd.menu_id=? AND cd.category_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, menuId);
+			ps.setInt(2, categoryId);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -207,6 +214,7 @@ public class DishDAO {
 
 				dish.setQuantityUnit(quantityUnit);
 				dish.setDishPrice(rs.getInt("price"));
+				dish.setStatus(rs.getInt("status"));
 
 				dishes.add(dish);
 			}

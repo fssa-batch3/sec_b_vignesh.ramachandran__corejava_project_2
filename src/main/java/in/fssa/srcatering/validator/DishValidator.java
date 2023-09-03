@@ -59,13 +59,12 @@ public class DishValidator {
 			MenuService menuService = new MenuService();
 			menuService.isMenuIdIsValid(dish.getMenuId());
 
-			CategoryService categoryService = new CategoryService();
-			categoryService.isCategoryIdIsValid(dish.getCategoryId());
+			CategoryValidator.isCategoryIdIsValid(dish.getCategoryId());
 			
 
 			CategoryDishDAO categoryDishDAO = new CategoryDishDAO();
 
-			List<String> dishNames = categoryDishDAO.findDishNameByMenuIdAndCategoryId(dish.getMenuId(),
+			List<String> dishNames = categoryDishDAO.findDishNamesByMenuIdAndCategoryId(dish.getMenuId(),
 					dish.getCategoryId());
 
 			if (dishNames.contains(dish.getDishName().trim().toUpperCase())) {
@@ -95,8 +94,7 @@ public class DishValidator {
 			MenuService menuService = new MenuService();
 			menuService.isMenuIdIsValid(menuId);
 
-			CategoryService categoryService = new CategoryService();
-			categoryService.isCategoryIdIsValid(categoryId);
+			CategoryValidator.isCategoryIdIsValid(categoryId);
 
 			// validate menu_id , category_id, dish_id in category_dish table
 			CategoryDishService categoryDishService = new CategoryDishService();
@@ -104,8 +102,7 @@ public class DishValidator {
 			categoryDishService.isDishIdIsValid(dishId);
 
 			// validate dish_id in dish table
-			DishService dishService = new DishService();
-			dishService.isDishIdIsValid(dishId);
+			isDishIdIsValid(dishId);
 
 			// validate dish_id in dish_price table
 			DishPriceService dishPriceService = new DishPriceService();

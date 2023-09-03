@@ -9,6 +9,9 @@ import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.util.IntUtil;
 import in.fssa.srcatering.validator.CategoryDishValidator;
+import in.fssa.srcatering.validator.CategoryValidator;
+import in.fssa.srcatering.validator.DishValidator;
+import in.fssa.srcatering.validator.MenuValidator;
 
 public class CategoryDishService {
 
@@ -69,7 +72,7 @@ public class CategoryDishService {
 		
 		try {
 
-			dishNames = categoryDishDAO.findDishNameByMenuIdAndCategoryId(menuId, categoryId);
+			dishNames = categoryDishDAO.findDishNamesByMenuIdAndCategoryId(menuId, categoryId);
 
 		} catch (DAOException e) {
 			e.printStackTrace();
@@ -116,6 +119,24 @@ public class CategoryDishService {
 			throw new ServiceException("Failed to Create Dish");
 		}
 
+	}
+	
+	
+	public void updateCategoryDish(int menuId, int categoryId, int dishId, int status) throws ValidationException, ServiceException {
+		
+		
+		try {
+			MenuValidator.isMenuIdIsValid(menuId);
+			CategoryValidator.isCategoryIdIsValid(categoryId);
+			DishValidator.isDishIdIsValid(dishId);
+			if(status < 0 || status > 1) {
+				throw new ValidationException("Invalid Status");
+			}
+			categoryDishDAO.updateCategoryDish(menuId, categoryId, dishId, status);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
 	}
 
 	/**

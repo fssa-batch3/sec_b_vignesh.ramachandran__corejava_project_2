@@ -8,6 +8,7 @@ import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.util.IntUtil;
 import in.fssa.srcatering.validator.DishPriceValidator;
+import in.fssa.srcatering.validator.DishValidator;
 
 public class DishPriceService {
 
@@ -30,7 +31,7 @@ public class DishPriceService {
 			LocalDateTime localDateTime = LocalDateTime.now();
 			java.sql.Timestamp dateTime = java.sql.Timestamp.valueOf(localDateTime);
 
-			dishService.isDishIdIsValid(dishId);
+			DishValidator.isDishIdIsValid(dishId);
 
 			IntUtil.priceCheck(price, "Price");
 
@@ -61,6 +62,7 @@ public class DishPriceService {
 			DishPriceValidator.isDishIdIsValid(dishId);
 			
 			int price = dishPriceDAO.findPriceByDishId(dishId);
+			
 			int priceId = dishPriceDAO.findPriceIdByDishId(dishId);
 			
 			IntUtil.rejectIfInvalidInt(priceId, "PriceId");
@@ -69,6 +71,8 @@ public class DishPriceService {
 			java.sql.Timestamp dateTime = java.sql.Timestamp.valueOf(localDateTime);
 			
 			if (price != dishPrice) {
+				System.out.println("price in if condition"+price);
+				
 				dishPriceDAO.update(priceId, dateTime);
 				dishPriceDAO.create(dishId, dishPrice, dateTime);
 			}

@@ -27,11 +27,9 @@ public class CategoryDishValidator {
 		MenuService menuService = new MenuService();
 		menuService.isMenuIdIsValid(menuId);
 
-		CategoryService categoryService = new CategoryService();
-		categoryService.isCategoryIdIsValid(categoryId);
+		CategoryValidator.isCategoryIdIsValid(categoryId);
 
-		DishService dishService = new DishService();
-		dishService.isDishIdIsValid(dishId);
+		DishValidator.isDishIdIsValid(dishId);
 
 	}
 

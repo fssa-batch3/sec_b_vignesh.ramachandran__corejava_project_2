@@ -30,6 +30,8 @@ class TestCategory {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Category category = new Category();
 			category.setCategoryName(null);
+			category.setImage("https://iili.io/HWh0ZrB.jpg");
+			category.setMenu_id(1);
 			
 			categoryService.createCategory(category);
 		});
@@ -46,6 +48,8 @@ class TestCategory {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Category category = new Category();
 			category.setCategoryName("");
+			category.setImage("https://iili.io/HWh0ZrB.jpg");
+			category.setMenu_id(1);
 			
 			categoryService.createCategory(category);
 		});
@@ -62,6 +66,8 @@ class TestCategory {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Category category = new Category();
 			category.setCategoryName("Ordinary");
+			category.setImage("https://iili.io/HWh0ZrB.jpg");
+			category.setMenu_id(1);
 			
 			categoryService.createCategory(category);
 		});
@@ -71,54 +77,117 @@ class TestCategory {
 		assertEquals(expectedMessage, actualMessage);
 	}
 	
-
 	@Test
-	void testFindMenuByIdWithValidCategoryId() {
+	void testCreateCategoryWithImageNull() {
 		CategoryService categoryService = new CategoryService();
-
-		assertDoesNotThrow(() -> {
-			categoryService.findByIdCategoryId(1);
-		});
-	}
-
-	@Test
-	void testFindMenuByIdWithCategoryIdZero() {
-		CategoryService categoryService = new CategoryService();
-
+		
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			categoryService.findByIdCategoryId(0);
+			Category category = new Category();
+			category.setCategoryName("Ultra");
+			category.setImage(null);
+			category.setMenu_id(1);
+			
+			categoryService.createCategory(category);
 		});
-		String expectedMessage = "CategoryId cannot be less than or equal to zero";
+		String expectedMessage = "CategoryImage cannot be null or empty";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	void testCreateCategoryWithImageEmpty() {
+		CategoryService categoryService = new CategoryService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Category category = new Category();
+			category.setCategoryName("Ultra");
+			category.setImage("");
+			category.setMenu_id(1);
+			
+			categoryService.createCategory(category);
+		});
+		String expectedMessage = "CategoryImage cannot be null or empty";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	
+	@Test
+	void testCreateCategoryWithInvalidImage() {
+		CategoryService categoryService = new CategoryService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Category category = new Category();
+			category.setCategoryName("Ultra");
+			category.setImage("httlskd2345");
+			category.setMenu_id(1);
+			
+			categoryService.createCategory(category);
+		});
+		String expectedMessage = "Image should be URL.eg:http, https";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	
+	@Test
+	void testCreateCategoryWithMenuIdZero() {
+		CategoryService categoryService = new CategoryService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Category category = new Category();
+			category.setCategoryName("Ultra");
+			category.setImage("https://iili.io/HWh0ZrB.jpg");
+			category.setMenu_id(0);
+			
+			categoryService.createCategory(category);
+		});
+		String expectedMessage = "MenuId cannot be less than or equal to zero";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	void testCreateCategoryWithNegativeMenuId() {
+		CategoryService categoryService = new CategoryService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Category category = new Category();
+			category.setCategoryName("Ultra");
+			category.setImage("https://iili.io/HWh0ZrB.jpg");
+			category.setMenu_id(-2);
+			
+			categoryService.createCategory(category);
+		});
+		String expectedMessage = "MenuId cannot be less than or equal to zero";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	void testCreateCategoryWithInvalidMenuId() {
+		CategoryService categoryService = new CategoryService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Category category = new Category();
+			category.setCategoryName("Ultra");
+			category.setImage("https://iili.io/HWh0ZrB.jpg");
+			category.setMenu_id(20);
+			
+			categoryService.createCategory(category);
+		});
+		String expectedMessage = "MenuId not found";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
 	}
 
-	@Test
-	void testFindMenuByIdWithNegativeCategoryId() {
-		CategoryService categoryService = new CategoryService();
 
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			categoryService.findByIdCategoryId(-1);
-		});
-		String expectedMessage = "CategoryId cannot be less than or equal to zero";
-		String actualMessage = exception.getMessage();
-
-		assertEquals(expectedMessage, actualMessage);
-	}
-
-	@Test
-	void testFindMenuByIdWithInvalidCategoryId() {
-		CategoryService categoryService = new CategoryService();
-
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			categoryService.findByIdCategoryId(20);
-		});
-		String expectedMessage = "CategoryId not found";
-		String actualMessage = exception.getMessage();
-
-		assertEquals(expectedMessage, actualMessage);
-	}
 	
     private String generateRandomCategoryName() {
         String alphabet = "abcdefghijklmnopqrstuvwxyz";

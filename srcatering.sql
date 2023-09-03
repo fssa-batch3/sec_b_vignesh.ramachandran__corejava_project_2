@@ -21,6 +21,7 @@ SELECT * FROM users;
 
 
 
+
 CREATE TABLE IF NOT EXISTS menus (
 id INT auto_increment primary KEY,
 menu_name VARCHAR(50) NOT NULL,
@@ -53,11 +54,33 @@ VALUES("Ordinary"),
 ("Special"),
 ("VIP");
 
+-- https://iili.io/HWh0ZrB.jpg
+-- https://iili.io/HWh0b71.png
+-- https://iili.io/HWh0DdP.jpg
+-- https://iili.io/HWhX7YQ.jpg
+-- https://iili.io/HWhXYvV.jpg
+-- https://iili.io/HWhXayB.jpg
 
 SELECT * FROM categories;
 
+CREATE TABLE IF NOT EXISTS category_images (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	menu_id INT,
+	category_id INT,
+    image VARCHAR(255) NOT NULL,
+	FOREIGN KEY (menu_id) REFERENCES menus(id),
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+);
 
--- SELECT menu_id FROM category_dish WHERE menu_id=1 AND status = 1; 
+INSERT INTO category_images(menu_id, category_id, image) 
+VALUES (1,1,"https://iili.io/HWhlXMQ.jpg"), (2,1,"https://iili.io/HWhlXMQ.jpg"),(1,2,"https://iili.io/HWhlXMQ.jpg");
+
+
+SELECT * FROM category_images;
+
+
+SELECT c.id, c.category_name, ci.image, ci.menu_id FROM categories c JOIN category_images ci ON c.id = ci.category_id
+WHERE ci.menu_id = 1;
 
 CREATE TABLE IF NOT EXISTS dishes (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -77,13 +100,7 @@ VALUES ("MINI LADDU",  1, "NOS"),
 
 select * from dishes;	
 
-
-
-
-
--- update
--- update dishes Set quantity = 1
--- Where id = 1;
+SELECT d.dish_name FROM dishes d JOIN category_dishes cd ON d.id = cd.dish_id where cd.menu_id =1 AND cd.category_id =1;
 
 
 CREATE TABLE IF NOT EXISTS dish_price (
@@ -102,6 +119,8 @@ VALUES (10, 1),
 (10, 4);
 
 SELECT * From dish_price;
+
+SELECT price FROM dish_price WHERE dish_id=2 AND end_date IS NULL;
 
 
 CREATE TABLE IF NOT EXISTS category_dishes(
@@ -123,12 +142,14 @@ VALUES(1,1,1),
 
 SELECT * FROM category_dishes;
 
+
+
 -- drop table category_dishes;
 -- drop table dish_price;
 -- drop table dishes;
 
-SELECT d.id, d.dish_name, d.quantity, d.quantity_unit, cd.menu_id, cd.category_id, dp.price FROM dishes d JOIN category_dish cd ON d.id = cd.dish_id
-JOIN dish_price dp ON d.id = dp.dish_id WHERE d.id = 1;
+SELECT d.id, d.dish_name, d.quantity, d.quantity_unit, cd.menu_id, cd.category_id, dp.price FROM dishes d JOIN category_dishes cd ON d.id = cd.dish_id
+JOIN dish_price dp ON d.id = dp.dish_id WHERE cd.menu_id=1 AND cd.category_id=1;
 
 
 -- SELECT c.dish_id, dp.price FROM category_dish c INNER JOIN dish_price dp ON c.dish_id = dp.dish_id WHERE c.menu_id = 1 AND c.category_id =1;

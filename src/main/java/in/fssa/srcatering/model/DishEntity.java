@@ -9,6 +9,7 @@ public abstract class DishEntity implements Comparable<DishEntity> {
 	private int menuId;
 	private int categoryId;
 	private int dishPrice;
+	private int status;
 
 	public int getId() {
 		return id;
@@ -66,10 +67,19 @@ public abstract class DishEntity implements Comparable<DishEntity> {
 		this.dishPrice = dishPrice;
 	}
 
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "DishEntity [id=" + id + ", dishName=" + dishName + ", quantity=" + quantity + ", quantityUnit="
-				+ quantityUnit + ", menuId=" + menuId + ", categoryId=" + categoryId + ", dishPrice=" + dishPrice + "]";
+				+ quantityUnit + ", menuId=" + menuId + ", categoryId=" + categoryId + ", dishPrice=" + dishPrice
+				+ ", status=" + status + "]";
 	}
 
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.fssa.srcatering.exception.DAOException;
+import in.fssa.srcatering.model.Category;
 import in.fssa.srcatering.util.ConnectionUtil;
 
 public class CategoryDishDAO {
@@ -27,7 +28,7 @@ public class CategoryDishDAO {
 
 		try {
 
-			String query = "SELECT menu_id FROM category_dishes WHERE menu_id=? AND status = 1";
+			String query = "SELECT menu_id FROM category_dishes WHERE menu_id=?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, menuId);
@@ -60,7 +61,7 @@ public class CategoryDishDAO {
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT menu_id,category_id FROM category_dishes WHERE menu_id = ? AND category_id = ? AND status = 1";
+			String query = "SELECT menu_id,category_id FROM category_dishes WHERE menu_id = ? AND category_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, menuId);
@@ -93,7 +94,7 @@ public class CategoryDishDAO {
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT dish_id FROM category_dishes WHERE dish_id=? AND status =1";
+			String query = "SELECT dish_id FROM category_dishes WHERE dish_id=?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, dishId);
@@ -120,7 +121,7 @@ public class CategoryDishDAO {
 	 *         category ID.
 	 * @throws DAOException If there's an issue with the database operation.
 	 */
-	public List<String> findDishNameByMenuIdAndCategoryId(int menuId, int categoryId) throws DAOException {
+	public List<String> findDishNamesByMenuIdAndCategoryId(int menuId, int categoryId) throws DAOException {
 
 		Connection con1 = null;
 		PreparedStatement ps = null;
@@ -167,7 +168,7 @@ public class CategoryDishDAO {
 		List<Integer> dishIds = new ArrayList<>();
 
 		try {
-			String query = "SELECT dish_id FROM category_dishes WHERE menu_id = ? AND category_id = ?";
+			String query = "SELECT dish_id FROM category_dishes WHERE menu_id = ? AND category_id = ? AND status=1";
 			con1 = ConnectionUtil.getConnection();
 			ps = con1.prepareStatement(query);
 			ps.setInt(1, menuId);
@@ -204,7 +205,7 @@ public class CategoryDishDAO {
 		try {
 			con = ConnectionUtil.getConnection();
 			con.setAutoCommit(false);
-			
+
 			String query = "INSERT INTO category_dishes(menu_id, category_id, dish_id) VALUES (?,?,?)";
 			ps = con.prepareStatement(query);
 
@@ -220,7 +221,7 @@ public class CategoryDishDAO {
 		} catch (SQLException e) {
 			rollBack = true;
 			e.printStackTrace();
-			
+
 			try {
 				if (con != null) {
 					con.rollback();
@@ -228,12 +229,9 @@ public class CategoryDishDAO {
 			} catch (SQLException rollbackEx) {
 				rollbackEx.printStackTrace();
 			}
-			
-			throw new DAOException("Error creating CategoryDish "+e.getMessage());
-			
-			
 
-			
+			throw new DAOException("Error creating CategoryDish " + e.getMessage());
+
 		} finally {
 			try {
 
@@ -245,7 +243,7 @@ public class CategoryDishDAO {
 					con.setAutoCommit(true);
 					con.close();
 				}
-				
+
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
@@ -254,10 +252,47 @@ public class CategoryDishDAO {
 				// Perform any necessary cleanup or additional handling
 				DishDAO dishDAO = new DishDAO();
 				DishPriceDAO dishPriceDAO = new DishPriceDAO();
-				
+
 				dishDAO.deleteByDishId(dishId);
 				dishPriceDAO.deleteDishPriceByDishId(dishId);
 			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param menuId
+	 * @param categoryId
+	 * @param dishId
+	 * @param status
+	 * @throws DAOException
+	 */
+	public void updateCategoryDish(int menuId, int categoryId, int dishId, int status) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			String query = "UPDATE category_dishes SET status = ? WHERE menu_id = ? AND category_id = ? AND dish_id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+
+			ps.setInt(1, status);
+			ps.setInt(2, menuId);
+			ps.setInt(3, categoryId);
+			ps.setInt(4, dishId);
+
+			int rowsUpdated = ps.executeUpdate();
+			if (rowsUpdated > 0) {
+				System.out.println("Status updated sucessfully");
+			} else {
+				System.out.println("Status updation failed");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps);
 		}
 	}
 

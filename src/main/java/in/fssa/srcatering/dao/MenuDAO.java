@@ -6,13 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.model.Menu;
 import in.fssa.srcatering.util.ConnectionUtil;
 
 public class MenuDAO {
-	
+
 	private static final String MENUNAME = "menu_name";
 
 	/**
@@ -21,16 +23,17 @@ public class MenuDAO {
 	 * @return A list of Menu objects representing all menus.
 	 * @throws DAOException If there's an issue with the database operation.
 	 */
-	public List<Menu> findAll() throws DAOException {
+	public Set<Menu> findAllActiveMenus() throws DAOException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		List<Menu> menuList = new ArrayList<>();
+		Set<Menu> menuList = new TreeSet<>();
 
 		try {
-			String query = "SELECT id, menu_name, description,image FROM menus";
+			String query = "SELECT m.id, m.menu_name, m.description,m.image,cd.status FROM menus m JOIN category_dishes cd "
+					+ "ON m.id = cd.menu_id WHERE cd.status=1 ";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -40,7 +43,39 @@ public class MenuDAO {
 				menu.setId(rs.getInt("id"));
 				menu.setMenuName(rs.getString(MENUNAME));
 				menu.setDescription(rs.getString("description"));
-				menu.setImage("image");
+				menu.setImage(rs.getString("image"));
+				menu.setStatus(rs.getBoolean("status"));
+				menuList.add(menu);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		return menuList;
+	}
+
+	public Set<Menu> findAllMenus() throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Set<Menu> menuList = new TreeSet<>();
+
+		try {
+			String query = "SELECT id, menu_name, description, image FROM menus";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Menu menu = new Menu();
+				menu.setId(rs.getInt("id"));
+				menu.setMenuName(rs.getString(MENUNAME));
+				menu.setDescription(rs.getString("description"));
+				menu.setImage(rs.getString("image"));
 				menuList.add(menu);
 			}
 
@@ -128,7 +163,7 @@ public class MenuDAO {
 
 		try {
 
-			String query = "SELECT id, menu_name, description,image FROM menus WHERE id =?";
+			String query = "SELECT id, menu_name,image, description FROM menus WHERE id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
@@ -141,7 +176,7 @@ public class MenuDAO {
 				newMenu.setId(rs.getInt("id"));
 				newMenu.setMenuName(rs.getString(MENUNAME));
 				newMenu.setDescription(rs.getString("description"));
-				newMenu.setImage("image");
+				newMenu.setImage(rs.getString("image"));
 			}
 
 		} catch (SQLException e) {
@@ -168,7 +203,7 @@ public class MenuDAO {
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT id FROM menus WHERE id =? ";
+			String query = "SELECT id FROM menus WHERE id=?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 

@@ -86,7 +86,7 @@ public class UserDAO implements UserInterface {
 
 			ps.executeUpdate();
 
-			System.out.println("User has been created sucessfully");
+			System.out.println("User has been created successfully");
 
 		} catch (SQLException e) {
 			if (e.getMessage().contains("Duplicate entry")) {
@@ -157,7 +157,7 @@ public class UserDAO implements UserInterface {
 		ResultSet rs = null;
 
 		try {
-			String query = "UPDATE users SET status = 1 WHERE id = ? AND status = 0";
+			String query = "UPDATE users SET status = 0 WHERE id = ? AND status = 1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 

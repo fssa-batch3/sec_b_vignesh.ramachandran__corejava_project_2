@@ -6,7 +6,7 @@ public class Dish extends DishEntity {
 		
 	}
 	
-	public Dish(int id, String dishName, int quantity, QuantityUnit quantityUnit, int menuId, int categoryId, int dishPrice) {
+	public Dish(int id, String dishName, int quantity, QuantityUnit quantityUnit, int menuId, int categoryId, int dishPrice,int status) {
 		super.setId(id);
 		super.setDishName(dishName);
 		super.setQuantity(quantity);
@@ -14,6 +14,7 @@ public class Dish extends DishEntity {
 		super.setMenuId(menuId);
 		super.setCategoryId(categoryId);
 		super.setDishPrice(dishPrice);
+		super.setStatus(status);
 	}
 
 	@Override

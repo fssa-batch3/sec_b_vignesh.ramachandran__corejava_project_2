@@ -1,8 +1,9 @@
 package in.fssa.srcatering.service;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import in.fssa.srcatering.dao.MenuDAO;
 import in.fssa.srcatering.exception.DAOException;
@@ -21,12 +22,12 @@ public class MenuService {
 	 * @return A list of all menus.
 	 * @throws ServiceException If there's an issue with the service operation.
 	 */
-	public List<Menu> getAllMenus() throws ServiceException {
+	public Set<Menu> getAllActiveMenus() throws ServiceException {
 
-		List<Menu> menuList = new ArrayList<>();
+		Set<Menu> menuList = new TreeSet<>();
 		try {
 
-			menuList = menuDAO.findAll();
+			menuList = menuDAO.findAllActiveMenus();
 
 			Iterator<Menu> iterator = menuList.iterator();
 
@@ -40,6 +41,31 @@ public class MenuService {
 
 		return menuList;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public Set<Menu> getAllMenus() throws ServiceException{
+		Set<Menu> menuList = new TreeSet<>();
+		
+		try {
+			menuList = menuDAO.findAllMenus();
+			Iterator<Menu> iterator = menuList.iterator();
+
+			while (iterator.hasNext()) {
+				System.out.println(iterator.next());
+			}
+			
+		}  catch (DAOException e) {
+			throw new ServiceException(e.getMessage());
+		}
+
+		return menuList;
+	}
+	
+	
 
 	/**
 	 * Creates a new menu in the database using the provided Menu object,
@@ -120,5 +146,23 @@ public class MenuService {
 
 		MenuValidator.isMenuIdIsValid(menuId);
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<String> getAllMenuNames() throws ServiceException {
+		
+		List<String> menuNames;
+		try {
+			menuNames = menuDAO.findAllMenuNames();
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+		return menuNames;
+	}
+	
 
 }
