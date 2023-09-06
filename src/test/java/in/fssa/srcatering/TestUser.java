@@ -28,14 +28,14 @@ import in.fssa.srcatering.service.UserService;
 		});
 	}
 
-	@Test
+	@Test 
 	 void testCreateUserWithInvalidInput() {
 		UserService userService = new UserService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			userService.createUser(null);
+			userService.createUser(null); 
 		});
-		String expectedMessage = "Invalid user Input";
+		String expectedMessage = "Invalid User Input";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage,actualMessage);

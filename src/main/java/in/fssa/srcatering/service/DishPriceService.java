@@ -42,7 +42,7 @@ public class DishPriceService {
 			throw new ServiceException("Invalid DishId");
 		}
 
-	}
+	} 
 
 	/**
      * Updates the price of a dish.

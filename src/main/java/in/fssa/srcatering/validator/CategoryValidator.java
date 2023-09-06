@@ -11,7 +11,7 @@ import in.fssa.srcatering.model.Category;
 import in.fssa.srcatering.util.IntUtil;
 import in.fssa.srcatering.util.StringUtil;
 
-public class CategoryValidator {
+public class CategoryValidator { 
 
 	/**
 	 * 
@@ -19,14 +19,17 @@ public class CategoryValidator {
 	 * @throws ValidationException
 	 */
 	public static void validateCategory(Category category) throws ValidationException {
+		
+		if(category == null) { 
+			throw new ValidationException("Invalid Category Input");
+		}
 
 		MenuValidator.isMenuIdIsValid(category.getMenu_id());
-
-		isCategoryNameAlreadyExistsForThatMenu(category.getCategoryName(), category.getMenu_id());
-
+		
 		StringUtil.rejectIfInvalidString(category.getImage(), "CategoryImage");
 		MenuValidator.validateImage(category.getImage());
 
+		isCategoryNameAlreadyExistsForThatMenu(category.getCategoryName(), category.getMenu_id());
 	}
 
 	/**
@@ -47,6 +50,26 @@ public class CategoryValidator {
 			throw new ValidationException("CategoryId not found");
 		}
 	}
+	
+	/**
+	 * 
+	 * @param menuId
+	 * @param categoryId
+	 * @throws ValidationException
+	 */
+	public static void isCategoryIdExistsForThatMenu(int menuId,int categoryId) throws ValidationException {
+		try {
+			CategoryDAO categoryDAO = new CategoryDAO();
+			
+			IntUtil.rejectIfInvalidInt(menuId, "MenuId");
+			IntUtil.rejectIfInvalidInt(categoryId, "CategoryId");
+			
+			categoryDAO.isCategoryIdExistsForThatMenu(menuId,categoryId);
+		} catch (DAOException e) {
+			throw new ValidationException("CategoryId not found");
+		}
+	}
+	
 
 	/**
 	 * Checks if a category name already exists in the database.

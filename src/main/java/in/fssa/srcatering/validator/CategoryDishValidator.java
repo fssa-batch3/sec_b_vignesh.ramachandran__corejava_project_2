@@ -22,12 +22,13 @@ public class CategoryDishValidator {
 
 		IntUtil.rejectIfInvalidInt(menuId, "MenuId");
 		IntUtil.rejectIfInvalidInt(categoryId, "CategoryId");
-		IntUtil.rejectIfInvalidInt(dishId, "DishId");
+		IntUtil.rejectIfInvalidInt(dishId, "DishId"); 
 
 		MenuService menuService = new MenuService();
 		menuService.isMenuIdIsValid(menuId);
 
-		CategoryValidator.isCategoryIdIsValid(categoryId);
+//		CategoryValidator.isCategoryIdIsValid(categoryId);
+		CategoryValidator.isCategoryIdExistsForThatMenu(menuId, categoryId);
 
 		DishValidator.isDishIdIsValid(dishId);
 

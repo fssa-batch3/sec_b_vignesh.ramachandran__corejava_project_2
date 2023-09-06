@@ -17,11 +17,30 @@ class TestCategory {
 		
 		Category category = new Category();
 		category.setCategoryName(generateRandomCategoryName());
+		category.setImage("https://iili.io/HWh0ZrB.jpg");
+		category.setMenu_id(1);
 
 		assertDoesNotThrow(() -> {
-			categoryService.createCategory(category);
+			categoryService.createCategory(category); 
 		});
 	}
+	
+	
+	@Test
+	void testCreateCategoryWithInvalidInput() {
+		CategoryService categoryService = new CategoryService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			
+			categoryService.createCategory(null);
+		});
+		String expectedMessage = "Invalid Category Input";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	
 	
 	@Test
 	void testCreateCategoryWithCategoryNameNull() {
@@ -102,7 +121,7 @@ class TestCategory {
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Category category = new Category();
 			category.setCategoryName("Ultra");
-			category.setImage("");
+			category.setImage(""); 
 			category.setMenu_id(1);
 			
 			categoryService.createCategory(category);

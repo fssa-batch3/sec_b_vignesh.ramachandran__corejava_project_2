@@ -33,11 +33,11 @@ import in.fssa.srcatering.service.DishService;
 	}
 
 	@Test
-	 void testCreateDishWithNull() {
+	 void testCreateDishWithInvalidInput() {
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
-			dishService.createDish(null);
+			dishService.createDish(null); 
 		});
 		String expectedMessage = "Invalid Dish Input";
 		String actualMessage = exception.getMessage();
@@ -369,9 +369,10 @@ import in.fssa.srcatering.service.DishService;
 			dishService.createDish(dish);
 		});
 		
-		String expectedMessage = "Check Quantity and QuantityUnit";
+		String expectedMessage = "Check Quantity and QuantityUnit Eg(NOS cannot be greater than 5 or less than 1 "
+				+ "& GRAMS cannot be less than 20 or greater than 500";
 		String actualMessage = exception.getMessage();
-
+ 
 		assertEquals(expectedMessage,actualMessage);
 	}
 	
@@ -445,7 +446,8 @@ import in.fssa.srcatering.service.DishService;
 			dishService.updateDish(dish);
 		});
 		
-		String expectedMessage = "Check Quantity and QuantityUnit";
+		String expectedMessage = "Check Quantity and QuantityUnit Eg(NOS cannot be greater than 5 or less than 1 "
+				+ "& GRAMS cannot be less than 20 or greater than 500";
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage,actualMessage);
@@ -729,12 +731,12 @@ import in.fssa.srcatering.service.DishService;
 		DishService dishService = new DishService();
 		
 		assertDoesNotThrow(() -> {
-			dishService.deleteDish(1, 1, 4);
+			dishService.deleteDish(1, 1, 1);
 		});
 		
 		CategoryDishService categorydishService = new CategoryDishService();
 		try {
-			categorydishService.changeCategoryDishStatus(1, 1, 4);
+			categorydishService.changeCategoryDishStatus(1, 1, 1);
 		} catch (ValidationException | ServiceException e) {
 			e.printStackTrace();
 		}

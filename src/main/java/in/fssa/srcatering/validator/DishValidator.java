@@ -23,10 +23,10 @@ public class DishValidator {
      * @param dish The Dish object to validate.
      * @throws ValidationException If the Dish object is invalid.
      */
-	public static void validate(Dish dish) throws ValidationException {
+	public static void validate(Dish dish) throws ValidationException { 
 
-		if (dish == null) {
-			throw new ValidationException("Invalid Dish Input");
+		if (dish == null) { 
+			throw new ValidationException("Invalid Dish Input"); 
 		}
 
 		StringUtil.rejectIfInvalidString(dish.getDishName(), "Dish Name");
@@ -37,11 +37,13 @@ public class DishValidator {
 		
 		
 		if(dish.getQuantityUnit().name().equals("NOS") && dish.getQuantity() > 5 ) {
-			throw new ValidationException("Check Quantity and QuantityUnit");
+			throw new ValidationException("Check Quantity and QuantityUnit Eg(NOS cannot be greater than 5 or less than 1 "
+					+ "& GRAMS cannot be less than 20 or greater than 500");
 		}
 		
 		if(dish.getQuantityUnit().name().equals("GRAMS") && dish.getQuantity() < 20){
-			throw new ValidationException("Check Quantity and QuantityUnit");
+			throw new ValidationException("Check Quantity and QuantityUnit Eg(NOS cannot be greater than 5 or less than 1 "
+					+ "& GRAMS cannot be less than 20 or greater than 500");
 		}
 
 	}
@@ -57,10 +59,9 @@ public class DishValidator {
 		try {
 			
 			MenuService menuService = new MenuService();
-			menuService.isMenuIdIsValid(dish.getMenuId());
+			menuService.isMenuIdIsValid(dish.getMenuId()); 
 
-			CategoryValidator.isCategoryIdIsValid(dish.getCategoryId());
-			
+			CategoryValidator.isCategoryIdExistsForThatMenu(dish.getMenuId(), dish.getCategoryId());
 
 			CategoryDishDAO categoryDishDAO = new CategoryDishDAO();
 

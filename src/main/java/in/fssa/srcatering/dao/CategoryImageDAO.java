@@ -19,7 +19,7 @@ public class CategoryImageDAO {
 	 */
 	public void createCategoryImage(int menu_id, int category_id, String image) throws DAOException {
 		Connection con = null;
-		PreparedStatement ps = null;
+		PreparedStatement ps = null; 
 
 		try {
 			String query = "INSERT INTO category_images(menu_id, category_id, image) VALUES(?,?,?)";
@@ -69,7 +69,7 @@ public class CategoryImageDAO {
 				System.out.println("Category with id " + category_id + " not found.");
 			}
 
-		} catch (SQLException e) {
+		} catch (SQLException e) { 
 			e.printStackTrace();
 			throw new DAOException(e.getMessage());
 		} finally {

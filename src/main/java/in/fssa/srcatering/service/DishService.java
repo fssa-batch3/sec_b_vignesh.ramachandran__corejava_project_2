@@ -30,7 +30,7 @@ public class DishService {
 	 * @throws ServiceException    If there's an issue with the service operation.
 	 */
 	public void createDish(Dish dish) throws ValidationException, ServiceException {
-
+  
 		try {
 
 			DishPriceService dishPriceService = new DishPriceService();
@@ -138,6 +138,32 @@ public class DishService {
 			throw new ServiceException(e.getMessage());
 		}
 		return dishList;
+	}
+
+	/**
+	 * 
+	 * @param menuId
+	 * @param categoryId
+	 * @return
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
+	public Set<Dish> getAllActiveDishesByMenuIdAndCategoryId(int menuId, int categoryId) throws ValidationException, ServiceException {
+
+		CategoryDishDAO categoryDishDAO = new CategoryDishDAO();
+
+		Set<Dish> dishList = new HashSet<>();
+
+		try {
+			MenuValidator.isMenuIdIsValid(menuId);
+			CategoryValidator.isCategoryIdIsValid(categoryId);
+			dishList = dishDAO.findAllActiveDishesByMenuIdAndCategoryId(menuId, categoryId);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+		return dishList;
+
 	}
 
 	/**

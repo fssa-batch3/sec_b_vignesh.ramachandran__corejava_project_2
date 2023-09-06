@@ -17,7 +17,7 @@ public class CategoryImageService {
 		try {
 
 			MenuValidator.isMenuIdIsValid(menu_id);
-			CategoryValidator.isCategoryIdIsValid(category_id);
+			CategoryValidator.isCategoryIdIsValid(category_id); 
 
 			categoryImageDAO.createCategoryImage(menu_id, category_id, image);
 

@@ -23,7 +23,7 @@ public class MenuValidator {
 	 */
 	public static void isMenuIdIsValid(int menuId) throws ValidationException {
 
-		try {
+		try { 
 
 			MenuDAO menuDAO = new MenuDAO();
 
@@ -44,6 +44,10 @@ public class MenuValidator {
 	 * @throws ValidationException If any attribute of the menu is found to be invalid.
 	 */
 	public static void validateMenu(Menu menu) throws ValidationException {
+		
+		if(menu == null) {
+			throw new ValidationException("Invalid Menu Input");
+		}
 
 		StringUtil.rejectIfInvalidString(menu.getMenuName(), MENUNAME);
 		StringUtil.rejectIfInvalidName(menu.getMenuName(), MENUNAME);

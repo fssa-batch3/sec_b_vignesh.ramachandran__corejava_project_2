@@ -31,7 +31,8 @@ public class CategoryDAO {
 		Set<Category> categoryList = new HashSet<>();
 
 		try {
-			String query = "SELECT id, category_name FROM categories";
+			String query = "SELECT c.id, c.category_name,ci.image,ci.menu_id FROM categories c "
+					+ "JOIN category_images ci ON c.id = ci.category_id";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
@@ -40,6 +41,48 @@ public class CategoryDAO {
 				Category category = new Category();
 				category.setCategoryName(rs.getString("category_name"));
 				category.setId(rs.getInt("id"));
+				category.setImage(rs.getString("image"));
+				category.setMenu_id(rs.getInt("menu_id"));
+				categoryList.add(category);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		return categoryList;
+	}
+
+	/**
+	 * 
+	 * @param menuId
+	 * @return
+	 * @throws DAOException
+	 */
+	public Set<Category> findCategoriesByMenuId(int menuId) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Set<Category> categoryList = new TreeSet<>();
+
+		try {
+			String query = "SELECT c.id, c.category_name, ci.image, ci.menu_id FROM categories c JOIN category_images ci "
+					+ "ON c.id = ci.category_id WHERE ci.menu_id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+
+			ps.setInt(1, menuId); 
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Category category = new Category();
+				category.setCategoryName(rs.getString(CATEGORYNAME));
+				category.setId(rs.getInt("id"));
+				category.setImage(rs.getString("image"));
+				category.setMenu_id(rs.getInt("menu_id"));
 				categoryList.add(category);
 			}
 
@@ -52,8 +95,48 @@ public class CategoryDAO {
 		return categoryList;
 	}
 	
+	/**
+	 * 
+	 * @param menuId
+	 * @return
+	 * @throws DAOException
+	 */
+	public Set<Category> findAllActiveCategoriesByMenuId(int menuId) throws DAOException{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		Set<Category> categoryList = new TreeSet<>();
+		
+		try {
+			String query = "SELECT c.id,c.category_name,cd.menu_id,ci.image FROM categories c JOIN category_images ci ON c.id = ci.category_id "
+					+ "JOIN category_dishes cd ON c.id = cd.category_id WHERE ci.menu_id = ? AND cd.menu_id = ? AND cd.status = 1";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, menuId);
+			ps.setInt(2, menuId);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				Category category = new Category();
+				category.setId(rs.getInt("id"));
+				category.setCategoryName(rs.getString("category_name"));
+				category.setImage(rs.getString("image"));
+				category.setMenu_id(rs.getInt("menu_id"));
+				categoryList.add(category);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		return categoryList;
+	}
 	
-
+	
 	/**
 	 * Retrieves a list of all category names from the database.
 	 *
@@ -93,44 +176,11 @@ public class CategoryDAO {
 
 	/**
 	 * 
-	 * @param menuId
+	 * @param menu_id
+	 * @param category_id
 	 * @return
 	 * @throws DAOException
 	 */
-	public Set<Category> findCategoriesByMenuId(int menuId) throws DAOException {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		Set<Category> categoryList = new TreeSet<>();
-
-		try {
-			String query = "SELECT c.id, c.category_name, ci.image, ci.menu_id FROM categories c JOIN category_images ci "
-					+ "ON c.id = ci.category_id WHERE ci.menu_id = ?";
-			con = ConnectionUtil.getConnection();
-			ps = con.prepareStatement(query);
-
-			ps.setInt(1, menuId);
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				Category category = new Category();
-				category.setCategoryName(rs.getString(CATEGORYNAME));
-				category.setId(rs.getInt("id"));
-				category.setImage(rs.getString("image"));
-				category.setMenu_id(rs.getInt("menu_id"));
-				categoryList.add(category);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DAOException(e.getMessage());
-		} finally {
-			ConnectionUtil.close(con, ps, rs);
-		}
-		return categoryList;
-	}
-
 	public Category findCategoryByMenuIdAndCategoryId(int menu_id, int category_id) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -207,17 +257,19 @@ public class CategoryDAO {
 	 * @throws DAOException If there's an issue with the database operation or if
 	 *                      the category ID is not found.
 	 */
-	public void isCategoryIdIsValid(int categoryId) throws DAOException {
+	public void isCategoryIdExistsForThatMenu(int menuId, int categoryId) throws DAOException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			String query = "SELECT id FROM categories WHERE id =?";
+			String query = "SELECT c.id FROM categories c JOIN category_images ci ON c.id = ci.category_id "
+					+ "WHERE ci.menu_id = ? AND ci.category_id =?";
 			con = ConnectionUtil.getConnection();
-			ps = con.prepareStatement(query);
-			ps.setInt(1, categoryId);
+			ps = con.prepareStatement(query); 
+			ps.setInt(1, menuId);
+			ps.setInt(2, categoryId);
 
 			rs = ps.executeQuery();
 			if (!rs.next()) {
@@ -230,6 +282,32 @@ public class CategoryDAO {
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
+	}
+	
+	
+	public void isCategoryIdIsValid(int categoryId) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			String query = "SELECT id FROM categories WHERE id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query); 
+			ps.setInt(1, categoryId);
+			
+			rs = ps.executeQuery();
+			if (!rs.next()) {
+				throw new DAOException("CategoryId not found");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		
 	}
 
 	/**
@@ -267,7 +345,5 @@ public class CategoryDAO {
 		}
 		return generatedId;
 	}
-	
-	
 
 }

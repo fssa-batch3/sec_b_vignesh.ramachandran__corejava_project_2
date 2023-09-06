@@ -29,7 +29,7 @@ public class MenuDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		Set<Menu> menuList = new TreeSet<>();
+		Set<Menu> menuList = new TreeSet<>(); 
 
 		try {
 			String query = "SELECT m.id, m.menu_name, m.description,m.image,cd.status FROM menus m JOIN category_dishes cd "
@@ -204,7 +204,7 @@ public class MenuDAO {
 
 		try {
 			String query = "SELECT id FROM menus WHERE id=?";
-			con = ConnectionUtil.getConnection();
+			con = ConnectionUtil.getConnection(); 
 			ps = con.prepareStatement(query);
 
 			ps.setInt(1, menuId);

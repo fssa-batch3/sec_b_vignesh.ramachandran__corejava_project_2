@@ -24,9 +24,27 @@ class TestMenu {
 		menu.setImage("https://iili.io/HWhlwKB.jpg");
 
 		assertDoesNotThrow(() -> {
-			menuService.createMenu(menu);
+			menuService.createMenu(menu); 
 		});
 	}
+	
+	
+	@Test
+	void testCreateMenuWithInvalidInput() {
+		MenuService menuService = new MenuService();
+
+		Exception exception = assertThrows(ValidationException.class, () -> {
+
+			menuService.createMenu(null);
+
+		});
+		String expectedMessage = "Invalid Menu Input";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	
 
 	@Test
 	void testCreateMenuWithMenuNameNull() {

@@ -163,19 +163,21 @@ public class UserService {
 	 * @param email
 	 * @param password
 	 * @throws ValidationException
+	 * @throws ServiceException 
 	 */
-	public void loginUser(String email, String password) throws ValidationException {
+	public void loginUser(String email, String password) throws ValidationException, ServiceException {
 		try {
 			StringUtil.rejectIfInvalidString(email, "Email");
 			StringUtil.rejectIfInvalidString(password, "Password");
 			StringUtil.rejectIfInvalidEmail(email);
 			StringUtil.rejectIfIvalidPassword(password);
-
+			
+			
 			userDAO.findByEmail(email);
 			userDAO.passwordChecker(email, password);
 		} catch (DAOException e) {
 			e.printStackTrace();
-			throw new ValidationException(e.getMessage());
+			throw new ServiceException(e.getMessage());
 		}
 	}
 	

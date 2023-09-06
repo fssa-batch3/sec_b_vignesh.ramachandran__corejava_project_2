@@ -196,13 +196,66 @@ public class DishDAO {
 					+ "JOIN dish_price dp ON d.id = dp.dish_id WHERE dp.end_date IS NULL AND cd.menu_id=? AND cd.category_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
-			
+
 			ps.setInt(1, menuId);
 			ps.setInt(2, categoryId);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				Dish dish = new Dish();
+				dish.setId(rs.getInt("id"));
+				dish.setMenuId(rs.getInt("menu_id"));
+				dish.setCategoryId(rs.getInt("category_id"));
+				dish.setDishName(rs.getString("dish_name"));
+				dish.setQuantity(rs.getInt("quantity"));
+
+				String quantityUnitString = rs.getString("quantity_unit");
+				QuantityUnit quantityUnit = QuantityUnit.valueOf(quantityUnitString);
+
+				dish.setQuantityUnit(quantityUnit);
+				dish.setDishPrice(rs.getInt("price"));
+				dish.setStatus(rs.getInt("status"));
+
+				dishes.add(dish);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		return dishes;
+	}
+
+	/**
+	 * 
+	 * @param menuId
+	 * @param categoryId
+	 * @return
+	 * @throws DAOException
+	 */
+	public Set<Dish> findAllActiveDishesByMenuIdAndCategoryId(int menuId, int categoryId) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		Set<Dish> dishes = new TreeSet<>();
+
+		try {
+			String query = "SELECT d.id, d.dish_name, d.quantity, d.quantity_unit, cd.menu_id, cd.category_id, dp.price,cd.status "
+					+ "FROM dishes d JOIN category_dishes cd ON d.id = cd.dish_id "
+					+ "JOIN dish_price dp ON d.id = dp.dish_id WHERE dp.end_date IS NULL AND cd.menu_id=? AND cd.category_id = ? AND cd.status = 1";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+
+			ps.setInt(1, menuId);
+			ps.setInt(2, categoryId);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Dish dish = new Dish();
+				
 				dish.setId(rs.getInt("id"));
 				dish.setMenuId(rs.getInt("menu_id"));
 				dish.setCategoryId(rs.getInt("category_id"));

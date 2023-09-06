@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.fssa.srcatering.exception.DAOException;
+import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.interfaces.UserInterface;
 import in.fssa.srcatering.model.User;
 import in.fssa.srcatering.util.ConnectionUtil;
@@ -296,9 +297,10 @@ public class UserDAO implements UserInterface {
      * @param email The email address to retrieve the user.
      * @return The User object with the specified email address.
      * @throws DAOException If there's an issue with the database operation.
+	 * @throws ValidationException 
      */
 	@Override
-	public User findByEmail(String email) throws DAOException {
+	public User findByEmail(String email) throws DAOException, ValidationException {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -307,7 +309,7 @@ public class UserDAO implements UserInterface {
 		User user = null;
 
 		try {
-			String query = "SELECT id, name, email, phone_number, password, status FROM users WHERE status = 1 AND email = ?";
+			String query = "SELECT id, name, email, phone_number, password, status FROM users WHERE email = ? AND status = 1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			ps.setString(1, email);
@@ -321,6 +323,8 @@ public class UserDAO implements UserInterface {
 				user.setEmail(rs.getString(USEREMAIL));
 				user.setPassword(rs.getString(USERPASSWORD));
 				user.setStatus(rs.getBoolean(USERSTATUS));
+			} else {
+				throw new ValidationException("Invalid Email");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

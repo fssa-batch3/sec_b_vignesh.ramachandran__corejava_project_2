@@ -48,22 +48,45 @@ public class CategoryService {
 		}
 		return categoryList;
 	}
-
+	
 	/**
 	 * 
-	 * @param menu_id
+	 * @param menuId
 	 * @return
 	 * @throws ValidationException
 	 * @throws ServiceException
 	 */
-	public Set<String> getAllCategoryNamesByMenuId(int menu_id) throws ValidationException, ServiceException {
+	public Set<Category> getAllActiveCategoriesByMenuId(int menuId) throws ValidationException, ServiceException{
+		
+		Set<Category> categoryList = new TreeSet<>();
+		
+		try {
+			MenuValidator.isMenuIdIsValid(menuId);
+			
+			categoryList = categoryDAO.findAllActiveCategoriesByMenuId(menuId);
+			
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException("Failed to Get categories");
+		}
+		return categoryList;
+	}
+
+	/**
+	 * 
+	 * @param menuId
+	 * @return
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
+	public Set<String> getAllCategoryNamesByMenuId(int menuId) throws ValidationException, ServiceException {
 
 		Set<String> categoryNames = new HashSet<>();
 
 		try {
-			MenuValidator.isMenuIdIsValid(menu_id);
+			MenuValidator.isMenuIdIsValid(menuId);
 
-			categoryNames = categoryDAO.findAllCategoryNamesByMenuId(menu_id);
+			categoryNames = categoryDAO.findAllCategoryNamesByMenuId(menuId);
 			Iterator<String> iterator = categoryNames.iterator();
 
 			while (iterator.hasNext()) {
@@ -79,19 +102,19 @@ public class CategoryService {
 
 	/**
 	 * 
-	 * @param menu_id
+	 * @param menuId
 	 * @return
 	 * @throws ValidationException
 	 * @throws ServiceException
 	 */
-	public Set<Category> getCategoriesByMenuId(int menu_id) throws ValidationException, ServiceException {
+	public Set<Category> getCategoriesByMenuId(int menuId) throws ValidationException, ServiceException {
 
-		MenuValidator.isMenuIdIsValid(menu_id);
+		MenuValidator.isMenuIdIsValid(menuId);
 
 		Set<Category> categoryList = new TreeSet<>();
 
 		try {
-			categoryList = categoryDAO.findCategoriesByMenuId(menu_id);
+			categoryList = categoryDAO.findCategoriesByMenuId(menuId);
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw new ServiceException("Failed to get category");
@@ -102,22 +125,22 @@ public class CategoryService {
 
 	/**
 	 * 
-	 * @param menu_id
-	 * @param category_id
+	 * @param menuId
+	 * @param categoryId
 	 * @return
 	 * @throws ValidationException
 	 * @throws ServiceException
 	 */
-	public Category getCategoryByMenuIdAndCategoryId(int menu_id, int category_id)
+	public Category getCategoryByMenuIdAndCategoryId(int menuId, int categoryId)
 			throws ValidationException, ServiceException {
 
-		MenuValidator.isMenuIdIsValid(menu_id);
-		CategoryValidator.isCategoryIdIsValid(category_id);
+		MenuValidator.isMenuIdIsValid(menuId);
+		CategoryValidator.isCategoryIdIsValid(categoryId);
 
 		Category category = null;
 
 		try {
-			category = categoryDAO.findCategoryByMenuIdAndCategoryId(menu_id, category_id);
+			category = categoryDAO.findCategoryByMenuIdAndCategoryId(menuId, categoryId);
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw new ServiceException("Failed to Category");
@@ -141,16 +164,14 @@ public class CategoryService {
 			CategoryValidator.validateCategory(category);
 
 			if (CategoryValidator.isCategoryNameExistsInTheCategoryTable(category.getCategoryName())) {
-				
-				System.out.println("not created in categories");
-
+ 
 				int id = categoryDAO.findCategoryIdByCategoryName(category.getCategoryName());
 
 				CategoryImageService categoryImageService = new CategoryImageService();
 				categoryImageService.createCategoryImage(category.getMenu_id(), id, category.getImage());
 
-			} else {
-				System.out.println("created in both tables");
+			} else { 
+				
 				int generatedCategoryId = -1;
 				// category
 				generatedCategoryId = categoryDAO.createCategory(category);
@@ -176,10 +197,10 @@ public class CategoryService {
 
 		StringUtil.rejectIfInvalidString(category.getCategoryName(), "CategoryName");
 		StringUtil.rejectIfInvalidName(category.getCategoryName(), "CategoryName");
-
+ 
 		MenuValidator.isMenuIdIsValid(category.getMenu_id());
 
-		CategoryValidator.isCategoryIdIsValid(category.getId());
+		CategoryValidator.isCategoryIdExistsForThatMenu(category.getMenu_id(), category.getId());
 
 		StringUtil.rejectIfInvalidString(category.getImage(), "CategoryImage");
 		MenuValidator.validateImage(category.getImage());
@@ -190,7 +211,7 @@ public class CategoryService {
 			categoryImageDAO.updateCategoryImage(category.getMenu_id(), category.getId(), category.getImage());
 		} catch (DAOException e) {
 			e.printStackTrace();
-			throw new ServiceException("Falied to create Category");
+			throw new ServiceException("Failed to create Category");
 		}
 
 	}

@@ -33,7 +33,7 @@ public class DishPriceDAO {
 			ps = con.prepareStatement(query);
 			ps.setInt(1, dishId);
 			ps.setInt(2, price);
-			ps.setTimestamp(3, dateTime);
+			ps.setTimestamp(3, dateTime); 
 			ps.executeUpdate();
 
 			con.commit();

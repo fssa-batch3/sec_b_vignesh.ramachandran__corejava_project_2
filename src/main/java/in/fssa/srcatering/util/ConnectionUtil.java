@@ -15,13 +15,13 @@ public class ConnectionUtil {
 	 */
 	public static Connection getConnection() throws SQLException {
 
-        String url;
-        String userName;
-        String passWord;
+		String url;
+		String userName;
+		String passWord;
 
-            url = System.getenv("DATABASE_HOSTNAME");
-            userName = System.getenv("DATABASE_USERNAME");
-            passWord = System.getenv("DATABASE_PASSWORD");        
+		url = System.getenv("DATABASE_HOSTNAME");
+		userName = System.getenv("DATABASE_USERNAME");
+		passWord = System.getenv("DATABASE_PASSWORD");
 
 		Connection con = null;
 
@@ -36,13 +36,13 @@ public class ConnectionUtil {
 		return con;
 
 	}
-	
+
 	/**
-     * Closes a database connection and a prepared statement.
-     *
-     * @param connection The database connection to close.
-     * @param ps         The prepared statement to close.
-     */
+	 * Closes a database connection and a prepared statement.
+	 *
+	 * @param connection The database connection to close.
+	 * @param ps         The prepared statement to close.
+	 */
 	public static void close(Connection connection, PreparedStatement ps) {
 
 		try {
@@ -58,14 +58,14 @@ public class ConnectionUtil {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	/**
-     * Closes a database connection, a prepared statement, and a result set.
-     *
-     * @param connection The database connection to close.
-     * @param ps         The prepared statement to close.
-     * @param rs         The result set to close.
-     */
+	 * Closes a database connection, a prepared statement, and a result set.
+	 *
+	 * @param connection The database connection to close.
+	 * @param ps         The prepared statement to close.
+	 * @param rs         The result set to close.
+	 */
 	public static void close(Connection connection, PreparedStatement ps, ResultSet rs) {
 
 		try {

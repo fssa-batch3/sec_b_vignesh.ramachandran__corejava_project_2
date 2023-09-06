@@ -1,22 +1,17 @@
-import in.fssa.srcatering.dao.CategoryDAO;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
-import in.fssa.srcatering.model.Dish;
-import in.fssa.srcatering.model.QuantityUnit;
 import in.fssa.srcatering.service.CategoryService;
-import in.fssa.srcatering.service.DishService;
-import in.fssa.srcatering.validator.CategoryValidator;
+import in.fssa.srcatering.service.UserService;
 
 public class App {
 
 	public static void main(String[] args) {
 
 		System.out.println("App ");
-		
-		DishService cs = new DishService();
+		CategoryService categoryService = new CategoryService();
 		
 		try {
-			System.out.println(cs.getDishByDishId(2));
+			System.out.println(categoryService.getCategoryByMenuIdAndCategoryId(1, 1));
 			
 		} catch (ValidationException e) {
 			// TODO Auto-generated catch block
