@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.model.Category;
@@ -328,6 +330,45 @@ public class CategoryDishDAO {
 			ConnectionUtil.close(con, ps);
 		}
 	}
+	
+	/**
+	 * 
+	 * @param menuId
+	 * @param categoryId
+	 * @return
+	 * @throws DAOException
+	 */
+	public Map<Integer, Integer> findDishIdAndPriceIdByMenuIdAndCategoryId(int menuId, int categoryId) throws DAOException{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		Map<Integer, Integer> dishIdPriceIdMap = new HashMap<>();
+		
+		try {
+			String query = "SELECT dp.dish_id, dp.id FROM dish_price dp JOIN category_dishes cd ON dp.dish_id = cd.dish_id "
+					+ "WHERE dp.end_date IS NULL AND cd.menu_id = ? AND cd.category_id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, menuId);
+			ps.setInt(2, categoryId);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				dishIdPriceIdMap.put(rs.getInt("dish_id"), rs.getInt("id"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		return dishIdPriceIdMap;
+	}
+	
 
 	/**
 	 * Changes the status of an entry in the 'category_dishes' table to active.

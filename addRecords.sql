@@ -60,3 +60,54 @@ VALUES(1,1,1),
 (1,1,4);
 
 SELECT * FROM category_dishes;
+
+CREATE TABLE IF NOT EXISTS cart(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT,
+    menu_id INT,
+    category_id INT,
+    no_of_guest INT,
+    total_cost INT,
+    delivery_date DATE NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (menu_id) REFERENCES menus(id),
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+INSERT INTO cart(user_id, menu_id, category_id, no_of_guest, total_cost, delivery_date)
+VALUES (1, 1, 1, 50, 200, "2024-01-01");
+
+SELECT * FROM cart; 
+
+
+
+CREATE TABLE IF NOT EXISTS orders(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    menu_id INT,
+    category_id INT,
+    no_of_guest INT,
+    total_cost INT,
+    order_date TIMESTAMP NOT NULL,
+    delivery_date DATE NOT NULL,
+    order_status ENUM ("DELIVERED", "NOT_DELIVERED", "CANCELLED") NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (menu_id) REFERENCES menus(id),
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+select * from orders;
+
+CREATE TABLE IF NOT EXISTS order_products(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    order_id INT, 
+    dish_id INT,
+    price_id INT,
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (dish_id) REFERENCES category_dishes(dish_id),
+    FOREIGN KEY (price_id) REFERENCES dish_price(id)
+);
+
+SELECT * FROM order_products;

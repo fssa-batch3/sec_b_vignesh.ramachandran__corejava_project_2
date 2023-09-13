@@ -19,8 +19,8 @@ public class CategoryValidator {
 	 * @throws ValidationException
 	 */
 	public static void validateCategory(Category category) throws ValidationException {
-		
-		if(category == null) { 
+		 
+		if(category == null) {  
 			throw new ValidationException("Invalid Category Input");
 		}
 
@@ -100,6 +100,12 @@ public class CategoryValidator {
 		}
 	}
 
+	/**
+	 * 
+	 * @param categoryName
+	 * @return
+	 * @throws ValidationException
+	 */
 	public static boolean isCategoryNameExistsInTheCategoryTable(String categoryName) throws ValidationException {
 		CategoryDAO categoryDAO = new CategoryDAO();
 

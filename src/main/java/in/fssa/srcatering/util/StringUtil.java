@@ -79,6 +79,25 @@ public class StringUtil {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param phoneNumber
+	 * @return
+	 */
+	public static boolean validatePhoneNumber(String phoneNumber) {
+        // Define a regular expression pattern for a 10-digit phone number starting with 6, 7, 8, or 9
+        String pattern = "^[6-9]\\d{9}$";
+
+        // Create a Pattern object
+        Pattern regexPattern = Pattern.compile(pattern);
+
+        // Create a Matcher object
+        Matcher matcher = regexPattern.matcher(phoneNumber);
+
+        // Use the Matcher.matches() method to check if the input matches the pattern
+        return matcher.matches();
+    }
+	
 	
 	
 

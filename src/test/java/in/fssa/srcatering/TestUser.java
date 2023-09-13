@@ -21,7 +21,7 @@ import in.fssa.srcatering.service.UserService;
 		user.setName("Varun");
 		user.setEmail(generateRandomEmail());
 		user.setPassword("Var@1234");
-		user.setPhoneNumber(9876545678L);
+		user.setPhoneNumber(9876545678L); 
 
 		assertDoesNotThrow(() -> {
 			userService.createUser(user);

@@ -122,8 +122,6 @@ public class DishService {
 	public Set<Dish> getAllDishesByMenuIdAndCategoryId(int menuId, int categoryId)
 			throws ValidationException, ServiceException {
 
-		CategoryDishDAO categoryDishDAO = new CategoryDishDAO();
-
 		Set<Dish> dishList = new HashSet<>();
 
 		try {

@@ -1,7 +1,9 @@
 package in.fssa.srcatering.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.fssa.srcatering.dao.CategoryDishDAO;
 import in.fssa.srcatering.exception.DAOException;
@@ -98,6 +100,30 @@ public class CategoryDishService {
 			throw new ServiceException(e.getMessage());
 		}
 		return dishIds;
+	}
+	
+	/**
+	 * 
+	 * @param menuId
+	 * @param categoryId
+	 * @return
+	 * @throws ServiceException
+	 * @throws ValidationException
+	 */
+	public Map<Integer, Integer> getDishIdAndPriceIdByMenuIdAndCategoryId(int menuId, int categoryId) throws ServiceException, ValidationException{
+		
+		Map<Integer, Integer> dishIdPriceIdMap = new HashMap<>();
+		try {
+			
+			MenuValidator.isMenuIdIsValid(menuId);
+			CategoryDishValidator.isCategoryIdIsValid(menuId, categoryId);
+			
+			dishIdPriceIdMap = categoryDishDAO.findDishIdAndPriceIdByMenuIdAndCategoryId(menuId, categoryId);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+		return dishIdPriceIdMap;
 	}
 
 	/**

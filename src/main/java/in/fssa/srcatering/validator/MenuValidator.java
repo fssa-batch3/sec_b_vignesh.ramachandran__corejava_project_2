@@ -27,7 +27,7 @@ public class MenuValidator {
 
 			MenuDAO menuDAO = new MenuDAO();
 
-			IntUtil.rejectIfInvalidInt(menuId, "MenuId");
+			IntUtil.rejectIfInvalidInt(menuId, "MenuId"); 
 
 			menuDAO.isMenuIdIsValid(menuId);
 

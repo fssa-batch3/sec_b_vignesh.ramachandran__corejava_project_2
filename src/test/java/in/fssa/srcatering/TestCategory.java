@@ -25,7 +25,7 @@ class TestCategory {
 		});
 	}
 	
-	
+	 
 	@Test
 	void testCreateCategoryWithInvalidInput() {
 		CategoryService categoryService = new CategoryService();

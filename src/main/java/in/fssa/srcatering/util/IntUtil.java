@@ -12,7 +12,7 @@ public class IntUtil {
      */
 	public static void rejectIfInvalidPhoneNumber(long phoneNumber) throws ValidationException {
 		
-	    String phoneNumberStr = String.valueOf(phoneNumber);
+	    String phoneNumberStr = String.valueOf(phoneNumber); 
 
 	    if (phoneNumberStr.length() != 10) {
 	        throw new ValidationException("PhoneNumber doesn't match the length");

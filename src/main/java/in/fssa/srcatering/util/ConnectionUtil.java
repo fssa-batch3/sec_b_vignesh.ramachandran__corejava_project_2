@@ -23,8 +23,8 @@ public class ConnectionUtil {
 		userName = System.getenv("DATABASE_USERNAME");
 		passWord = System.getenv("DATABASE_PASSWORD");
 
-		Connection con = null;
-
+		Connection con = null; 
+ 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(url, userName, passWord);

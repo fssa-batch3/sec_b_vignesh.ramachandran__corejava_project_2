@@ -25,7 +25,7 @@ public class CategoryDAO {
 	public Set<Category> findAllCategories() throws DAOException {
 
 		Connection con = null;
-		PreparedStatement ps = null;
+		PreparedStatement ps = null; 
 		ResultSet rs = null;
 
 		Set<Category> categoryList = new HashSet<>();
@@ -245,7 +245,7 @@ public class CategoryDAO {
 			e.printStackTrace();
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionUtil.close(con, ps);
+			ConnectionUtil.close(con, ps,rs);
 		}
 		return id;
 	}
@@ -324,7 +324,7 @@ public class CategoryDAO {
 		int generatedId = -1;
 
 		try {
-			String query = "INSERT INTO categories(category_name) VALUES(?)";
+			String query = "INSERT INTO categories(category_name) VALUES(?)"; 
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
@@ -341,9 +341,47 @@ public class CategoryDAO {
 			e.printStackTrace();
 			throw new DAOException(e.getMessage());
 		} finally {
-			ConnectionUtil.close(con, ps);
+			ConnectionUtil.close(con, ps,rs);
 		}
 		return generatedId;
 	}
-
+	
+	/**
+	 * 
+	 * @param menuId
+	 * @param categoryId
+	 * @return
+	 * @throws DAOException
+	 */
+	public int getTotalPriceOfTheCategoryByMenuIdAndCategoryId(int menuId, int categoryId) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		int totalPrice = -1;
+		
+		try {
+			String query = "SELECT SUM(dp.price) FROM dish_price dp JOIN category_dishes cd ON cd.dish_id =  dp.dish_id "
+					+ "WHERE dp.end_date IS NULL AND cd.menu_id = ? AND cd.category_id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, menuId);
+			ps.setInt(2, categoryId);
+			
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+	            totalPrice = rs.getInt(1); 
+	        }
+			
+		}  catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps,rs);
+		}
+		return totalPrice;
+	}
+	
 }

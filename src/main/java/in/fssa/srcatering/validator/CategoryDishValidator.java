@@ -24,7 +24,7 @@ public class CategoryDishValidator {
 		IntUtil.rejectIfInvalidInt(categoryId, "CategoryId");
 		IntUtil.rejectIfInvalidInt(dishId, "DishId"); 
 
-		MenuService menuService = new MenuService();
+		MenuService menuService = new MenuService(); 
 		menuService.isMenuIdIsValid(menuId);
 
 //		CategoryValidator.isCategoryIdIsValid(categoryId);
@@ -95,6 +95,8 @@ public class CategoryDishValidator {
 		} catch (DAOException e) {
 			throw new ValidationException("Invalid DishId");
 		}
-
 	}
+	
+	
+	
 }

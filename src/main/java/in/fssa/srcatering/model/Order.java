@@ -1,5 +1,7 @@
 package in.fssa.srcatering.model;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Order extends OrderEntity {
@@ -9,7 +11,7 @@ public class Order extends OrderEntity {
 	}
 
 	public Order(int id, int userId, int menuId, int categoryId, int noOfGuest, int totalCost, LocalDateTime orderDate,
-			LocalDateTime deliveryDate, OrderStatus orderStatus){
+			LocalDate deliveryDate, OrderStatus orderStatus){
 		
 		super.setId(id);
 		super.setMenuId(menuId);

@@ -1,5 +1,6 @@
 package in.fssa.srcatering.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public abstract class OrderEntity {
@@ -7,16 +8,16 @@ public abstract class OrderEntity {
 	private int id;
 	private int userId;
 	private int noOfGuest;
-	private int totalCost;
+	private int totalCost; 
 	private LocalDateTime orderDate;
-	private LocalDateTime deliveryDate;
+	private LocalDate deliveryDate;
 	private OrderStatus orderStatus;
 
 	private int menuId;
 	private int categoryId;
 
 	public int getId() {
-		return id;
+		return id; 
 	}
 
 	public void setId(int id) {
@@ -55,11 +56,11 @@ public abstract class OrderEntity {
 		this.orderDate = orderDate;
 	}
 
-	public LocalDateTime getDeliveryDate() {
+	public LocalDate getDeliveryDate() {
 		return deliveryDate;
 	}
 
-	public void setDeliveryDate(LocalDateTime deliveryDate) {
+	public void setDeliveryDate(LocalDate deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
 
@@ -86,5 +87,14 @@ public abstract class OrderEntity {
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
+
+	@Override
+	public String toString() {
+		return "OrderEntity [id=" + id + ", userId=" + userId + ", noOfGuest=" + noOfGuest + ", totalCost=" + totalCost
+				+ ", orderDate=" + orderDate + ", deliveryDate=" + deliveryDate + ", orderStatus=" + orderStatus
+				+ ", menuId=" + menuId + ", categoryId=" + categoryId + "]";
+	}
+	
+	
 
 }

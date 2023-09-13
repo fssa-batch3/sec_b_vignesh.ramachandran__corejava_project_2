@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.util.ConnectionUtil;
@@ -34,7 +36,7 @@ public class DishPriceDAO {
 			ps.setInt(1, dishId);
 			ps.setInt(2, price);
 			ps.setTimestamp(3, dateTime); 
-			ps.executeUpdate();
+			ps.executeUpdate(); 
 
 			con.commit();
 			System.out.println("Dish price created sucessfully");
@@ -212,6 +214,45 @@ public class DishPriceDAO {
 			ConnectionUtil.close(con, ps, rs);
 		}
 	}
+	
+	/**
+	 * 
+	 * @param menuId
+	 * @param categoryId
+	 * @return
+	 * @throws DAOException
+	 */
+	public List<Integer> findAllPriceIdsByMenuIdAndCategoryId(int menuId, int categoryId) throws DAOException{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		List<Integer> priceIds = new ArrayList<>();
+		
+		try {
+			String query = "SELECT dp.id FROM dish_price dp JOIN category_dishes cd ON dp.dish_id = cd.dish_id "
+					+ "WHERE dp.end_date IS NULL AND cd.menu_id = ? AND cd.category_id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, menuId);
+			ps.setInt(2, categoryId);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				priceIds.add(rs.getInt("id"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		return priceIds;
+	}
+	
 
 	/**
 	 * Deletes dish prices from the database associated with the provided dish ID.
