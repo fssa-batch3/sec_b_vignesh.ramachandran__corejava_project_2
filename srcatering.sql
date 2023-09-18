@@ -27,11 +27,12 @@ CREATE TABLE IF NOT EXISTS address_book (
     pincode INT,
     status BOOLEAN DEFAULT TRUE,
     set_as_default BOOLEAN,
-    selected BOOLEAN,
+    selected BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (user_id) REFERENCES users(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
 
 SELECT * FROM address_book;
 

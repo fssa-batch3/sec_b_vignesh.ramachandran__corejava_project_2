@@ -1,5 +1,6 @@
 package in.fssa.srcatering.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +32,8 @@ public class CartService {
 			// setting totalCost
 			int price = new CategoryService().getTotalPriceOfTheCategoryByMenuIdAndCategoryId(cart.getMenuId(),
 					cart.getCategoryId());
-			
-			int totalCost = price * cart.getNoOfGuest();
-			
-			cart.setTotalCost(totalCost);
+
+			cart.setPrice(price);
 
 			CartValidator.isThatMenuAndCategoryAlreadyExistsForThatUser(cart.getMenuId(), cart.getCategoryId(),
 					cart.getUserId());
@@ -46,38 +45,34 @@ public class CartService {
 			e.printStackTrace();
 			throw new ServiceException("Cart creation failed");
 		}
-
 	}
 
 	/**
 	 * 
-	 * @param cart
+	 * @param noOfGuest
+	 * @param cartId
 	 * @throws ValidationException
 	 * @throws ServiceException
 	 */
-	public void updateAddtoCart(Cart cart) throws ValidationException, ServiceException {
+	public void updateCart(int noOfGuest, LocalDate deliveryDate, int cartId)
+			throws ValidationException, ServiceException {
 
 		try {
-			// validate addtoCart
-			CartValidator.validateCart(cart);
+			// validate data
+			CartValidator.validateNoOfGuest(noOfGuest);
+			CartValidator.validateDeliveryDate(deliveryDate);
 
-			// setting totalCost
-			int totalCost = new CategoryService().getTotalPriceOfTheCategoryByMenuIdAndCategoryId(cart.getMenuId(),
-					cart.getCategoryId());
-			cart.setTotalCost(totalCost);
-
-			if (!CartValidator.isCartIdIsValid(cart.getId())) {
+			if (!CartValidator.isCartIdIsValid(cartId)) {
 				throw new ValidationException("Invalid CartId");
 			}
 
 			// update cart
-			addtoCartDAO.update(cart);
+			addtoCartDAO.updateCart(noOfGuest, deliveryDate, cartId);
 
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw new ServiceException("Cart updation failed");
 		}
-
 	}
 
 	/**
@@ -99,7 +94,21 @@ public class CartService {
 			e.printStackTrace();
 			throw new ServiceException("Cart deletion failed");
 		}
-
+	}
+	
+	/**
+	 * 
+	 * @throws ServiceException
+	 */
+	public void deleteAllCart() throws ServiceException {
+		
+		try {
+			addtoCartDAO.deleteAllCart();
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException("AllCart items deletion failed");
+		}
+		
 	}
 
 	/**
@@ -146,6 +155,26 @@ public class CartService {
 			throw new ServiceException("Unable to get Cart");
 		}
 		return cart;
+	}
+
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws ValidationException
+	 * @throws ServiceException 
+	 */
+	public int getCartCountByUserId(int userId) throws ValidationException, ServiceException {
+
+		int count = 0;
+		try {
+			UserValidator.isUserIdIsValid(userId);
+			count = addtoCartDAO.findCartCountByUserId(userId);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+		return count;
 	}
 
 }

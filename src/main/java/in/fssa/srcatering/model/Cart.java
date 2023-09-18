@@ -14,7 +14,7 @@ public class Cart extends CartEntity {
 		super.setUserId(userId);
 		super.setMenuId(menuId);
 		super.setCategoryId(categoryId);
-		super.setTotalCost(totalCost);
+		super.setPrice(totalCost);
 		super.setNoOfGuest(noOfGuest);
 		super.setDeliveryDate(deliveryDate);
 	}

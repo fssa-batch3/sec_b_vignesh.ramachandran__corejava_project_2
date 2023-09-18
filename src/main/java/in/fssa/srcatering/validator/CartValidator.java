@@ -17,29 +17,31 @@ public class CartValidator {
 	 * @throws ValidationException
 	 */
 	public static void validateCart(Cart cart) throws ValidationException {
-		
-		if(cart == null) {
+
+		if (cart == null) {
 			throw new ValidationException("Invalid Cart Input");
 		}
 
 		IntUtil.rejectIfInvalidInt(cart.getUserId(), "UserId");
 		IntUtil.rejectIfInvalidInt(cart.getMenuId(), "MenuId");
-		IntUtil.rejectIfInvalidInt(cart.getCategoryId(), "CategoryId"); 
+		IntUtil.rejectIfInvalidInt(cart.getCategoryId(), "CategoryId");
 		IntUtil.rejectIfInvalidInt(cart.getNoOfGuest(), "NoOfGuest");
-		//IntUtil.rejectIfInvalidInt(cart.getTotalCost(), "TotalCost");
 
 		LocalDate today = LocalDate.now();
-		LocalDate deliveryDate = cart.getDeliveryDate(); 
+		LocalDate deliveryDate = cart.getDeliveryDate();
+		LocalDate twoMonthsLater = today.plusMonths(2);
+		
 
-		// Period period = Period.between(today, addtoCart.getDeliveryDate());
+		// getting no of Days
 		long daysDifference = ChronoUnit.DAYS.between(today, deliveryDate);
-
-		if (daysDifference < 7) {
+		long monthsDifference = ChronoUnit.MONTHS.between(today, twoMonthsLater);
+		
+		if (daysDifference < 7 || monthsDifference > 60) {
 			throw new ValidationException("The date is more than one week from today");
 		}
 
-		if (cart.getNoOfGuest() < 50 || cart.getNoOfGuest() > 500) {
-			throw new ValidationException("NoOfGuest should be above 49 and less than 501");
+		if (cart.getNoOfGuest() < 50 || cart.getNoOfGuest() > 1500) {
+			throw new ValidationException("NoOfGuest should be above 49 and less than 1501");
 		}
 
 		UserValidator.isUserIdIsValid(cart.getUserId());
@@ -84,7 +86,36 @@ public class CartValidator {
 			e.printStackTrace();
 			throw new ValidationException(e.getMessage());
 		}
+	}
 
+	/**
+	 * 
+	 * @param noOfGuest
+	 * @throws ValidationException
+	 */
+	public static void validateNoOfGuest(int noOfGuest) throws ValidationException {
+
+		IntUtil.rejectIfInvalidInt(noOfGuest, "NoOfGuest");
+		if (noOfGuest < 50 || noOfGuest > 1500) {
+			throw new ValidationException("NoOfGuest should be above 49 and less than 1501");
+		}
+	}
+
+	/**
+	 * 
+	 * @param deliveryDate
+	 * @throws ValidationException
+	 */
+	public static void validateDeliveryDate(LocalDate deliveryDate) throws ValidationException {
+		
+		LocalDate today = LocalDate.now();
+
+		// getting no of Days
+		long daysDifference = ChronoUnit.DAYS.between(today, deliveryDate);
+
+		if (daysDifference < 7) {
+			throw new ValidationException("The date is more than one week from today");
+		}
 	}
 
 }

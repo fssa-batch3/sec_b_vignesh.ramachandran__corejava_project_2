@@ -5,23 +5,19 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Order extends OrderEntity {
-	
+
 	public Order() {
-		
+
 	}
 
-	public Order(int id, int userId, int menuId, int categoryId, int noOfGuest, int totalCost, LocalDateTime orderDate,
-			LocalDate deliveryDate, OrderStatus orderStatus){
-		
+	public Order(int id, int userId, int addressId, LocalDateTime orderDate, String eventName, int totalCost) {
+
 		super.setId(id);
-		super.setMenuId(menuId);
-		super.setCategoryId(categoryId);
 		super.setUserId(userId);
-		super.setNoOfGuest(noOfGuest);
+		super.setAddressId(addressId);
 		super.setTotalCost(totalCost);
 		super.setOrderDate(orderDate);
-		super.setDeliveryDate(deliveryDate);
-		super.setOrderStatus(orderStatus);
-		
+		super.setEventName(eventName);
+
 	}
 }

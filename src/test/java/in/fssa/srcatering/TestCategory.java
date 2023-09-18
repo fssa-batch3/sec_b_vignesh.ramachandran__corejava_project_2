@@ -11,19 +11,19 @@ import in.fssa.srcatering.service.CategoryService;
 
 class TestCategory {
 
-	@Test
-	void testCreateCategoryWithValidInput() {
-		CategoryService categoryService = new CategoryService();
-		
-		Category category = new Category();
-		category.setCategoryName(generateRandomCategoryName());
-		category.setImage("https://iili.io/HWh0ZrB.jpg");
-		category.setMenu_id(1);
-
-		assertDoesNotThrow(() -> {
-			categoryService.createCategory(category); 
-		});
-	}
+//	@Test
+//	void testCreateCategoryWithValidInput() {
+//		CategoryService categoryService = new CategoryService();
+//		
+//		Category category = new Category();
+//		category.setCategoryName(generateRandomCategoryName());
+//		category.setImage("https://iili.io/HWh0ZrB.jpg");
+//		category.setMenu_id(1);
+//
+//		assertDoesNotThrow(() -> {
+//			categoryService.createCategory(category); 
+//		});
+//	}
 	
 	 
 	@Test

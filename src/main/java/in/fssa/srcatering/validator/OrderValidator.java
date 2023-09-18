@@ -9,6 +9,7 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Order;
 import in.fssa.srcatering.util.IntUtil;
+import in.fssa.srcatering.util.StringUtil;
 
 public class OrderValidator {
 
@@ -20,26 +21,11 @@ public class OrderValidator {
 	public static void validateOrder(Order order) throws ValidationException {
 
 		IntUtil.rejectIfInvalidInt(order.getUserId(), "UserId");
-		IntUtil.rejectIfInvalidInt(order.getMenuId(), "MenuId");
-		IntUtil.rejectIfInvalidInt(order.getCategoryId(), "CategoryId");
-		IntUtil.rejectIfInvalidInt(order.getNoOfGuest(), "NoOfGuest");
+		IntUtil.rejectIfInvalidInt(order.getAddressId(), "AddressId");
+		IntUtil.rejectIfInvalidInt(order.getTotalCost(), "TotalCost");
+		StringUtil.rejectIfInvalidString(order.getEventName(), "EventName");
 
-		LocalDate today = LocalDate.now();
-		LocalDate deliveryDate = order.getDeliveryDate(); 
-
-		long daysDifference = ChronoUnit.DAYS.between(today, deliveryDate);
-
-		if (daysDifference < 7) {
-			throw new ValidationException("The date is more than one week from today");
-		}
-
-		if (order.getNoOfGuest() < 50 || order.getNoOfGuest() > 500) {
-			throw new ValidationException("NoOfGuest should be above 49 and less than 501");
-		}
-
-		UserValidator.isUserIdIsValid(order.getUserId());
-		MenuValidator.isMenuIdIsValid(order.getMenuId());
-		CategoryValidator.isCategoryIdExistsForThatMenu(order.getMenuId(), order.getCategoryId());
+		UserValidator.isUserIdIsValid(order.getUserId());	
 	}
 	
 	/**

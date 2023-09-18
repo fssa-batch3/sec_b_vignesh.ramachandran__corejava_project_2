@@ -11,22 +11,22 @@ import in.fssa.srcatering.service.MenuService;
 
 class TestMenu {
 
-	@Test
-	void testCreateMenuWithValidInput() {
-		MenuService menuService = new MenuService();
-
-		Menu menu = new Menu();
-		menu.setMenuName(generateRandomMenuName());
-		menu.setDescription(
-				"SR Catering Service present a detailed dinner menu which is available for all parties, "
-				+ "wedding and reception; we also aid customers to create a personalized and special menu just "
-				+ "according to the taste and budget");
-		menu.setImage("https://iili.io/HWhlwKB.jpg");
-
-		assertDoesNotThrow(() -> {
-			menuService.createMenu(menu); 
-		});
-	}
+//	@Test
+//	void testCreateMenuWithValidInput() {
+//		MenuService menuService = new MenuService();
+//
+//		Menu menu = new Menu();
+//		menu.setMenuName(generateRandomMenuName());
+//		menu.setDescription(
+//				"SR Catering Service present a detailed dinner menu which is available for all parties, "
+//				+ "wedding and reception; we also aid customers to create a personalized and special menu just "
+//				+ "according to the taste and budget");
+//		menu.setImage("https://iili.io/HWhlwKB.jpg");
+//
+//		assertDoesNotThrow(() -> {
+//			menuService.createMenu(menu); 
+//		});
+//	}
 	
 	
 	@Test

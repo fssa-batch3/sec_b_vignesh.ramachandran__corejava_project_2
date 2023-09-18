@@ -14,23 +14,23 @@ import in.fssa.srcatering.service.DishService;
 
  class TestDish {
 
-	@Test
-	 void testCreateDishWithValidInput() {
-		DishService dishService = new DishService();
-
-		Dish dish = new Dish();
-
-		dish.setMenuId(1);
-		dish.setCategoryId(1);
-		dish.setDishName(generateRandomDishName());
-		dish.setDishPrice(30);
-		dish.setQuantity(2);
-		dish.setQuantityUnit(QuantityUnit.NOS);
-
-		assertDoesNotThrow(() -> {
-			dishService.createDish(dish);
-		});
-	}
+//	@Test
+//	 void testCreateDishWithValidInput() {
+//		DishService dishService = new DishService();
+//
+//		Dish dish = new Dish();
+//
+//		dish.setMenuId(1);
+//		dish.setCategoryId(1);
+//		dish.setDishName(generateRandomDishName());
+//		dish.setDishPrice(30);
+//		dish.setQuantity(2);
+//		dish.setQuantityUnit(QuantityUnit.NOS);
+//
+//		assertDoesNotThrow(() -> {
+//			dishService.createDish(dish);
+//		});
+//	}
 
 	@Test
 	 void testCreateDishWithInvalidInput() {

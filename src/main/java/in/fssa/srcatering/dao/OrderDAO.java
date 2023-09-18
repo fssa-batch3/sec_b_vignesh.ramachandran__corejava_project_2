@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,24 +26,17 @@ public class OrderDAO {
 		int generatedId = -1;
 		
 		try {
-			String query = "INSERT INTO orders(user_id, no_of_guest, total_cost, order_date, delivery_date, order_status,"
-					+ "menu_id, category_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO orders(user_id, address_id, order_date,event_name,total_cost) VALUES(?, ?, ?, ?, ?)";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			
 			java.sql.Timestamp orderDateTime = java.sql.Timestamp.valueOf(order.getOrderDate());
 			
-			// Parse the date string into a LocalDate object
-	        java.sql.Date deliveryDate = java.sql.Date.valueOf(order.getDeliveryDate());
-			
 			ps.setInt(1, order.getUserId());
-			ps.setInt(2, order.getNoOfGuest());
-			ps.setInt(3, order.getTotalCost());
-			ps.setTimestamp(4, orderDateTime);
-			ps.setDate(5, deliveryDate);
-			ps.setString(6, order.getOrderStatus().name()); 
-			ps.setInt(7, order.getMenuId());
-			ps.setInt(8, order.getCategoryId());
+			ps.setInt(2, order.getAddressId());
+			ps.setTimestamp(3, orderDateTime);
+			ps.setString(4, order.getEventName());
+			ps.setInt(5, order.getTotalCost());
 			
 			ps.executeUpdate();
 			
@@ -64,32 +57,6 @@ public class OrderDAO {
 		return generatedId;
 	}
 	
-	/**
-	 * 
-	 * @param status
-	 * @param orderId
-	 * @throws DAOException
-	 */
-	public void update(OrderStatus status, int orderId) throws DAOException {
-		Connection con = null;
-		PreparedStatement ps = null;
-		
-		try {
-			String query = "UPDATE orders SET order_status = ? WHERE id = ?";
-			con = ConnectionUtil.getConnection();
-			ps = con.prepareStatement(query);
-			
-			ps.setString(1, status.name());
-			ps.setInt(2, orderId);
-			ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DAOException(e.getMessage());
-		} finally {
-			ConnectionUtil.close(con, ps);
-		}
-	}
 	
 	
 	/**
@@ -136,8 +103,7 @@ public class OrderDAO {
 		List<Order> orderList = new ArrayList<>();
 		
 		try {
-			String query = "SELECT id, user_id, menu_id, category_id, no_of_guest, total_cost, order_date, "
-					+ "delivery_date, order_status FROM orders WHERE user_id = ?";
+			String query = "SELECT id, user_id, address_id, total_cost, order_date, event_name FROM orders WHERE user_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			
@@ -149,23 +115,14 @@ public class OrderDAO {
 				Order order = new Order();
 				order.setId(rs.getInt("id"));
 				order.setUserId(rs.getInt("user_id"));
-				order.setMenuId(rs.getInt("menu_id"));
-				order.setCategoryId(rs.getInt("category_id"));
-				order.setNoOfGuest(rs.getInt("no_of_guest"));
+				order.setAddressId(rs.getInt("address_id"));
 				order.setTotalCost(rs.getInt("total_cost"));
+				order.setEventName(rs.getString("event_name"));
 				
 				// Convert SQL Timestamp to LocalDateTime
                 Timestamp timestamp = rs.getTimestamp("order_date");
                 LocalDateTime orderDate = timestamp.toLocalDateTime();
                 order.setOrderDate(orderDate);
-				
-				// Convert SQL Date to LocalDate
-				Date sqlDate = rs.getDate("delivery_date");
-				order.setDeliveryDate(sqlDate.toLocalDate());
-				
-				String statusStr = rs.getString("order_status");
-				OrderStatus orderStatus = OrderStatus.valueOf(statusStr);
-				order.setOrderStatus(orderStatus);
 				
 				orderList.add(order);
 			}
@@ -194,8 +151,7 @@ public class OrderDAO {
 		Order order = null;
 		
 		try {
-			String query = "SELECT id, user_id, menu_id, category_id, no_of_guest, total_cost, order_date,"
-					+ "delivery_date, order_status FROM orders WHERE id = ?";
+			String query = "SELECT id, user_id, address_id, total_cost, order_date, event_name FROM orders WHERE id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			
@@ -206,23 +162,15 @@ public class OrderDAO {
 				order = new Order();
 				order.setId(rs.getInt("id"));
 				order.setUserId(rs.getInt("user_id"));
-				order.setMenuId(rs.getInt("menu_id"));
-				order.setCategoryId(rs.getInt("category_id"));
-				order.setNoOfGuest(rs.getInt("no_of_guest"));
+				order.setAddressId(rs.getInt("address_id"));
 				order.setTotalCost(rs.getInt("total_cost"));
+				order.setEventName(rs.getString("event_name"));
 				
 				// Convert SQL Timestamp to LocalDateTime
                 Timestamp timestamp = rs.getTimestamp("order_date");
                 LocalDateTime orderDate = timestamp.toLocalDateTime();
                 order.setOrderDate(orderDate);
 				
-				// Convert SQL Date to LocalDate
-				Date sqlDate = rs.getDate("delivery_date");
-				order.setDeliveryDate(sqlDate.toLocalDate());
-				
-				String statusStr = rs.getString("order_status");
-				OrderStatus orderStatus = OrderStatus.valueOf(statusStr);
-				order.setOrderStatus(orderStatus);
 			}
 			
 		} catch (SQLException e) {

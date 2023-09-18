@@ -12,6 +12,7 @@ import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Order;
 import in.fssa.srcatering.model.OrderProduct;
 import in.fssa.srcatering.model.OrderStatus;
+import in.fssa.srcatering.validator.OrderProductValidator;
 import in.fssa.srcatering.validator.OrderValidator;
 import in.fssa.srcatering.validator.UserValidator;
 
@@ -25,12 +26,10 @@ public class OrderService {
 	 * @throws ValidationException
 	 * @throws ServiceException
 	 */
-	public void createOrder(Order order) throws ValidationException, ServiceException {
+	public int createOrder(Order order) throws ValidationException, ServiceException {
 
 		LocalDateTime localDateTime = LocalDateTime.now();
 		order.setOrderDate(localDateTime);
-
-		OrderProductService orderProductService = new OrderProductService();
 
 		int generatedOrderId = -1;
 
@@ -38,57 +37,17 @@ public class OrderService {
 
 			// validate order
 			OrderValidator.validateOrder(order);
-
-			// setting totalCost
-			int price = new CategoryService().getTotalPriceOfTheCategoryByMenuIdAndCategoryId(order.getMenuId(),
-					order.getCategoryId());
 			
-			int totalCost = price * order.getNoOfGuest();
-			
-			order.setTotalCost(totalCost);
-			
-
-			// setting order status
-			order.setOrderStatus(OrderStatus.NOT_DELIVERED);
-
 			// create order
 			generatedOrderId = orderDAO.create(order);
-
-			OrderProduct orderProduct = new OrderProduct();
-
-			Map<Integer, Integer> dishIdPriceIdMap = new CategoryDishService()
-					.getDishIdAndPriceIdByMenuIdAndCategoryId(order.getMenuId(), order.getCategoryId());
-
-			// setting orderId, dishId, priceId
-			orderProduct.setOrderId(generatedOrderId);
-			orderProduct.setDishIdPriceIdMap(dishIdPriceIdMap);
-
-			// create orderProduct
-			orderProductService.createOrderProduct(orderProduct);
 
 		} catch (DAOException e) {
 			e.printStackTrace();
 			throw new ServiceException("Order creation failed");
 		}
+		return generatedOrderId;
 	}
 
-	/**
-	 * 
-	 * @param status
-	 * @param orderId
-	 * @throws ValidationException
-	 * @throws ServiceException
-	 */
-	public void updateOrder(OrderStatus status, int orderId) throws ValidationException, ServiceException {
-
-		try {
-			OrderValidator.isOrderIdIsValid(orderId);
-			orderDAO.update(status, orderId);
-		} catch (DAOException e) {
-			e.printStackTrace();
-			throw new ServiceException("Order updation failed");
-		}
-	}
 
 	/**
 	 * 

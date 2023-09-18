@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class CartDAO {
 			ps.setInt(1, cart.getUserId());
 			ps.setInt(2, cart.getMenuId());
 			ps.setInt(3, cart.getCategoryId());
-			ps.setInt(4, cart.getTotalCost());
+			ps.setInt(4, cart.getPrice());
 			ps.setInt(5, cart.getNoOfGuest());
 			ps.setDate(6, deliveryDate);
 
@@ -51,27 +52,27 @@ public class CartDAO {
 		}
 	}
 
+	
 	/**
 	 * 
 	 * @param cart
 	 * @throws DAOException
 	 */
-	public void update(Cart cart) throws DAOException {
+	public void updateCart(int noOfGuest,LocalDate deliveryDate, int cartId) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			String query = "UPDATE cart SET total_cost = ?, no_of_guest = ?, delivery_date = ? WHERE id = ?";
+			String query = "UPDATE cart SET no_of_guest = ?, delivery_date = ? WHERE id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
-
+			
 			// Parse the date string into a LocalDate object
-			java.sql.Date deliveryDate = java.sql.Date.valueOf(cart.getDeliveryDate());
+			java.sql.Date deliveryDate1 = java.sql.Date.valueOf(deliveryDate);
 
-			ps.setInt(1, cart.getTotalCost());
-			ps.setInt(2, cart.getNoOfGuest());
-			ps.setDate(3, deliveryDate);
-			ps.setInt(4, cart.getId());
+			ps.setInt(1, noOfGuest);
+			ps.setDate(2, deliveryDate1);
+			ps.setInt(3, cartId);
 
 			ps.executeUpdate();
 
@@ -84,6 +85,7 @@ public class CartDAO {
 			ConnectionUtil.close(con, ps);
 		}
 	}
+	
 
 	/**
 	 * 
@@ -111,7 +113,34 @@ public class CartDAO {
 			ConnectionUtil.close(con, ps);
 		}
 	}
+	
+	
+	/**
+	 * 
+	 * @throws DAOException
+	 */
+	public void deleteAllCart() throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		try {
+			String query = "TRUNCATE TABLE cart";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.executeUpdate();
+			
+			System.out.println("All Cart items removed sucessfully");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps);
+		}
+	}
 
+	
 	/**
 	 * 
 	 * @param cartId
@@ -169,7 +198,7 @@ public class CartDAO {
 				cart.setMenuId(rs.getInt("menu_id"));
 				cart.setCategoryId(rs.getInt("category_id"));
 				cart.setNoOfGuest(rs.getInt("no_of_guest"));
-				cart.setTotalCost(rs.getInt("total_cost"));
+				cart.setPrice(rs.getInt("total_cost"));
 
 				Date sqlDate = rs.getDate("delivery_date");
 				cart.setDeliveryDate(sqlDate.toLocalDate());
@@ -214,7 +243,7 @@ public class CartDAO {
 				cart.setMenuId(rs.getInt("menu_id"));
 				cart.setCategoryId(rs.getInt("category_id"));
 				cart.setNoOfGuest(rs.getInt("no_of_guest"));
-				cart.setTotalCost(rs.getInt("total_cost"));
+				cart.setPrice(rs.getInt("total_cost"));
 
 				Date sqlDate = rs.getDate("delivery_date");
 				cart.setDeliveryDate(sqlDate.toLocalDate());
@@ -262,6 +291,40 @@ public class CartDAO {
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
+	}
+	
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws DAOException
+	 */
+	public int findCartCountByUserId(int userId) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		int count = 0;
+		
+		try {
+			String query = "SELECT COUNT(id) FROM cart WHERE user_id = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, userId);
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+	            count = rs.getInt(1);
+	        } 
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		return count;
 	}
 
 }

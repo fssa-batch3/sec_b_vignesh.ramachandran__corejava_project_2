@@ -6,6 +6,8 @@ VALUES ("Vignesh", "vignesh@gmail.com", 6379370482, "Vig@1234"),
 -- findall users
 SELECT * FROM users;
 
+SELECT * FROM address_book;
+
 
 INSERT INTO menus(menu_name, description,image)
 VALUES ("Breakfast", "SR Catering Service offers best breakfast menu that is available for all parties and weddings; we also assist customers to create a personalized menu just according to client’s taste and perfect for the occasion","https://iili.io/HWhcQZx.jpg"),
@@ -77,7 +79,8 @@ CREATE TABLE IF NOT EXISTS cart(
 INSERT INTO cart(user_id, menu_id, category_id, no_of_guest, total_cost, delivery_date)
 VALUES (1, 1, 1, 50, 200, "2024-01-01");
 
-SELECT * FROM cart; 
+SELECT * FROM cart;
+select count(id) FROM cart WHERE user_id = 4;
 
 
 

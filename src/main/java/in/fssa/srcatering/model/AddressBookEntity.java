@@ -16,9 +16,9 @@ public class AddressBookEntity {
 	String state;
 	int pincode;
 	
-	boolean status;
-	boolean setAsDefault;
-	boolean selected;
+	int status;
+	int setAsDefault;
+	int selected;
 	
 	
 	public int getId() {
@@ -93,22 +93,22 @@ public class AddressBookEntity {
 	public void setPincode(int pincode) {
 		this.pincode = pincode;
 	}
-	public boolean isStatus() {
+	public int isStatus() {
 		return status;
 	}
-	public void setStatus(boolean status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
-	public boolean isSetAsDefault() {
+	public int isSetAsDefault() {
 		return setAsDefault;
 	}
-	public void setSetAsdefault(boolean setAsdefault) {
+	public void setSetAsdefault(int setAsdefault) {
 		this.setAsDefault = setAsdefault;
 	}
-	public boolean isSelected() {
+	public int isSelected() {
 		return selected;
 	}
-	public void setSelected(boolean selected) {
+	public void setSelected(int selected) {
 		this.selected = selected;
 	}
 	

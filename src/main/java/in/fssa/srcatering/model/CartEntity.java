@@ -8,7 +8,7 @@ public class CartEntity {
 	private int userId;
 	private int menuId;
 	private int categoryId;
-	private int totalCost;
+	private int price;
 	private int noOfGuest;
 	private LocalDate deliveryDate;
 	
@@ -37,11 +37,11 @@ public class CartEntity {
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
-	public int getTotalCost() {
-		return totalCost;
+	public int getPrice() {
+		return price;
 	}
-	public void setTotalCost(int totalCost) {
-		this.totalCost = totalCost;
+	public void setPrice(int totalCost) {
+		this.price = totalCost;
 	}
 	public int getNoOfGuest() {
 		return noOfGuest;

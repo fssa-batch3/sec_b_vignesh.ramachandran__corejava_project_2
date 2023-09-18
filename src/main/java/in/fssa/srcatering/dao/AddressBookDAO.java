@@ -24,7 +24,7 @@ public class AddressBookDAO {
 		
 		try {
 			String query = "INSERT INTO address_book(user_id, name, email, phone_number,door_no,street_name,sub_locality, city,"
-					+ "district, state, pincode, status, set_as_default, selected) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "district, state, pincode,set_as_default) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			
@@ -39,9 +39,7 @@ public class AddressBookDAO {
 			ps.setString(9, addressBook.getDistrict());
 			ps.setString(10, addressBook.getState());
 			ps.setInt(11, addressBook.getPincode());
-			ps.setBoolean(12, addressBook.isStatus());
-			ps.setBoolean(13, addressBook.isSetAsDefault());
-			ps.setBoolean(14, addressBook.isSelected());
+			ps.setInt(12, addressBook.isSetAsDefault());
 			
 			ps.executeUpdate();
 			
@@ -265,7 +263,7 @@ public class AddressBookDAO {
 		
 		try {
 			String query = "SELECT id,user_id, name, email, phone_number, door_no, street_name, sub_locality, city, district, state,"
-					+ "pincode,status,set_as_default,selected WHERE user_id = ? AND name = ? AND email=? AND phone_number = ? AND door_no = ? AND street_name = ? AND "
+					+ "pincode,status,set_as_default,selected FROM address_book WHERE user_id = ? AND name = ? AND email=? AND phone_number = ? AND door_no = ? AND street_name = ? AND "
 					+ "sub_locality = ? AND city = ? AND district = ? AND state=? AND pincode = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
@@ -298,9 +296,9 @@ public class AddressBookDAO {
 				addressBook1.setDistrict(rs.getString("district"));
 				addressBook1.setState(rs.getString("state"));
 				addressBook1.setPincode(rs.getInt("pincode"));
-				addressBook1.setStatus(rs.getBoolean("status"));
-				addressBook1.setSetAsdefault(rs.getBoolean("set_as_default"));
-				addressBook1.setSelected(rs.getBoolean("selected"));
+				addressBook1.setStatus(rs.getInt("status"));
+				addressBook1.setSetAsdefault(rs.getInt("set_as_default"));
+				addressBook1.setSelected(rs.getInt("selected"));
 			}
 			
 		} catch (SQLException e) {
@@ -328,7 +326,7 @@ public class AddressBookDAO {
 		
 		try {
 			String query = "SELECT id,user_id, name, email, phone_number, door_no, street_name, sub_locality, city, district, state,"
-					+ "pincode, status, set_as_defalut, selected FROM address_book WHERE id = ?";
+					+ "pincode, status, set_as_default, selected FROM address_book WHERE id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			
@@ -350,9 +348,9 @@ public class AddressBookDAO {
 				addressBook.setDistrict(rs.getString("district"));
 				addressBook.setState(rs.getString("state"));
 				addressBook.setPincode(rs.getInt("pincode"));
-				addressBook.setStatus(rs.getBoolean("status"));
-				addressBook.setSetAsdefault(rs.getBoolean("set_as_default"));
-				addressBook.setSelected(rs.getBoolean("selected"));
+				addressBook.setStatus(rs.getInt("status"));
+				addressBook.setSetAsdefault(rs.getInt("set_as_default"));
+				addressBook.setSelected(rs.getInt("selected"));
 			}
 			
 		} catch (SQLException e) {
@@ -380,7 +378,7 @@ public class AddressBookDAO {
 		
 		try {
 			String query = "SELECT id,user_id, name, email, phone_number, door_no, street_name, sub_locality, city, district, state,"
-					+ "pincode, status, set_as_default, selected FROM address_book WHERE user_id = ?";
+					+ "pincode, status, set_as_default, selected FROM address_book WHERE user_id = ? AND status = 1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			
@@ -401,9 +399,9 @@ public class AddressBookDAO {
 				addressBook.setDistrict(rs.getString("district"));
 				addressBook.setState(rs.getString("state"));
 				addressBook.setPincode(rs.getInt("pincode"));
-				addressBook.setStatus(rs.getBoolean("status"));
-				addressBook.setSetAsdefault(rs.getBoolean("set_as_default"));
-				addressBook.setSelected(rs.getBoolean("selected"));
+				addressBook.setStatus(rs.getInt("status"));
+				addressBook.setSetAsdefault(rs.getInt("set_as_default"));
+				addressBook.setSelected(rs.getInt("selected"));
 				addressList.add(addressBook);
 			}
 			
@@ -447,4 +445,61 @@ public class AddressBookDAO {
 			ConnectionUtil.close(con, ps,rs);
 		}
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws DAOException
+	 */
+	public AddressBook findDefaultAddressByUserId(int userId) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		AddressBook addressBook = null;
+		
+		try {
+			String query = "SELECT id,user_id, name, email, phone_number, door_no, street_name, sub_locality, city, district, state,"
+					+"pincode, status, set_as_default, selected FROM address_book WHERE user_id = ? AND set_as_default = 1 AND status = 1";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, userId);
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				
+				addressBook = new AddressBook();
+				addressBook.setId(rs.getInt("id"));
+				addressBook.setUserId(rs.getInt("user_id"));
+				addressBook.setName(rs.getString("name"));
+				addressBook.setEmail(rs.getString("email"));
+				addressBook.setPhoneNumber(rs.getString("phone_number"));
+				addressBook.setDoorNo(rs.getString("door_no"));
+				addressBook.setStreetName(rs.getString("street_name"));
+				addressBook.setSubLocality(rs.getString("sub_locality"));
+				addressBook.setCity(rs.getString("city"));
+				addressBook.setDistrict(rs.getString("district"));
+				addressBook.setState(rs.getString("state"));
+				addressBook.setPincode(rs.getInt("pincode"));
+				addressBook.setStatus(rs.getInt("status"));
+				addressBook.setSetAsdefault(rs.getInt("set_as_default"));
+				addressBook.setSelected(rs.getInt("selected"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps,rs);
+		}
+		return addressBook;
+		
+	}
+	
+	
 }
+
+
+

@@ -144,4 +144,26 @@ public class DishPriceService {
 		return priceIds;
 	}
 
+	/**
+	 * 
+	 * @param priceIds
+	 * @return
+	 * @throws ServiceException 
+	 * @throws  
+	 */
+	public int getTotalPriceByPriceId(List<Integer> priceIds) throws ValidationException, ServiceException  {
+		
+		int sum = 0;
+		
+		try {
+			for(Integer id: priceIds) {
+				IntUtil.rejectIfInvalidInt(id, "PriceId");
+			}
+			sum = dishPriceDAO.getTotalPriceByPriceIds(priceIds);
+		} catch (DAOException e) {
+			e.printStackTrace();
+			throw new ServiceException(e.getMessage());
+		}
+		return sum;
+	}
 }

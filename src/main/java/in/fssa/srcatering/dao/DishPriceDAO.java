@@ -265,7 +265,6 @@ public class DishPriceDAO {
 		PreparedStatement ps = null;
 		
 		try {
-			
 			String query = "DELETE FROM dish_price WHERE dish_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
@@ -286,6 +285,48 @@ public class DishPriceDAO {
 		} finally {
 			ConnectionUtil.close(con, ps);
 		}
+	}
+	
+	/**
+	 * 
+	 * @param dishIds
+	 * @throws DAOException
+	 */
+	public int getTotalPriceByPriceIds(List<Integer> priceIds) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		int sum = 0;
+		
+		try {
+			
+			StringBuilder idList = new StringBuilder();
+            for (int i = 0; i < priceIds.size(); i++) {
+                idList.append(priceIds.get(i));
+                if (i < priceIds.size() - 1) {
+                    idList.append(",");
+                }
+            }
+			
+            String query = "SELECT SUM(price) AS total FROM dish_price WHERE id IN (" + idList.toString() + ")";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				sum = rs.getInt("total");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps);
+		}
+		
+		return sum;
 	}
 
 }

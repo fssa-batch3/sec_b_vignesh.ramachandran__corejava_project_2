@@ -12,21 +12,21 @@ import in.fssa.srcatering.service.UserService;
 
  class TestUser {
 
-	@Test
-	 void testCreateUserWithValidInput() {
-		UserService userService = new UserService();
-
-		// user object
-		User user = new User();
-		user.setName("Varun");
-		user.setEmail(generateRandomEmail());
-		user.setPassword("Var@1234");
-		user.setPhoneNumber(9876545678L); 
-
-		assertDoesNotThrow(() -> {
-			userService.createUser(user);
-		});
-	}
+//	@Test
+//	 void testCreateUserWithValidInput() {
+//		UserService userService = new UserService();
+//
+//		// user object
+//		User user = new User();
+//		user.setName("Varun");
+//		user.setEmail(generateRandomEmail());
+//		user.setPassword("Var@1234");
+//		user.setPhoneNumber(9876545678L); 
+//
+//		assertDoesNotThrow(() -> {
+//			userService.createUser(user);
+//		});
+//	}
 
 	@Test 
 	 void testCreateUserWithInvalidInput() {

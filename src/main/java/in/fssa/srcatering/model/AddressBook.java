@@ -1,12 +1,14 @@
 package in.fssa.srcatering.model;
 
 public class AddressBook extends AddressBookEntity {
-	
+
 	public AddressBook() {
-		
+
 	}
 
-	public AddressBook(int id, int userId, String name, String email, String phoneNumber, String doorNo, String streetName, String subLocality, String city, String district, String state, int pincode, boolean status, boolean setAsDefault, boolean selected) {
+	public AddressBook(int id, int userId, String name, String email, String phoneNumber, String doorNo,
+			String streetName, String subLocality, String city, String district, String state, int pincode, int status,
+			int setAsDefault, int selected) {
 		super.setId(id);
 		super.setUserId(userId);
 		super.setName(name);
