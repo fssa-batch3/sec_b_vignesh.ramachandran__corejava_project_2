@@ -34,6 +34,20 @@ public class StringUtil {
 			throw new ValidationException(inputName+" should contain only alphabetic characters");
 		}
 	}
+	
+	/**
+	 * 
+	 * @param input
+	 * @param inputName
+	 * @throws ValidationException
+	 */
+	public static void rejectIfInvalidDishName(String input, String inputName) throws ValidationException {
+		final String NAME_PATTERN = "^[a-zA-Z -]+$";
+		
+		if (!Pattern.matches(NAME_PATTERN, input)) {
+			throw new ValidationException(inputName+" should contain only alphabetic characters");
+		}
+	}
 
 	/**
      * Validates and rejects an invalid email address.

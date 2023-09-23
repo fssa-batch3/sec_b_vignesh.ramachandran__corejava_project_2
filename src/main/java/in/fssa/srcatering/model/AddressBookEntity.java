@@ -4,21 +4,21 @@ public class AddressBookEntity {
 	
 	private int id;
 	private int userId;
-	String name;
-	String email;
-	String phoneNumber;
+	private String name;
+	private String email;
+	private String phoneNumber;
 	
-	String doorNo;
-	String streetName;
-	String subLocality;
-	String city;
-	String district;
-	String state;
-	int pincode;
+	private String doorNo;
+	private String streetName;
+	private String subLocality;
+	private String city;
+	private String district;
+	private String state;
+	private int pincode;
 	
-	int status;
-	int setAsDefault;
-	int selected;
+	private int status;
+	private int setAsDefault;
+	private int selected;
 	
 	
 	public int getId() {

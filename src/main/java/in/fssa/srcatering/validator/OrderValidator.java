@@ -1,14 +1,11 @@
 package in.fssa.srcatering.validator;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
-
 import in.fssa.srcatering.dao.OrderDAO;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Order;
 import in.fssa.srcatering.util.IntUtil;
+import in.fssa.srcatering.util.Logger;
 import in.fssa.srcatering.util.StringUtil;
 
 public class OrderValidator {
@@ -19,6 +16,10 @@ public class OrderValidator {
 	 * @throws ValidationException
 	 */
 	public static void validateOrder(Order order) throws ValidationException {
+		
+		if (order == null) {
+			throw new ValidationException("Invalid Order Input");
+		}
 
 		IntUtil.rejectIfInvalidInt(order.getUserId(), "UserId");
 		IntUtil.rejectIfInvalidInt(order.getAddressId(), "AddressId");
@@ -26,6 +27,7 @@ public class OrderValidator {
 		StringUtil.rejectIfInvalidString(order.getEventName(), "EventName");
 
 		UserValidator.isUserIdIsValid(order.getUserId());	
+		AddressBookValidator.isAddressIdIsValid(order.getAddressId());
 	}
 	
 	/**
@@ -40,7 +42,7 @@ public class OrderValidator {
 			OrderDAO orderDAO = new OrderDAO();
 			orderDAO.isOrderIdIsValid(orderId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ValidationException(e.getMessage());
 		}
 	}

@@ -486,17 +486,17 @@ class TestMenu {
 		assertEquals(expectedMessage, actualMessage);
 	}
 	
-    private String generateRandomMenuName() {
-        String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        StringBuilder dishName = new StringBuilder();
-
-        for (int i = 0; i < 5; i++) {
-            int index = (int) (Math.random() * alphabet.length());
-            char randomChar = alphabet.charAt(index);
-            dishName.append(Character.toUpperCase(randomChar));
-        }
-
-        return dishName.toString();
-    }
+//    private String generateRandomMenuName() {
+//        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+//        StringBuilder dishName = new StringBuilder();
+//
+//        for (int i = 0; i < 5; i++) {
+//            int index = (int) (Math.random() * alphabet.length());
+//            char randomChar = alphabet.charAt(index);
+//            dishName.append(Character.toUpperCase(randomChar));
+//        }
+//
+//        return dishName.toString();
+//    }
 
 }

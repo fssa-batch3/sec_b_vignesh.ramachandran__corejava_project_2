@@ -1,11 +1,8 @@
 package in.fssa.srcatering.service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import in.fssa.srcatering.dao.CategoryDishDAO;
 import in.fssa.srcatering.dao.DishDAO;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
@@ -109,6 +106,7 @@ public class DishService {
 		}
 		return dish;
 	}
+	
 
 	/**
 	 * Retrieves all dishes by a given menu ID and category ID.
@@ -132,7 +130,6 @@ public class DishService {
 			dishList = dishDAO.findAllDishesByMenuIdCategoryId(menuId, categoryId);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
 		}
 		return dishList;
@@ -148,8 +145,6 @@ public class DishService {
 	 */
 	public Set<Dish> getAllActiveDishesByMenuIdAndCategoryId(int menuId, int categoryId) throws ValidationException, ServiceException {
 
-		CategoryDishDAO categoryDishDAO = new CategoryDishDAO();
-
 		Set<Dish> dishList = new HashSet<>();
 
 		try {
@@ -157,7 +152,6 @@ public class DishService {
 			CategoryValidator.isCategoryIdIsValid(categoryId);
 			dishList = dishDAO.findAllActiveDishesByMenuIdAndCategoryId(menuId, categoryId);
 		} catch (DAOException e) {
-			e.printStackTrace();
 			throw new ServiceException(e.getMessage());
 		}
 		return dishList;

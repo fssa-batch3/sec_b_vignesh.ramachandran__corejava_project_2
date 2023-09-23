@@ -12,6 +12,8 @@ import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.interfaces.UserInterface;
 import in.fssa.srcatering.model.User;
 import in.fssa.srcatering.util.ConnectionUtil;
+import in.fssa.srcatering.util.Logger;
+import in.fssa.srcatering.util.PasswordUtil;
 
 public class UserDAO implements UserInterface {
 	
@@ -32,7 +34,7 @@ public class UserDAO implements UserInterface {
 	@Override
 	public List<User> findAll() throws DAOException {
 		Connection con = null;
-		PreparedStatement ps = null;
+		PreparedStatement ps = null; 
 		ResultSet rs = null;
 
 		List<User> userList = new ArrayList<>();
@@ -50,13 +52,13 @@ public class UserDAO implements UserInterface {
 				newUser.setName(rs.getString(USERNAME));
 				newUser.setEmail(rs.getString(USEREMAIL));
 				newUser.setPhoneNumber(rs.getLong(USERPHONENUMBER));
-				newUser.setPassword(rs.getString(USERPASSWORD));
+				newUser.setPassword(PasswordUtil.decodePassword(rs.getString(USERPASSWORD)));
 				newUser.setStatus(rs.getBoolean(USERSTATUS));
 				userList.add(newUser);
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -93,7 +95,7 @@ public class UserDAO implements UserInterface {
 			if (e.getMessage().contains("Duplicate entry")) {
 				throw new DAOException("Duplicate constraint");
 			} else {
-				e.printStackTrace();
+				Logger.error(e);
 				throw new DAOException(e.getMessage());
 			}
 		} finally {
@@ -124,7 +126,7 @@ public class UserDAO implements UserInterface {
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
-			ps.setString(1, newUser.getName());
+			ps.setString(1, newUser.getName().trim());
 			ps.setString(2, newUser.getPassword());
 			ps.setInt(3, id);
 
@@ -137,7 +139,7 @@ public class UserDAO implements UserInterface {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -173,7 +175,7 @@ public class UserDAO implements UserInterface {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -207,7 +209,7 @@ public class UserDAO implements UserInterface {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 			
 		} finally {
@@ -244,12 +246,12 @@ public class UserDAO implements UserInterface {
 				user.setId(rs.getInt(USERID));
 				user.setName(rs.getString(USERNAME));
 				user.setEmail(rs.getString(USEREMAIL));
-				user.setPassword(rs.getString(USERPASSWORD));
+				user.setPassword(PasswordUtil.decodePassword(rs.getString(USERPASSWORD)));
 				user.setPhoneNumber(rs.getLong(USERPHONENUMBER));
 				user.setStatus(rs.getBoolean(USERSTATUS));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -275,7 +277,7 @@ public class UserDAO implements UserInterface {
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
-			ps.setString(1, email);
+			ps.setString(1, email.trim());
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
@@ -283,7 +285,7 @@ public class UserDAO implements UserInterface {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -312,7 +314,7 @@ public class UserDAO implements UserInterface {
 			String query = "SELECT id, name, email, phone_number, password, status FROM users WHERE email = ? AND status = 1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
-			ps.setString(1, email);
+			ps.setString(1, email.trim());
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
@@ -321,13 +323,13 @@ public class UserDAO implements UserInterface {
 				user.setName(rs.getString(USERNAME));
 				user.setPhoneNumber(rs.getLong(USERPHONENUMBER));
 				user.setEmail(rs.getString(USEREMAIL));
-				user.setPassword(rs.getString(USERPASSWORD));
+				user.setPassword(PasswordUtil.decodePassword(rs.getString(USERPASSWORD)));
 				user.setStatus(rs.getBoolean(USERSTATUS));
 			} else {
 				throw new ValidationException("Invalid Email");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		}  finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -356,11 +358,11 @@ public class UserDAO implements UserInterface {
 			
 			rs = ps.executeQuery();
 			if(rs.next() && (!rs.getString(USERPASSWORD).equals(password))) {
-					throw new DAOException("Password mismatch");
+					throw new DAOException("Invalid Login Credentials");
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -394,7 +396,7 @@ public class UserDAO implements UserInterface {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);

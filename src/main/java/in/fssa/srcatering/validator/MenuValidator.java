@@ -9,6 +9,7 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Menu;
 import in.fssa.srcatering.util.IntUtil;
+import in.fssa.srcatering.util.Logger;
 import in.fssa.srcatering.util.StringUtil;
 
 public class MenuValidator {
@@ -98,7 +99,7 @@ public class MenuValidator {
 				throw new ValidationException("MenuName already exists");
 			}
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ValidationException("Failed to find MenuNames");
 		}
 

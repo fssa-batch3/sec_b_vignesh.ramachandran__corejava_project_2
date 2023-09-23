@@ -1,6 +1,5 @@
 package in.fssa.srcatering.validator;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -9,6 +8,7 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Category;
 import in.fssa.srcatering.util.IntUtil;
+import in.fssa.srcatering.util.Logger;
 import in.fssa.srcatering.util.StringUtil;
 
 public class CategoryValidator { 
@@ -95,7 +95,7 @@ public class CategoryValidator {
 			}
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ValidationException("Failed to find CategoryNames");
 		}
 	}
@@ -124,7 +124,7 @@ public class CategoryValidator {
 			return categoryNames.contains(categoryName.trim().toLowerCase());
 			
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ValidationException("Failed to find CategoryNames");
 		}
 

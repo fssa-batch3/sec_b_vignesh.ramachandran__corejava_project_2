@@ -12,6 +12,7 @@ import java.util.List;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.model.Cart;
 import in.fssa.srcatering.util.ConnectionUtil;
+import in.fssa.srcatering.util.Logger;
 
 public class CartDAO {
 
@@ -26,7 +27,7 @@ public class CartDAO {
 
 		try {
 			String query = "INSERT INTO cart(user_id, menu_id, category_id, total_cost, no_of_guest, delivery_date) "
-					+ "VALUES(?, ?, ?, ?, ?, ?)";
+					+ "VALUES(?, ?, ?, ?, ?, ?)"; 
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
@@ -45,7 +46,7 @@ public class CartDAO {
 			System.out.println("Product added to the Cart sucessfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -79,7 +80,7 @@ public class CartDAO {
 			System.out.println("Cart updated sucessfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -107,7 +108,7 @@ public class CartDAO {
 			System.out.println("Cart removed sucessfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -133,7 +134,7 @@ public class CartDAO {
 			System.out.println("All Cart items removed sucessfully");
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -163,7 +164,7 @@ public class CartDAO {
 			return rs.next();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -207,7 +208,7 @@ public class CartDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -250,7 +251,7 @@ public class CartDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -286,7 +287,7 @@ public class CartDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -319,7 +320,7 @@ public class CartDAO {
 	        } 
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);

@@ -10,6 +10,7 @@ import java.util.List;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.model.AddressBook;
 import in.fssa.srcatering.util.ConnectionUtil;
+import in.fssa.srcatering.util.Logger;
 
 public class AddressBookDAO {
 
@@ -29,22 +30,22 @@ public class AddressBookDAO {
 			ps = con.prepareStatement(query);
 			
 			ps.setInt(1, addressBook.getUserId());
-			ps.setString(2, addressBook.getName());
-			ps.setString(3, addressBook.getEmail());
-			ps.setString(4, addressBook.getPhoneNumber());
-			ps.setString(5, addressBook.getDoorNo());
-			ps.setString(6, addressBook.getStreetName());
-			ps.setString(7, addressBook.getSubLocality());
-			ps.setString(8, addressBook.getCity());
-			ps.setString(9, addressBook.getDistrict());
-			ps.setString(10, addressBook.getState());
+			ps.setString(2, addressBook.getName().trim());
+			ps.setString(3, addressBook.getEmail().trim());
+			ps.setString(4, addressBook.getPhoneNumber().trim());
+			ps.setString(5, addressBook.getDoorNo().trim());
+			ps.setString(6, addressBook.getStreetName().trim());
+			ps.setString(7, addressBook.getSubLocality().trim());
+			ps.setString(8, addressBook.getCity().trim());
+			ps.setString(9, addressBook.getDistrict().trim());
+			ps.setString(10, addressBook.getState().trim());
 			ps.setInt(11, addressBook.getPincode());
 			ps.setInt(12, addressBook.isSetAsDefault());
 			
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -81,7 +82,7 @@ public class AddressBookDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -107,7 +108,7 @@ public class AddressBookDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -133,7 +134,7 @@ public class AddressBookDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -160,7 +161,7 @@ public class AddressBookDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -186,7 +187,7 @@ public class AddressBookDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -212,7 +213,7 @@ public class AddressBookDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -239,7 +240,7 @@ public class AddressBookDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -269,15 +270,15 @@ public class AddressBookDAO {
 			ps = con.prepareStatement(query);
 			
 			ps.setInt(1, addressBook.getUserId());
-			ps.setString(2, addressBook.getName());
-			ps.setString(3, addressBook.getEmail());
-			ps.setString(4, addressBook.getPhoneNumber());
-			ps.setString(5, addressBook.getDoorNo());
-			ps.setString(6, addressBook.getStreetName());
-			ps.setString(7, addressBook.getSubLocality());
-			ps.setString(8, addressBook.getCity());
-			ps.setString(9, addressBook.getDistrict());
-			ps.setString(10, addressBook.getState());
+			ps.setString(2, addressBook.getName().trim());
+			ps.setString(3, addressBook.getEmail().trim());
+			ps.setString(4, addressBook.getPhoneNumber().trim());
+			ps.setString(5, addressBook.getDoorNo().trim());
+			ps.setString(6, addressBook.getStreetName().trim());
+			ps.setString(7, addressBook.getSubLocality().trim());
+			ps.setString(8, addressBook.getCity().trim());
+			ps.setString(9, addressBook.getDistrict().trim());
+			ps.setString(10, addressBook.getState().trim());
 			ps.setInt(11, addressBook.getPincode());
 			
 			rs = ps.executeQuery();
@@ -302,7 +303,7 @@ public class AddressBookDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps,rs);
@@ -354,7 +355,7 @@ public class AddressBookDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps,rs);
@@ -406,7 +407,7 @@ public class AddressBookDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps,rs);
@@ -426,7 +427,7 @@ public class AddressBookDAO {
 		ResultSet rs = null;
 		
 		try {
-			String query = "SELECT id FROM address_book WHERE id = ? AND status = 1";
+			String query = "SELECT id FROM address_book WHERE id = ? AND status = 1	OR selected = 1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			
@@ -439,7 +440,7 @@ public class AddressBookDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps,rs);
@@ -489,7 +490,7 @@ public class AddressBookDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps,rs);

@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.model.Menu;
 import in.fssa.srcatering.util.ConnectionUtil;
+import in.fssa.srcatering.util.Logger;
 
 public class MenuDAO {
 
@@ -30,13 +31,13 @@ public class MenuDAO {
 		ResultSet rs = null;
 
 		Set<Menu> menuList = new TreeSet<>(); 
-
+ 
 		try {
 			String query = "SELECT m.id, m.menu_name, m.description,m.image,cd.status FROM menus m JOIN category_dishes cd "
 					+ "ON m.id = cd.menu_id WHERE cd.status=1 ";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
-			rs = ps.executeQuery();
+			rs = ps.executeQuery(); 
 
 			while (rs.next()) {
 				Menu menu = new Menu();
@@ -49,7 +50,7 @@ public class MenuDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -80,7 +81,7 @@ public class MenuDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -102,16 +103,16 @@ public class MenuDAO {
 			String query = "INSERT INTO menus(menu_name, description, image) VALUES(?,?,?)";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
-			ps.setString(1, menu.getMenuName());
-			ps.setString(2, menu.getDescription());
-			ps.setString(3, menu.getImage());
+			ps.setString(1, menu.getMenuName().trim());
+			ps.setString(2, menu.getDescription().trim());
+			ps.setString(3, menu.getImage().trim());
 
 			ps.executeUpdate();
 
 			System.out.println("Menu created sucessfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -133,13 +134,13 @@ public class MenuDAO {
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
-			ps.setString(1, menu.getDescription());
-			ps.setString(2, menu.getImage());
+			ps.setString(1, menu.getDescription().trim());
+			ps.setString(2, menu.getImage().trim());
 			ps.setInt(3, menu.getId());
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -180,7 +181,7 @@ public class MenuDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -215,7 +216,7 @@ public class MenuDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -247,7 +248,7 @@ public class MenuDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);

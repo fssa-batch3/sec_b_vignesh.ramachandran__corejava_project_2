@@ -2,7 +2,6 @@ package in.fssa.srcatering.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -15,7 +14,8 @@ public class OrderProduct extends OrderProductEntity {
 	}
 
 	public OrderProduct(int id, int ordeId, int dishId, int priceId, Map<Integer, Integer> dishIdPriceIdMap,
-			int menuId, int categoryId, int noOfGuest,LocalDate deliveryDate, OrderStatus orderStatus, LocalDateTime cancelDate, String cancelReason) {
+			int menuId, int categoryId, int noOfGuest,LocalDate deliveryDate, OrderStatus orderStatus, LocalDateTime cancelDate, String cancelReason,
+			CaterApproval caterApproval, String rejectReason) {
 		
 		super.setId(id);
 		super.setOrderId(ordeId);
@@ -29,6 +29,8 @@ public class OrderProduct extends OrderProductEntity {
 		super.setOrderStatus(orderStatus);
 		super.setCancelDate(cancelDate);
 		super.setCancelReason(cancelReason);
+		super.setCaterApproval(caterApproval);
+		super.setRejectReason(rejectReason);
 	}
 	
     @Override

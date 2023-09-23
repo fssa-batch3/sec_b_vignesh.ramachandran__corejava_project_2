@@ -1,6 +1,5 @@
 package in.fssa.srcatering;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
@@ -205,20 +204,148 @@ class TestCategory {
 
 		assertEquals(expectedMessage, actualMessage);
 	}
+	
+	// update
+	@Test
+	void testUpdateCategoryWithImageNull() {
+		
+		CategoryService categoryService = new CategoryService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Category category = new Category();
+			category.setMenu_id(1);
+			category.setId(1);
+			category.setCategoryName("Ordinary");
+			category.setMenu_id(1);
+			category.setImage(null);
+			
+			categoryService.updateCategory(category);
+		});
+		String expectedMessage = "CategoryImage cannot be null or empty";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	void testUpdateCategoryWithImageEmpty() {
+		
+		CategoryService categoryService = new CategoryService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Category category = new Category();
+			category.setMenu_id(1);
+			category.setId(1);
+			category.setCategoryName("Ordinary");
+			category.setMenu_id(1);
+			category.setImage("");
+			
+			categoryService.updateCategory(category);
+		});
+		String expectedMessage = "CategoryImage cannot be null or empty";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	void testUpdateCategoryWithInvalidImage() {
+		
+		CategoryService categoryService = new CategoryService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Category category = new Category();
+			category.setMenu_id(1);
+			category.setId(1);
+			category.setCategoryName("Ordinary");
+			category.setMenu_id(1);
+			category.setImage("httlskd2345");
+			
+			categoryService.updateCategory(category);
+		});
+		String expectedMessage = "Image should be URL.eg:http, https";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	void testUpdateCategoryWithMenuIdZero() {
+		
+		CategoryService categoryService = new CategoryService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Category category = new Category();
+			category.setMenu_id(1);
+			category.setId(1);
+			category.setCategoryName("Ordinary");
+			category.setMenu_id(0);
+			category.setImage("https://iili.io/HWh0ZrB.jpg");
+			
+			categoryService.updateCategory(category);
+		});
+		String expectedMessage = "MenuId cannot be less than or equal to zero";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	void testUpdateCategoryWithNegativeMenuId() {
+		
+		CategoryService categoryService = new CategoryService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Category category = new Category();
+			category.setMenu_id(1);
+			category.setId(1);
+			category.setCategoryName("Ordinary");
+			category.setMenu_id(-1);
+			category.setImage("https://iili.io/HWh0ZrB.jpg");
+			
+			categoryService.updateCategory(category);
+		});
+		String expectedMessage = "MenuId cannot be less than or equal to zero";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	@Test
+	void testUpdateCategoryWithInvalidMenuId() {
+		
+		CategoryService categoryService = new CategoryService();
+		
+		Exception exception = assertThrows(ValidationException.class, () -> {
+			Category category = new Category();
+			category.setMenu_id(1);
+			category.setId(1);
+			category.setCategoryName("Ordinary");
+			category.setMenu_id(20);
+			category.setImage("https://iili.io/HWh0ZrB.jpg");
+			
+			categoryService.updateCategory(category);
+		});
+		String expectedMessage = "MenuId not found";
+		String actualMessage = exception.getMessage();
+
+		assertEquals(expectedMessage, actualMessage);
+	}
+	
 
 
 	
-    private String generateRandomCategoryName() {
-        String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        StringBuilder dishName = new StringBuilder();
-
-        for (int i = 0; i < 5; i++) {
-            int index = (int) (Math.random() * alphabet.length());
-            char randomChar = alphabet.charAt(index);
-            dishName.append(Character.toUpperCase(randomChar));
-        }
-
-        return dishName.toString();
-    }
+//    private String generateRandomCategoryName() {
+//        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+//        StringBuilder dishName = new StringBuilder();
+//
+//        for (int i = 0; i < 5; i++) {
+//            int index = (int) (Math.random() * alphabet.length());
+//            char randomChar = alphabet.charAt(index);
+//            dishName.append(Character.toUpperCase(randomChar));
+//        }
+//
+//        return dishName.toString();
+//    }
 
 }

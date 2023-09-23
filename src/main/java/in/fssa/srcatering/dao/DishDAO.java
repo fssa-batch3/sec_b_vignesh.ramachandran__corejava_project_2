@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -15,6 +13,7 @@ import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Dish;
 import in.fssa.srcatering.model.QuantityUnit;
 import in.fssa.srcatering.util.ConnectionUtil;
+import in.fssa.srcatering.util.Logger;
 
 public class DishDAO {
 
@@ -31,7 +30,7 @@ public class DishDAO {
 
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
+		ResultSet rs = null; 
 
 		int generatedId = -1;
 
@@ -39,7 +38,7 @@ public class DishDAO {
 			String query = "INSERT INTO dishes(dish_name, quantity, quantity_unit) VALUES(?,?,?)";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, dishName);
+			ps.setString(1, dishName.trim());
 			ps.setInt(2, quantity);
 			ps.setString(3, quantityUnit.name());
 
@@ -51,7 +50,7 @@ public class DishDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 
 		} finally {
@@ -84,7 +83,7 @@ public class DishDAO {
 			System.out.println("Dish updated sucessfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -116,7 +115,7 @@ public class DishDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -168,7 +167,7 @@ public class DishDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -220,7 +219,7 @@ public class DishDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -273,7 +272,7 @@ public class DishDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -307,7 +306,7 @@ public class DishDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);

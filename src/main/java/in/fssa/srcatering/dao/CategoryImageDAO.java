@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import in.fssa.srcatering.exception.DAOException;
-import in.fssa.srcatering.model.Category;
 import in.fssa.srcatering.util.ConnectionUtil;
+import in.fssa.srcatering.util.Logger;
 
 public class CategoryImageDAO {
 
@@ -24,17 +24,17 @@ public class CategoryImageDAO {
 		try {
 			String query = "INSERT INTO category_images(menu_id, category_id, image) VALUES(?,?,?)";
 			con = ConnectionUtil.getConnection();
-			ps = con.prepareStatement(query);
+			ps = con.prepareStatement(query); 
 
 			ps.setInt(1, menu_id);
 			ps.setInt(2, category_id);
-			ps.setString(3, image);
+			ps.setString(3, image.trim());
 
 			ps.executeUpdate();
 			System.out.println("Category Image created sucessfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -57,7 +57,7 @@ public class CategoryImageDAO {
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
-			ps.setString(1, image);
+			ps.setString(1, image.trim());
 			ps.setInt(2, menu_id);
 			ps.setInt(3, category_id);
 
@@ -70,7 +70,7 @@ public class CategoryImageDAO {
 			}
 
 		} catch (SQLException e) { 
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);

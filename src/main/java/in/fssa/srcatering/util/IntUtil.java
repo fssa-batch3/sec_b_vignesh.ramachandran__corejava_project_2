@@ -49,8 +49,8 @@ public class IntUtil {
 		if(input < 0) {
 			throw new ValidationException(inputName +" cannot be less than zero");
 		}
-		if(input > 150) {
-			throw new ValidationException( inputName+ " cannot be above 150");
+		if(input > 100) {
+			throw new ValidationException( inputName+ " cannot be above 100");
 		}
 	}
 	
@@ -62,6 +62,9 @@ public class IntUtil {
      * @throws ValidationException If the quantity value exceeds the limit.
      */
 	public static void quantityCheck(int input, String inputName) throws ValidationException {
+		if(input < 0) {
+			throw new ValidationException(inputName+" cannot be less than zero");
+		}
 		if(input > 500) {
 			throw new ValidationException(inputName+" doesn't above 500");
 		}

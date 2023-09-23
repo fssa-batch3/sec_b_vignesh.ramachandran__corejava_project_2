@@ -1,9 +1,7 @@
 package in.fssa.srcatering.service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,7 +11,7 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Category;
-import in.fssa.srcatering.util.IntUtil;
+import in.fssa.srcatering.util.Logger;
 import in.fssa.srcatering.util.StringUtil;
 import in.fssa.srcatering.validator.CategoryDishValidator;
 import in.fssa.srcatering.validator.CategoryValidator;
@@ -44,7 +42,7 @@ public class CategoryService {
 			}
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to GetAll Category");
 		}
 		return categoryList;
@@ -67,7 +65,7 @@ public class CategoryService {
 			categoryList = categoryDAO.findAllActiveCategoriesByMenuId(menuId);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to Get categories");
 		}
 		return categoryList;
@@ -95,7 +93,7 @@ public class CategoryService {
 			}
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to GetAll Category Names by menuId");
 		}
 		return categoryNames;
@@ -117,7 +115,7 @@ public class CategoryService {
 		try {
 			categoryList = categoryDAO.findCategoriesByMenuId(menuId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to get category");
 		}
 
@@ -143,7 +141,7 @@ public class CategoryService {
 		try {
 			category = categoryDAO.findCategoryByMenuIdAndCategoryId(menuId, categoryId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to Category");
 		}
 		return category;
@@ -183,7 +181,7 @@ public class CategoryService {
 			}
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Falied to create Category");
 		}
 	}
@@ -211,7 +209,7 @@ public class CategoryService {
 		try {
 			categoryImageDAO.updateCategoryImage(category.getMenu_id(), category.getId(), category.getImage());
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to create Category");
 		}
 
@@ -233,7 +231,7 @@ public class CategoryService {
 
 			totalPrice = categoryDAO.getTotalPriceOfTheCategoryByMenuIdAndCategoryId(menuId, categoryId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to get category total price");
 		}
 		return totalPrice;

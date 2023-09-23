@@ -9,6 +9,7 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Cart;
+import in.fssa.srcatering.util.Logger;
 import in.fssa.srcatering.validator.CartValidator;
 import in.fssa.srcatering.validator.UserValidator;
 
@@ -34,6 +35,9 @@ public class CartService {
 					cart.getCategoryId());
 
 			cart.setPrice(price);
+			
+			LocalDate deliveryDate = LocalDate.now().plusDays(7);
+			cart.setDeliveryDate(deliveryDate);
 
 			CartValidator.isThatMenuAndCategoryAlreadyExistsForThatUser(cart.getMenuId(), cart.getCategoryId(),
 					cart.getUserId());
@@ -42,7 +46,7 @@ public class CartService {
 			addtoCartDAO.create(cart);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Cart creation failed");
 		}
 	}
@@ -70,7 +74,7 @@ public class CartService {
 			addtoCartDAO.updateCart(noOfGuest, deliveryDate, cartId);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Cart updation failed");
 		}
 	}
@@ -91,7 +95,7 @@ public class CartService {
 			addtoCartDAO.deleteCart(cartId);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Cart deletion failed");
 		}
 	}
@@ -105,7 +109,7 @@ public class CartService {
 		try {
 			addtoCartDAO.deleteAllCart();
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("AllCart items deletion failed");
 		}
 		
@@ -127,7 +131,7 @@ public class CartService {
 			cartList = addtoCartDAO.findAllCartsByUserId(userId);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Unable to getAll Carts");
 		}
 		return cartList;
@@ -151,7 +155,7 @@ public class CartService {
 			cart = addtoCartDAO.findCartByCartId(cartId);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Unable to get Cart");
 		}
 		return cart;
@@ -171,7 +175,7 @@ public class CartService {
 			UserValidator.isUserIdIsValid(userId);
 			count = addtoCartDAO.findCartCountByUserId(userId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 		return count;

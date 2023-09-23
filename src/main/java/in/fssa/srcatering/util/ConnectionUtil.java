@@ -34,7 +34,7 @@ public class ConnectionUtil {
 			con = DriverManager.getConnection(url, userName, passWord);
 
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new SQLException(e.getMessage());
 		}
 		return con;

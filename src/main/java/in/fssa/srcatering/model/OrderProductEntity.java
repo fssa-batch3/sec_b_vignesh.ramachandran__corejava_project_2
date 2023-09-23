@@ -21,6 +21,9 @@ public abstract class OrderProductEntity {
 	
 	private LocalDateTime cancelDate;
 	private String cancelReason;
+	
+	private CaterApproval caterApproval;
+	private String rejectReason;
 
 	public int getId() {
 		return id;
@@ -118,14 +121,30 @@ public abstract class OrderProductEntity {
 		this.cancelReason = cancelReason;
 	}
 
+	public CaterApproval getCaterApproval() {
+		return caterApproval;
+	}
+
+	public void setCaterApproval(CaterApproval caterApproval) {
+		this.caterApproval = caterApproval;
+	}
+
+	public String getRejectReason() {
+		return rejectReason;
+	}
+
+	public void setRejectReason(String rejectReason) {
+		this.rejectReason = rejectReason;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderProductEntity [id=" + id + ", orderId=" + orderId + ", dishId=" + dishId + ", priceId=" + priceId
 				+ ", dishIdPriceIdMap=" + dishIdPriceIdMap + ", noOfGuest=" + noOfGuest + ", deliveryDate="
 				+ deliveryDate + ", orderStatus=" + orderStatus + ", menuId=" + menuId + ", categoryId=" + categoryId
-				+ ", cancelDate=" + cancelDate + ", cancelReason=" + cancelReason + "]";
+				+ ", cancelDate=" + cancelDate + ", cancelReason=" + cancelReason + ", caterApproval=" + caterApproval
+				+ ", rejectReason=" + rejectReason + "]";
 	}
 
-	
 
 }

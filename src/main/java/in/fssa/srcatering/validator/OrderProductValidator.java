@@ -6,18 +6,23 @@ import java.time.temporal.ChronoUnit;
 import in.fssa.srcatering.dao.OrderDAO;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ValidationException;
+import in.fssa.srcatering.model.CaterApproval;
 import in.fssa.srcatering.model.OrderProduct;
-import in.fssa.srcatering.model.OrderStatus;
 import in.fssa.srcatering.util.IntUtil;
+import in.fssa.srcatering.util.Logger;
 
 public class OrderProductValidator {
 	
 	public static void validateOrderProduct(OrderProduct orderProduct) throws ValidationException {
 		
+		if (orderProduct == null) {
+			throw new ValidationException("Invalid OrderProduct Input");
+		}
+		
 		IntUtil.rejectIfInvalidInt(orderProduct.getMenuId(), "MenuId");
 		IntUtil.rejectIfInvalidInt(orderProduct.getCategoryId(), "CategoryId");
 		IntUtil.rejectIfInvalidInt(orderProduct.getNoOfGuest(), "NoOfGuest");
-		
+		IntUtil.rejectIfInvalidInt(orderProduct.getOrderId(), "OrderId");
 		
 		LocalDate today = LocalDate.now();
 		LocalDate deliveryDate = orderProduct.getDeliveryDate();
@@ -26,14 +31,15 @@ public class OrderProductValidator {
 
 		// getting no of Days
 		long daysDifference = ChronoUnit.DAYS.between(today, deliveryDate);
-		long monthsDifference = ChronoUnit.MONTHS.between(today, twoMonthsLater);
+		long monthsDifference = ChronoUnit.DAYS.between(today, twoMonthsLater);
 		
 		if (daysDifference < 7) {
-			throw new ValidationException("The deliveryDate is more than one week from today");
+			throw new ValidationException(
+					"Delivery date cannot be less than one week from today");
 		}
-		
-		if(monthsDifference > 60) {
-			throw new ValidationException("Please ensure that the delivery date falls within a two-month period.");
+
+		if (daysDifference > monthsDifference) {
+			throw new ValidationException("Delivery date cannot be more than two months from today");
 		}
 
 		if (orderProduct.getNoOfGuest() < 50 || orderProduct.getNoOfGuest() > 1500) {
@@ -42,7 +48,7 @@ public class OrderProductValidator {
 		
 		MenuValidator.isMenuIdIsValid(orderProduct.getMenuId());
 		CategoryValidator.isCategoryIdExistsForThatMenu(orderProduct.getMenuId(), orderProduct.getCategoryId());
-		
+		OrderValidator.isOrderIdIsValid(orderProduct.getOrderId());
 	}
 	
 	
@@ -60,7 +66,7 @@ public class OrderProductValidator {
 			OrderDAO orderDAO = new OrderDAO();
 			orderDAO.isOrderIdIsValid(orderId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ValidationException(e.getMessage());
 		}
 	}
@@ -78,6 +84,22 @@ public class OrderProductValidator {
 		MenuValidator.isMenuIdIsValid(menuId);
 		CategoryValidator.isCategoryIdExistsForThatMenu(menuId, categoryId);
 		
+	}
+	
+	
+	/**
+	 * 
+	 * @param caterApproval
+	 * @param orderId
+	 * @param menuId
+	 * @param categoryId
+	 * @throws ValidationException
+	 */
+	public static void validateUpdateCaterApprovalByOrderIdAndMenuIdAndCategoryId(CaterApproval caterApproval, int orderId, int menuId, int categoryId) throws ValidationException {
+		
+		OrderValidator.isOrderIdIsValid(orderId);
+		MenuValidator.isMenuIdIsValid(menuId);
+		CategoryValidator.isCategoryIdExistsForThatMenu(menuId, categoryId);
 	}
 	
 	

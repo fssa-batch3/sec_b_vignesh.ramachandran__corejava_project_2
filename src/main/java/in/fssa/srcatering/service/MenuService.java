@@ -10,6 +10,7 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Menu;
+import in.fssa.srcatering.util.Logger;
 import in.fssa.srcatering.validator.MenuValidator;
 
 public class MenuService {
@@ -83,7 +84,7 @@ public class MenuService {
 			MenuValidator.isMenuNameAlreadyExists(menu.getMenuName());
 			menuDAO.create(menu);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 	}
@@ -104,7 +105,7 @@ public class MenuService {
 			this.isMenuIdIsValid(menu.getId());
 			menuDAO.update(menu);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 	}
@@ -158,7 +159,7 @@ public class MenuService {
 		try {
 			menuNames = menuDAO.findAllMenuNames();
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 		return menuNames;

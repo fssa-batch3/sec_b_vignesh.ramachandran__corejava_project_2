@@ -8,6 +8,7 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.AddressBook;
+import in.fssa.srcatering.util.Logger;
 import in.fssa.srcatering.validator.AddressBookValidator;
 import in.fssa.srcatering.validator.UserValidator;
 
@@ -33,17 +34,17 @@ public class AddressBookService {
 			if (addressBook1 != null) {
 				if (addressBook1.isStatus() == 0) {
 					addressBookDAO.setStausTrue(addressBook1.getId());
-					System.out.println("Address created sucessfully");
+					Logger.debug("Address created sucessfully");
 				} else {
-					System.out.println("Address already Exists");
+					throw new DAOException("Address already Exists");
 				}
 			} else {
 				addressBookDAO.create(addressBook);
-				System.out.println("Address created sucessfully");
+				Logger.debug("Address created sucessfully");
 			}
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 
@@ -71,18 +72,22 @@ public class AddressBookService {
 					
 					if(addressBook.isSetAsDefault() == 1) {
 						addressBookDAO.setAsDefaultTrue(addressBook1.getId());
+						addressBookDAO.setAsDefaultFalse(addressBook.getId());
 					}
-					
 				} else {
-					System.out.println("Address already Exists");
+					throw new DAOException("Address already Exists");
 				}
 			} else {
+				
 				addressBookDAO.create(addressBook);
 				addressBookDAO.setStausFalse(addressBook.getId());
+				if(addressBook.isSetAsDefault() == 1) {
+					addressBookDAO.setAsDefaultFalse(addressBook.getId());
+				}
 			}
 			
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 	}
@@ -99,7 +104,7 @@ public class AddressBookService {
 			AddressBookValidator.isAddressIdIsValid(addressId);
 			addressBookDAO.setStausTrue(addressId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 	}
@@ -116,7 +121,7 @@ public class AddressBookService {
 			AddressBookValidator.isAddressIdIsValid(addressId);
 			addressBookDAO.setStausFalse(addressId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 	}
@@ -133,7 +138,7 @@ public class AddressBookService {
 			AddressBookValidator.isAddressIdIsValid(addressId);
 			addressBookDAO.setAsDefaultTrue(addressId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 	}
@@ -150,7 +155,7 @@ public class AddressBookService {
 			AddressBookValidator.isAddressIdIsValid(addressId);
 			addressBookDAO.setAsDefaultFalse(addressId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 	}
@@ -167,7 +172,7 @@ public class AddressBookService {
 			AddressBookValidator.isAddressIdIsValid(addressId);
 			addressBookDAO.setSelectedTrue(addressId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 	}
@@ -184,7 +189,7 @@ public class AddressBookService {
 			AddressBookValidator.isAddressIdIsValid(addressId);
 			addressBookDAO.setSelectedFalse(addressId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 	}
@@ -202,7 +207,7 @@ public class AddressBookService {
 			AddressBookValidator.isAddressIdIsValid(addressId);
 			addressBook = addressBookDAO.findAddressByAddressId(addressId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 		return addressBook;
@@ -221,7 +226,7 @@ public class AddressBookService {
 			UserValidator.isUserIdIsValid(userId);
 			addressList = addressBookDAO.findAllAddressesByUserId(userId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 		return addressList;
@@ -240,7 +245,7 @@ public class AddressBookService {
 			UserValidator.isUserIdIsValid(userId);
 			addressBook = addressBookDAO.findDefaultAddressByUserId(userId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 		return addressBook;

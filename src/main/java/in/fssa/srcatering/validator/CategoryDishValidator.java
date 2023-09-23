@@ -3,8 +3,6 @@ package in.fssa.srcatering.validator;
 import in.fssa.srcatering.dao.CategoryDishDAO;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ValidationException;
-import in.fssa.srcatering.service.CategoryService;
-import in.fssa.srcatering.service.DishService;
 import in.fssa.srcatering.service.MenuService;
 import in.fssa.srcatering.util.IntUtil;
 

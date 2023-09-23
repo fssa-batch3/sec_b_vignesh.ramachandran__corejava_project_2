@@ -19,7 +19,7 @@ public class UserValidator {
 
 		if (newUser == null) {
 			throw new ValidationException("Invalid User Input");
-		} 
+		}
 
 		StringUtil.rejectIfInvalidString(newUser.getName(), "Name");
 		StringUtil.rejectIfInvalidString(newUser.getEmail(), "Email");

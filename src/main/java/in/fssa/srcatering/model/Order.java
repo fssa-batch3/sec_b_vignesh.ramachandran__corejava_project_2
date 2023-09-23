@@ -1,7 +1,5 @@
 package in.fssa.srcatering.model;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Order extends OrderEntity {

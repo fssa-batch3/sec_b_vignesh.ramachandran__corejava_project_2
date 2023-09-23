@@ -485,18 +485,18 @@ import in.fssa.srcatering.service.UserService;
 	}
 	
 	
-    private String generateRandomEmail() {
-        String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        StringBuilder email = new StringBuilder();
-
-        for (int i = 0; i < 10; i++) {
-            int index = (int) (Math.random() * alphabet.length());
-            char randomChar = alphabet.charAt(index);
-            email.append(randomChar);
-        }
-
-        email.append("@gmail.com");
-        return email.toString();
-    }
+//    private String generateRandomEmail() {
+//        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+//        StringBuilder email = new StringBuilder();
+//
+//        for (int i = 0; i < 10; i++) { 
+//            int index = (int) (Math.random() * alphabet.length());
+//            char randomChar = alphabet.charAt(index);
+//            email.append(randomChar);
+//        }
+//
+//        email.append("@gmail.com");
+//        return email.toString();
+//    }
 
 }

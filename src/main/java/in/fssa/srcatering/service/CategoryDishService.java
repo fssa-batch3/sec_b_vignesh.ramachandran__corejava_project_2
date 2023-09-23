@@ -10,6 +10,7 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.util.IntUtil;
+import in.fssa.srcatering.util.Logger;
 import in.fssa.srcatering.validator.CategoryDishValidator;
 import in.fssa.srcatering.validator.CategoryValidator;
 import in.fssa.srcatering.validator.DishValidator;
@@ -77,7 +78,7 @@ public class CategoryDishService {
 			dishNames = categoryDishDAO.findDishNamesByMenuIdAndCategoryId(menuId, categoryId);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to Find Dish Name By MenuId & CategoryId");
 		}
 		return dishNames;
@@ -120,7 +121,7 @@ public class CategoryDishService {
 			
 			dishIdPriceIdMap = categoryDishDAO.findDishIdAndPriceIdByMenuIdAndCategoryId(menuId, categoryId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 		return dishIdPriceIdMap;
@@ -141,7 +142,7 @@ public class CategoryDishService {
 			CategoryDishValidator.validate(menuId, categoryId, dishId);
 			categoryDishDAO.create(menuId, categoryId, dishId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to Create Dish");
 		}
  
@@ -160,7 +161,7 @@ public class CategoryDishService {
 			}
 			categoryDishDAO.updateCategoryDish(menuId, categoryId, dishId, status);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		} 
 	}
@@ -185,7 +186,7 @@ public class CategoryDishService {
 			categoryDishDAO.delete(menuId, categoryId, dishId);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to Delete Dish");
 		}
 	}
@@ -210,7 +211,7 @@ public class CategoryDishService {
 			categoryDishDAO.changeStatus(menuId, categoryId, dishId);
 			
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 			
 		}

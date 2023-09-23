@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.model.Category;
 import in.fssa.srcatering.util.ConnectionUtil;
+import in.fssa.srcatering.util.Logger;
 
 public class CategoryDAO {
 
@@ -37,7 +38,7 @@ public class CategoryDAO {
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			while (rs.next()) { 
 				Category category = new Category();
 				category.setCategoryName(rs.getString("category_name"));
 				category.setId(rs.getInt("id"));
@@ -47,7 +48,7 @@ public class CategoryDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -87,7 +88,7 @@ public class CategoryDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -128,7 +129,7 @@ public class CategoryDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -166,7 +167,7 @@ public class CategoryDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -208,7 +209,7 @@ public class CategoryDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -234,7 +235,7 @@ public class CategoryDAO {
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
-			ps.setString(1, categoryName);
+			ps.setString(1, categoryName.trim());
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
@@ -242,7 +243,7 @@ public class CategoryDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps,rs);
@@ -277,7 +278,7 @@ public class CategoryDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -302,7 +303,7 @@ public class CategoryDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -328,7 +329,7 @@ public class CategoryDAO {
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
-			ps.setString(1, category.getCategoryName());
+			ps.setString(1, category.getCategoryName().trim());
 			ps.executeUpdate();
 
 			rs = ps.getGeneratedKeys();
@@ -338,7 +339,7 @@ public class CategoryDAO {
 
 			System.out.println("Category created sucessfully");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps,rs);
@@ -376,7 +377,7 @@ public class CategoryDAO {
 	        }
 			
 		}  catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps,rs);

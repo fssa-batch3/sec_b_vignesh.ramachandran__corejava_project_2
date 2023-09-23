@@ -5,6 +5,7 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.AddressBook;
 import in.fssa.srcatering.util.IntUtil;
+import in.fssa.srcatering.util.Logger;
 import in.fssa.srcatering.util.StringUtil;
 
 public class AddressBookValidator {
@@ -64,7 +65,7 @@ public class AddressBookValidator {
 			addressBook1 = addressBookDAO.isAddressAlreadyExists(addressBook);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ValidationException(e.getMessage());
 		}
 		return addressBook1;
@@ -83,7 +84,7 @@ public class AddressBookValidator {
 			AddressBookDAO addressBookDAO = new AddressBookDAO();
 			addressBookDAO.isAdressIdIsValid(addressId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ValidationException(e.getMessage());
 		}
 	}

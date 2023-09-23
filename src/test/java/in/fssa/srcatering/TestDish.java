@@ -33,7 +33,7 @@ import in.fssa.srcatering.service.DishService;
 //	}
 
 	@Test
-	 void testCreateDishWithInvalidInput() {
+	 void testCreateDishWithInvalidInput() { 
 		DishService dishService = new DishService();
 
 		Exception exception = assertThrows(ValidationException.class, () -> {
@@ -290,13 +290,13 @@ import in.fssa.srcatering.service.DishService;
 			dish.setMenuId(1);
 			dish.setCategoryId(1);
 			dish.setDishName("MINI UTTAPPAM");
-			dish.setDishPrice(151);
+			dish.setDishPrice(101);
 			dish.setQuantity(2);
 			dish.setQuantityUnit(QuantityUnit.NOS);
 
 			dishService.createDish(dish);
 		});
-		String expectedMessage = "Price cannot be above 150";
+		String expectedMessage = "Price cannot be above 100";
 		String actualMessage = exception.getMessage();
 		
 		assertEquals(expectedMessage,actualMessage);
@@ -377,7 +377,7 @@ import in.fssa.srcatering.service.DishService;
 	}
 	
 
-	
+	// update
 	@Test
 	 void testUpdatedDishWithNegativeQuantity() {
 		DishService dishService = new DishService();
@@ -635,14 +635,14 @@ import in.fssa.srcatering.service.DishService;
 			dish.setMenuId(1);
 			dish.setCategoryId(1);
 			dish.setDishName("MINI LADDU");
-			dish.setDishPrice(151);
+			dish.setDishPrice(101);
 			dish.setQuantity(1);
 			dish.setQuantityUnit(QuantityUnit.NOS);
 			dish.setId(1);
 
 			dishService.updateDish(dish);
 		});
-		String expectedMessage = "Price cannot be above 150";
+		String expectedMessage = "Price cannot be above 100";
 		String actualMessage = exception.getMessage();
 		System.out.println(actualMessage);
 
@@ -713,7 +713,7 @@ import in.fssa.srcatering.service.DishService;
 			dish.setDishPrice(10);
 			dish.setQuantity(1);
 			dish.setQuantityUnit(QuantityUnit.NOS);
-			dish.setId(100);
+			dish.setId(1000);
 
 			dishService.updateDish(dish);
 		});
@@ -780,27 +780,26 @@ import in.fssa.srcatering.service.DishService;
 		
 		Exception exception = assertThrows(ValidationException.class, ()-> {
 
-			dishService.deleteDish(1, 1, 100);
+			dishService.deleteDish(1, 1, 1000);
 		});
 		String expectedMessage = "DishId not found";
 		String actualMessage = exception.getMessage();
-		System.out.println(actualMessage);
 
 		assertEquals(expectedMessage,actualMessage);
 	}
 	
 	
-    private String generateRandomDishName() {
-        String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        StringBuilder dishName = new StringBuilder();
-
-        for (int i = 0; i < 10; i++) {
-            int index = (int) (Math.random() * alphabet.length());
-            char randomChar = alphabet.charAt(index);
-            dishName.append(Character.toUpperCase(randomChar));
-        }
-
-        return dishName.toString();
-    }
+//    private String generateRandomDishName() {
+//        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+//        StringBuilder dishName = new StringBuilder();
+//
+//        for (int i = 0; i < 10; i++) {
+//            int index = (int) (Math.random() * alphabet.length());
+//            char randomChar = alphabet.charAt(index);
+//            dishName.append(Character.toUpperCase(randomChar));
+//        }
+//
+//        return dishName.toString();
+//    }
 
 }

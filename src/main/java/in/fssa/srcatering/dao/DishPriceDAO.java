@@ -10,6 +10,7 @@ import java.util.List;
 
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.util.ConnectionUtil;
+import in.fssa.srcatering.util.Logger;
 
 public class DishPriceDAO {
 
@@ -24,7 +25,7 @@ public class DishPriceDAO {
 	public void create(int dishId, int price, Timestamp dateTime) throws DAOException {
 
 		Connection con = null;
-		PreparedStatement ps = null;
+		PreparedStatement ps = null; 
 		boolean rollBack = false;
 
 		try {
@@ -43,7 +44,7 @@ public class DishPriceDAO {
 
 		} catch (SQLException e) {
 			rollBack = true;
-			e.printStackTrace();
+			Logger.error(e);
 
 			try {
 				if (con != null) {
@@ -106,7 +107,7 @@ public class DishPriceDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -140,7 +141,7 @@ public class DishPriceDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -176,7 +177,7 @@ public class DishPriceDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -208,7 +209,7 @@ public class DishPriceDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -245,7 +246,7 @@ public class DishPriceDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -280,7 +281,7 @@ public class DishPriceDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -320,7 +321,7 @@ public class DishPriceDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);

@@ -8,6 +8,7 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Cart;
 import in.fssa.srcatering.util.IntUtil;
+import in.fssa.srcatering.util.Logger;
 
 public class CartValidator {
 
@@ -26,19 +27,6 @@ public class CartValidator {
 		IntUtil.rejectIfInvalidInt(cart.getMenuId(), "MenuId");
 		IntUtil.rejectIfInvalidInt(cart.getCategoryId(), "CategoryId");
 		IntUtil.rejectIfInvalidInt(cart.getNoOfGuest(), "NoOfGuest");
-
-		LocalDate today = LocalDate.now();
-		LocalDate deliveryDate = cart.getDeliveryDate();
-		LocalDate twoMonthsLater = today.plusMonths(2);
-		
-
-		// getting no of Days
-		long daysDifference = ChronoUnit.DAYS.between(today, deliveryDate);
-		long monthsDifference = ChronoUnit.MONTHS.between(today, twoMonthsLater);
-		
-		if (daysDifference < 7 || monthsDifference > 60) {
-			throw new ValidationException("The date is more than one week from today");
-		}
 
 		if (cart.getNoOfGuest() < 50 || cart.getNoOfGuest() > 1500) {
 			throw new ValidationException("NoOfGuest should be above 49 and less than 1501");
@@ -66,7 +54,7 @@ public class CartValidator {
 			}
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ValidationException(e.getMessage());
 		}
 		return false;
@@ -83,7 +71,7 @@ public class CartValidator {
 			CartDAO cartDAO = new CartDAO();
 			cartDAO.isThatMenuAndCategoryAlreadyExists(menuId, categoryId, userId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ValidationException(e.getMessage());
 		}
 	}
@@ -107,15 +95,23 @@ public class CartValidator {
 	 * @throws ValidationException
 	 */
 	public static void validateDeliveryDate(LocalDate deliveryDate) throws ValidationException {
-		
+
 		LocalDate today = LocalDate.now();
+		LocalDate twoMonthsLater = today.plusMonths(2);
 
 		// getting no of Days
 		long daysDifference = ChronoUnit.DAYS.between(today, deliveryDate);
+		long monthsDifference = ChronoUnit.DAYS.between(today, twoMonthsLater);
 
 		if (daysDifference < 7) {
-			throw new ValidationException("The date is more than one week from today");
+			throw new ValidationException(
+					"Delivery date cannot be less than one week from today");
 		}
+
+		if (daysDifference > monthsDifference) {
+			throw new ValidationException("Delivery date cannot be more than two months from today");
+		}
+
 	}
 
 }

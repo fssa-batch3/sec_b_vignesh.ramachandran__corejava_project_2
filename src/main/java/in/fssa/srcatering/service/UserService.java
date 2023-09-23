@@ -9,6 +9,8 @@ import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.User;
 import in.fssa.srcatering.util.IntUtil;
+import in.fssa.srcatering.util.Logger;
+import in.fssa.srcatering.util.PasswordUtil;
 import in.fssa.srcatering.util.StringUtil;
 import in.fssa.srcatering.validator.UserValidator;
 
@@ -35,7 +37,7 @@ public class UserService {
 
 			return userDAO.findAll();
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to Getall User");
 		}
 
@@ -51,9 +53,13 @@ public class UserService {
 	public void createUser(User newUser) throws ValidationException, ServiceException {
 
 		try {
+			
 			UserValidator.validate(newUser);
 			UserValidator.isEmailAlreadyExists(newUser.getEmail());
+			
+			newUser.setPassword(PasswordUtil.encodePassword(newUser.getPassword()));
 			userDAO.create(newUser);
+			
 		} catch (DAOException e) {
 			if (e.getMessage().contains("Email already exists")) {
 
@@ -79,11 +85,12 @@ public class UserService {
 		try {
 			UserValidator.validate(newUser);
 			UserValidator.isUserIdIsValid(id);
-
+			
+			newUser.setPassword(PasswordUtil.encodePassword(newUser.getPassword()));
 			userDAO.update(id, newUser);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to Update User");
 		}
 
@@ -104,7 +111,7 @@ public class UserService {
 			userDAO.delete(id);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to Delete User");
 		}
 	}
@@ -127,7 +134,7 @@ public class UserService {
 			user = userDAO.findById(id);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to findById");
 		}
 		System.out.println(user);
@@ -151,7 +158,7 @@ public class UserService {
 			user = userDAO.findByEmail(email);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Failed to findById");
 		}
 		System.out.println(user);
@@ -172,11 +179,12 @@ public class UserService {
 			StringUtil.rejectIfInvalidEmail(email);
 			StringUtil.rejectIfIvalidPassword(password);
 			
-			
 			userDAO.findByEmail(email);
+			
+			password = PasswordUtil.encodePassword(password);
 			userDAO.passwordChecker(email, password);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 	}
@@ -195,7 +203,7 @@ public class UserService {
 			IntUtil.rejectIfInvalidInt(id, "UserId");
 			userDAO.changeStatus(id);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 
 		}

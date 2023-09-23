@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import in.fssa.srcatering.exception.DAOException;
-import in.fssa.srcatering.model.Category;
 import in.fssa.srcatering.util.ConnectionUtil;
+import in.fssa.srcatering.util.Logger;
 
 public class CategoryDishDAO {
 
@@ -26,7 +26,7 @@ public class CategoryDishDAO {
 	public void isMenuIdIsValid(int menuId) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
+		ResultSet rs = null; 
 
 		try {
 
@@ -41,7 +41,7 @@ public class CategoryDishDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -75,7 +75,7 @@ public class CategoryDishDAO {
 				throw new DAOException("CategoryId not found");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -106,7 +106,7 @@ public class CategoryDishDAO {
 				throw new DAOException("DishId not found");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -140,11 +140,11 @@ public class CategoryDishDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				dishNames.add(rs.getString("dish_name").trim());
+				dishNames.add(rs.getString("dish_name").trim().replaceAll(" ", ""));
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con1, ps, rs);
@@ -182,7 +182,7 @@ public class CategoryDishDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con1, ps, rs);
@@ -222,7 +222,7 @@ public class CategoryDishDAO {
 
 		} catch (SQLException e) {
 			rollBack = true;
-			e.printStackTrace();
+			Logger.error(e);
 
 			try {
 				if (con != null) {
@@ -291,7 +291,7 @@ public class CategoryDishDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -324,7 +324,7 @@ public class CategoryDishDAO {
 			System.out.println("Dish deleted sucessfully");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
@@ -361,7 +361,7 @@ public class CategoryDishDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -395,7 +395,7 @@ public class CategoryDishDAO {
 			System.out.println("done");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);

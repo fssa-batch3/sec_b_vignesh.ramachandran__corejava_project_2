@@ -16,9 +16,11 @@ import java.util.Map;
 import java.util.Set;
 
 import in.fssa.srcatering.exception.DAOException;
+import in.fssa.srcatering.model.CaterApproval;
 import in.fssa.srcatering.model.OrderProduct;
 import in.fssa.srcatering.model.OrderStatus;
 import in.fssa.srcatering.util.ConnectionUtil;
+import in.fssa.srcatering.util.Logger;
 
 public class OrderProductDAO {
 
@@ -61,7 +63,7 @@ public class OrderProductDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			System.out.println("OrderedProduct created sucessfully");
@@ -117,7 +119,7 @@ public class OrderProductDAO {
 	        System.out.println("Order status updated");
 
 		} catch (SQLException e) {
-	        e.printStackTrace();
+	        Logger.error(e);
 	        throw new DAOException(e.getMessage());
 	    } finally {
 	        ConnectionUtil.close(con, ps);
@@ -125,6 +127,58 @@ public class OrderProductDAO {
 
 	}
 
+	/**
+	 * 
+	 * @param caterApproval
+	 * @param reason
+	 * @param orderId
+	 * @param menuId
+	 * @param categoryId
+	 * @throws DAOException
+	 */
+	public void updateCaterApprovalByOrderIdAndMenuIdAndCategoryId(CaterApproval caterApproval, String reason, int orderId, int menuId, int categoryId) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		try {
+
+			String query;
+
+			if (caterApproval == CaterApproval.REJECTED) {
+				// Update order status and set cancel date
+				query = "UPDATE order_products SET cater_approval = ?, reject_reason = ? WHERE order_id = ? AND menu_id = ? AND category_id =?";
+			} else {
+				// Update order status only
+				query = "UPDATE order_products SET cater_approval = ? WHERE order_id = ? AND menu_id = ? AND category_id =?";
+			}
+			
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			ps.setString(1, caterApproval.name());
+			
+			if (caterApproval == CaterApproval.REJECTED) {
+				ps.setString(2, reason);
+				ps.setInt(3, orderId);
+				ps.setInt(4, menuId);
+				ps.setInt(5, categoryId);
+			} else {
+				ps.setInt(2, orderId);
+				ps.setInt(3, menuId);
+				ps.setInt(4, categoryId);
+			}
+
+			ps.executeUpdate();
+			
+			System.out.println("CaterApproval updated sucessfully");
+
+		} catch (SQLException e) {
+	        Logger.error(e);
+	        throw new DAOException(e.getMessage());
+	    } finally {
+	        ConnectionUtil.close(con, ps);
+	    }
+	}
 	
 
 	/**
@@ -187,7 +241,7 @@ public class OrderProductDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -212,7 +266,7 @@ public class OrderProductDAO {
 		
 		try {
 			String query = "SELECT order_id, dish_id, price_id, no_of_guest, delivery_date, order_status, menu_id, category_id, "
-					+ "cancel_date, cancel_reason FROM order_products WHERE order_id = ? AND menu_id = ? AND category_id = ?";
+					+ "cancel_date, cancel_reason, cater_approval, reject_reason FROM order_products WHERE order_id = ? AND menu_id = ? AND category_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			
@@ -251,10 +305,16 @@ public class OrderProductDAO {
 					orderProduct.setCancelDate(cancelDate);
 					orderProduct.setCancelReason(rs.getString("cancel_reason"));
 				}
+				
+				String caterApprovalStr = rs.getString("cater_approval");
+				CaterApproval caterApproval = CaterApproval.valueOf(caterApprovalStr);
+				orderProduct.setCaterApproval(caterApproval);
+				
+				orderProduct.setRejectReason(rs.getString("reject_reason"));
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -292,7 +352,7 @@ public class OrderProductDAO {
 //			}
 //			
 //		} catch (SQLException e) {
-//			e.printStackTrace();
+//			Logger.error(e);
 //			throw new DAOException(e.getMessage());
 //		} finally {
 //			ConnectionUtil.close(con, ps, rs);
@@ -301,7 +361,12 @@ public class OrderProductDAO {
 //
 //	}
 	
-	
+	/**
+	 * 
+	 * @param orderId
+	 * @return
+	 * @throws DAOException
+	 */
 	public Set<Map.Entry<Integer, Integer>> findOrderedMenuIdAndCategoryIdByOrderId(int orderId) throws DAOException {
 	    Connection con = null;
 	    PreparedStatement ps = null;
@@ -325,12 +390,47 @@ public class OrderProductDAO {
 	        }
 
 	    } catch (SQLException e) {
-	        e.printStackTrace();
+	        Logger.error(e);
 	        throw new DAOException(e.getMessage());
 	    } finally {
 	        ConnectionUtil.close(con, ps, rs);
 	    }
 	    return menuIdCategoryIdList;
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 * @throws DAOException
+	 */
+	public List<Integer> findAllOrderIds() throws DAOException{
+		
+		Connection con = null;
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    
+	    List<Integer> orderIds = new ArrayList<>();
+	    
+	    try {
+	    	String query = "SELECT id FROM orders";
+	    	con = ConnectionUtil.getConnection();
+	        ps = con.prepareStatement(query);
+	        
+	        rs = ps.executeQuery();
+	        
+	        while(rs.next()) {
+	        	orderIds.add(rs.getInt("id"));
+			}
+
+		} catch (SQLException e) {
+	        Logger.error(e);
+	        throw new DAOException(e.getMessage());
+	    } finally {
+	        ConnectionUtil.close(con, ps, rs);
+	    }
+		return orderIds;
+		
 	}
 
 

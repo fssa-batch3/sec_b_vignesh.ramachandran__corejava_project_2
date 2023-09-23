@@ -1,20 +1,18 @@
 package in.fssa.srcatering.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.model.Order;
-import in.fssa.srcatering.model.OrderStatus;
 import in.fssa.srcatering.util.ConnectionUtil;
+import in.fssa.srcatering.util.Logger;
 
 public class OrderDAO {
 	
@@ -27,7 +25,7 @@ public class OrderDAO {
 		
 		try {
 			String query = "INSERT INTO orders(user_id, address_id, order_date,event_name,total_cost) VALUES(?, ?, ?, ?, ?)";
-			con = ConnectionUtil.getConnection();
+			con = ConnectionUtil.getConnection(); 
 			ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			
 			java.sql.Timestamp orderDateTime = java.sql.Timestamp.valueOf(order.getOrderDate());
@@ -49,7 +47,7 @@ public class OrderDAO {
 			System.out.println("Order created sucessfully");
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		}finally {
 			ConnectionUtil.close(con, ps);
@@ -78,11 +76,11 @@ public class OrderDAO {
 			rs = ps.executeQuery();
 			
 			if(!rs.next()) {
-				throw new DAOException("OrderId not found");
+				throw new DAOException("Invalid OrderId");
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -128,7 +126,7 @@ public class OrderDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
@@ -174,13 +172,61 @@ public class OrderDAO {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps, rs);
 		}
 		return order;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws DAOException
+	 */
+	public List<Order> findAllOrders() throws DAOException{
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		List<Order> orderList = new ArrayList<>();
+		
+		try {
+			String query = "SELECT id, user_id, address_id, total_cost, order_date, event_name FROM orders";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+			
+			rs =  ps.executeQuery();
+			
+			while(rs.next()) {
+				Order order = new Order();
+				order = new Order();
+				order.setId(rs.getInt("id"));
+				order.setUserId(rs.getInt("user_id"));
+				order.setAddressId(rs.getInt("address_id"));
+				order.setTotalCost(rs.getInt("total_cost"));
+				order.setEventName(rs.getString("event_name"));
+				
+				// Convert SQL Timestamp to LocalDateTime
+                Timestamp timestamp = rs.getTimestamp("order_date");
+                LocalDateTime orderDate = timestamp.toLocalDateTime();
+                order.setOrderDate(orderDate);
+                
+                orderList.add(order);
+			}
+			
+		} catch (SQLException e) {
+			Logger.error(e);
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+		return orderList;
+		
+	}
+	
+
 	
 
 }

@@ -9,8 +9,8 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.util.IntUtil;
+import in.fssa.srcatering.util.Logger;
 import in.fssa.srcatering.validator.CategoryDishValidator;
-import in.fssa.srcatering.validator.CategoryValidator;
 import in.fssa.srcatering.validator.DishPriceValidator;
 import in.fssa.srcatering.validator.DishValidator;
 import in.fssa.srcatering.validator.MenuValidator;
@@ -43,7 +43,7 @@ public class DishPriceService {
 			dishPriceDAO.create(dishId, price, dateTime);
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Invalid DishId");
 		}
 
@@ -83,7 +83,7 @@ public class DishPriceService {
 			}
 
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException("Invalid DishId");
 		}
 	}
@@ -102,7 +102,7 @@ public class DishPriceService {
 			IntUtil.rejectIfInvalidInt(dishId, "DishId");
 			price = dishPriceDAO.findPriceByDishId(dishId);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 		return price;
@@ -138,7 +138,7 @@ public class DishPriceService {
 			priceIds = dishPriceDAO.findAllPriceIdsByMenuIdAndCategoryId(menuId, categoryId);
 			
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 		return priceIds;
@@ -161,7 +161,7 @@ public class DishPriceService {
 			}
 			sum = dishPriceDAO.getTotalPriceByPriceIds(priceIds);
 		} catch (DAOException e) {
-			e.printStackTrace();
+			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 		return sum;

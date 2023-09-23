@@ -8,9 +8,7 @@ import in.fssa.srcatering.exception.DAOException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Dish;
 import in.fssa.srcatering.service.CategoryDishService;
-import in.fssa.srcatering.service.CategoryService;
 import in.fssa.srcatering.service.DishPriceService;
-import in.fssa.srcatering.service.DishService;
 import in.fssa.srcatering.service.MenuService;
 import in.fssa.srcatering.util.IntUtil;
 import in.fssa.srcatering.util.StringUtil;
@@ -30,10 +28,18 @@ public class DishValidator {
 		}
 
 		StringUtil.rejectIfInvalidString(dish.getDishName(), "Dish Name");
-		StringUtil.rejectIfInvalidName(dish.getDishName(), "Dish Name");
+		StringUtil.rejectIfInvalidDishName(dish.getDishName(), "Dish Name");
 		IntUtil.rejectIfInvalidInt(dish.getQuantity(), "Quantity");
 		IntUtil.quantityCheck(dish.getQuantity(), "Quantity");
 		IntUtil.priceCheck(dish.getDishPrice(), "Price");
+		
+		if(dish.getQuantity() > 501) {
+			throw new ValidationException("Quantity cannot be greater than 500");
+		}
+		 
+		if(dish.getDishPrice() > 100) {
+			throw new ValidationException("Dish price cannot be greater than 100");
+		}
 		
 		
 		if(dish.getQuantityUnit().name().equals("NOS") && dish.getQuantity() > 5 ) {
@@ -68,7 +74,7 @@ public class DishValidator {
 			List<String> dishNames = categoryDishDAO.findDishNamesByMenuIdAndCategoryId(dish.getMenuId(),
 					dish.getCategoryId());
 
-			if (dishNames.contains(dish.getDishName().trim().toUpperCase())) {
+			if (dishNames.contains(dish.getDishName().trim().toUpperCase().replaceAll(" ", ""))) {
 				throw new ValidationException("Dish name already Exists");
 			}
 
