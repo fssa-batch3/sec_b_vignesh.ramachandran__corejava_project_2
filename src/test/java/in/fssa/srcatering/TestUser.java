@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.User;
+import in.fssa.srcatering.service.DishService;
 import in.fssa.srcatering.service.UserService;
 
  class TestUser {
@@ -482,6 +483,36 @@ import in.fssa.srcatering.service.UserService;
 		String actualMessage = exception.getMessage();
 		
 		assertEquals(expectedMessage,actualMessage);
+	}
+	
+	
+	@Test
+	void testGetAllUsers() {
+		UserService userService = new UserService();
+		
+		assertDoesNotThrow(() -> {
+			userService.getAllUsers();
+		});
+	}
+	
+	
+	@Test
+	void testFindByUserId() {
+		UserService userService = new UserService();
+		
+		assertDoesNotThrow(() -> {
+			userService.findByUserId(1);
+		});
+	}
+	
+	
+	@Test
+	void testFindByEmail() {
+		UserService userService = new UserService();
+		
+		assertDoesNotThrow(() -> {
+			userService.findByEmail("vignesh@gmail.com");
+		});
 	}
 	
 	

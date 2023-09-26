@@ -35,13 +35,7 @@ public class CategoryService {
 
 			categoryList = categoryDAO.findAllCategories();
 
-			Iterator<Category> iterator = categoryList.iterator();
-
-			while (iterator.hasNext()) {
-				System.out.println(iterator.next());
-			}
-
-		} catch (DAOException e) {
+		} catch (DAOException e) { 
 			Logger.error(e);
 			throw new ServiceException("Failed to GetAll Category");
 		}
@@ -86,11 +80,6 @@ public class CategoryService {
 			MenuValidator.isMenuIdIsValid(menuId);
 
 			categoryNames = categoryDAO.findAllCategoryNamesByMenuId(menuId);
-			Iterator<String> iterator = categoryNames.iterator();
-
-			while (iterator.hasNext()) {
-				System.out.println(iterator.next());
-			}
 
 		} catch (DAOException e) {
 			Logger.error(e);
@@ -235,5 +224,24 @@ public class CategoryService {
 			throw new ServiceException("Failed to get category total price");
 		}
 		return totalPrice;
+	}
+	
+	/**
+	 * 
+	 * @param menuId
+	 * @param categoryId
+	 * @throws ValidationException
+	 * @throws ServiceException 
+	 */
+	public void isCategoryIdExistsForThatMenu(int menuId, int categoryId) throws ValidationException, ServiceException {
+		
+		try {
+			CategoryDishValidator.isCategoryIdIsValid(menuId, categoryId);
+			categoryDAO.isCategoryIdExistsForThatMenu(menuId, categoryId);
+		} catch (DAOException e) {
+			Logger.error(e);
+			throw new ServiceException(e.getMessage());
+		}
+		
 	}
 }

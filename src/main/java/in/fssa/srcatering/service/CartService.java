@@ -28,7 +28,7 @@ public class CartService {
 		try {
 
 			// validate addtoCart
-			CartValidator.validateCart(cart);
+			CartValidator.validateCart(cart); 
 
 			// setting totalCost
 			int price = new CategoryService().getTotalPriceOfTheCategoryByMenuIdAndCategoryId(cart.getMenuId(),

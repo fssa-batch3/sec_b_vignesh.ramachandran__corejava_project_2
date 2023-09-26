@@ -1,5 +1,6 @@
 package in.fssa.srcatering;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Review;
 import in.fssa.srcatering.service.ReviewService;
+import in.fssa.srcatering.service.UserService;
 
 public class TestReview {
 	
@@ -334,7 +336,23 @@ public class TestReview {
 	}
 	
 	
-
+	@Test
+	void testGetReviewByOrderIdAndMenuIdAndCategoryId() {
+		ReviewService reviewService = new ReviewService();
+		
+		assertDoesNotThrow(() -> {
+			reviewService.getReviewByOrderIdAndMenuIdAndCategoryId(1, 1, 1);
+		});
+	}
+	
+	@Test
+	void testGetAllReviewsByMenuIdAndCategoryId() {
+		ReviewService reviewService = new ReviewService();
+		
+		assertDoesNotThrow(() -> {
+			reviewService.getAllReviewsByMenuIdAndCategoryId(1, 1);
+		});
+	}
 	
 	
 

@@ -34,13 +34,11 @@ public class AddressBookService {
 			if (addressBook1 != null) {
 				if (addressBook1.isStatus() == 0) {
 					addressBookDAO.setStausTrue(addressBook1.getId());
-					Logger.debug("Address created sucessfully");
 				} else {
 					throw new DAOException("Address already Exists");
 				}
 			} else {
 				addressBookDAO.create(addressBook);
-				Logger.debug("Address created sucessfully");
 			}
 
 		} catch (DAOException e) {

@@ -25,7 +25,7 @@ public class ConnectionUtil {
 		
 		url = "jdbc:mysql://localhost:3306/java_project";
 		userName = "root";
-		passWord = "123456";
+		passWord = "123456"; 
 
 		Connection con = null; 
  
@@ -59,7 +59,8 @@ public class ConnectionUtil {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			Logger.error(e);
+			Logger.debug(e.getMessage());
 		}
 	}
 
@@ -85,7 +86,8 @@ public class ConnectionUtil {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			Logger.error(e);
+			Logger.debug(e.getMessage());
 		}
 	}
 

@@ -336,8 +336,6 @@ public class CategoryDAO {
 			if (rs.next()) {
 				generatedId = rs.getInt(1);
 			}
-
-			System.out.println("Category created sucessfully");
 		} catch (SQLException e) {
 			Logger.error(e);
 			throw new DAOException(e.getMessage());
@@ -363,7 +361,7 @@ public class CategoryDAO {
 		
 		try {
 			String query = "SELECT SUM(dp.price) FROM dish_price dp JOIN category_dishes cd ON cd.dish_id =  dp.dish_id "
-					+ "WHERE dp.end_date IS NULL AND cd.menu_id = ? AND cd.category_id = ?";
+					+ "WHERE dp.end_date IS NULL AND cd.menu_id = ? AND cd.category_id = ? AND cd.status = 1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			

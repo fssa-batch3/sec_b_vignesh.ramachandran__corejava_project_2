@@ -28,7 +28,7 @@ public class ReviewService {
 			reviewDAO.create(review);
 		} catch (DAOException e) {
 			Logger.error(e); 
-			throw new ServiceException(e.getMessage());
+			throw new ServiceException(e.getMessage()); 
 		}
 	}
 	

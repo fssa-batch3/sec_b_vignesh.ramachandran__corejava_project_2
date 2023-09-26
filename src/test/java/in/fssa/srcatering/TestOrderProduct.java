@@ -1,5 +1,6 @@
 package in.fssa.srcatering;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -12,6 +13,7 @@ import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.CaterApproval;
 import in.fssa.srcatering.model.OrderProduct;
 import in.fssa.srcatering.model.OrderStatus;
+import in.fssa.srcatering.service.MenuService;
 import in.fssa.srcatering.service.OrderProductService;
 
 
@@ -739,6 +741,55 @@ public class TestOrderProduct {
 		String actualMessage = exception.getMessage();
 
 		assertEquals(expectedMessage, actualMessage);
+	}
+	
+	
+	@Test
+	void testGetAllMenuNames() {
+		OrderProductService orderProductService = new OrderProductService();
+
+		assertDoesNotThrow(() -> {
+			orderProductService.getAllOrderProductsByOrderId(1);
+		});
+	}
+	
+	
+	@Test
+	void testGetOrderProductByOrderIdAndMenuIdAndCategoryId() {
+		OrderProductService orderProductService = new OrderProductService();
+
+		assertDoesNotThrow(() -> {
+			orderProductService.getOrderProductByOrderIdAndMenuIdAndCategoryId(1, 1, 1);
+		});
+	}
+	
+	
+	@Test
+	void testGetOrderedMenuIdAndCategoryIdByOrderId() {
+		OrderProductService orderProductService = new OrderProductService();
+
+		assertDoesNotThrow(() -> {
+			orderProductService.getOrderedMenuIdAndCategoryIdByOrderId(1);
+		});
+	}
+	
+	@Test
+	void testGetAllOrderIds() {
+		OrderProductService orderProductService = new OrderProductService();
+
+		assertDoesNotThrow(() -> {
+			orderProductService.getAllOrderIds();
+		});
+	}
+	
+	
+	@Test
+	void testGetAllOrderProducts() {
+		OrderProductService orderProductService = new OrderProductService();
+
+		assertDoesNotThrow(() -> {
+			orderProductService.getAllOrderProducts();
+		});
 	}
 	
 	

@@ -25,11 +25,9 @@ public class CategoryDishValidator {
 		MenuService menuService = new MenuService(); 
 		menuService.isMenuIdIsValid(menuId);
 
-//		CategoryValidator.isCategoryIdIsValid(categoryId);
-		CategoryValidator.isCategoryIdExistsForThatMenu(menuId, categoryId);
+		CategoryValidator.isCategoryIdExistsForThatMenu(menuId, categoryId); 
 
 		DishValidator.isDishIdIsValid(dishId);
-
 	}
 
 	/**

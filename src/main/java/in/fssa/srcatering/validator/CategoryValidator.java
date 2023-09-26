@@ -30,7 +30,7 @@ public class CategoryValidator {
 		MenuValidator.validateImage(category.getImage());
 
 		isCategoryNameAlreadyExistsForThatMenu(category.getCategoryName(), category.getMenu_id());
-	}
+	} 
 
 	/**
 	 * Validates if the provided category ID is valid.

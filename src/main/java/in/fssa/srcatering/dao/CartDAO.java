@@ -43,8 +43,6 @@ public class CartDAO {
 
 			ps.executeUpdate();
 
-			System.out.println("Product added to the Cart sucessfully");
-
 		} catch (SQLException e) {
 			Logger.error(e);
 			throw new DAOException(e.getMessage());
@@ -77,8 +75,6 @@ public class CartDAO {
 
 			ps.executeUpdate();
 
-			System.out.println("Cart updated sucessfully");
-
 		} catch (SQLException e) {
 			Logger.error(e);
 			throw new DAOException(e.getMessage());
@@ -105,8 +101,6 @@ public class CartDAO {
 			ps.setInt(1, cartId);
 			ps.executeUpdate();
 
-			System.out.println("Cart removed sucessfully");
-
 		} catch (SQLException e) {
 			Logger.error(e);
 			throw new DAOException(e.getMessage());
@@ -130,8 +124,6 @@ public class CartDAO {
 			ps = con.prepareStatement(query);
 			
 			ps.executeUpdate();
-			
-			System.out.println("All Cart items removed sucessfully");
 			
 		} catch (SQLException e) {
 			Logger.error(e);

@@ -40,7 +40,6 @@ public class DishPriceDAO {
 			ps.executeUpdate(); 
 
 			con.commit();
-			System.out.println("Dish price created sucessfully");
 
 		} catch (SQLException e) {
 			rollBack = true;
@@ -51,7 +50,7 @@ public class DishPriceDAO {
 					con.rollback();
 				}
 			} catch (SQLException rollbackEx) {
-				rollbackEx.printStackTrace();
+				rollbackEx.printStackTrace(); 
 			}
 
 			throw new DAOException("Error creating DishPrice "+e.getMessage());
@@ -68,7 +67,8 @@ public class DishPriceDAO {
 				}
 				
 			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+				Logger.error(e);
+				Logger.debug(e);
 			}
 
 			if (rollBack) {
@@ -98,13 +98,7 @@ public class DishPriceDAO {
 			ps = con.prepareStatement(query);
 			ps.setTimestamp(1, dateTime);
 			ps.setInt(2, priceId);
-			int rowsUpdated = ps.executeUpdate();
-
-			if (rowsUpdated > 0) {
-				System.out.println("Price with ID " + priceId + " has been updated successfully.");
-			} else {
-				System.out.println("Price with ID " + priceId + " not found.");
-			}
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -272,13 +266,7 @@ public class DishPriceDAO {
 			
 			ps.setInt(1, dishId);
 			
-			int rowsAffected = ps.executeUpdate();
-
-			if (rowsAffected > 0) {
-				System.out.println("DishPrice deleted successfully");
-			} else {
-				System.out.println("No rows deleted");
-			}
+			ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			Logger.error(e);

@@ -109,8 +109,6 @@ public class MenuDAO {
 
 			ps.executeUpdate();
 
-			System.out.println("Menu created sucessfully");
-
 		} catch (SQLException e) {
 			Logger.error(e);
 			throw new DAOException(e.getMessage());

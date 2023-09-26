@@ -46,13 +46,13 @@ public class UserDAO implements UserInterface {
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			while (rs.next()) { 
 				User newUser = new User();
 				newUser.setId(rs.getInt(USERID));
 				newUser.setName(rs.getString(USERNAME));
 				newUser.setEmail(rs.getString(USEREMAIL));
 				newUser.setPhoneNumber(rs.getLong(USERPHONENUMBER));
-				newUser.setPassword(PasswordUtil.decodePassword(rs.getString(USERPASSWORD)));
+				newUser.setPassword(rs.getString(USERPASSWORD));
 				newUser.setStatus(rs.getBoolean(USERSTATUS));
 				userList.add(newUser);
 			}
@@ -89,8 +89,6 @@ public class UserDAO implements UserInterface {
 
 			ps.executeUpdate();
 
-			System.out.println("User has been created successfully");
-
 		} catch (SQLException e) {
 			if (e.getMessage().contains("Duplicate entry")) {
 				throw new DAOException("Duplicate constraint");
@@ -122,21 +120,14 @@ public class UserDAO implements UserInterface {
 
 		try {
 
-			String query = "UPDATE users SET name=?, password=? WHERE id =?";
+			String query = "UPDATE users SET name=? WHERE id =?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
 			ps.setString(1, newUser.getName().trim());
-			ps.setString(2, newUser.getPassword());
-			ps.setInt(3, id);
+			ps.setInt(2, id);
 
-			int rowUpdated = ps.executeUpdate();
-
-			if (rowUpdated > 0) {
-				System.out.println("User with ID " + id + " updated successfully.");
-			} else {
-				System.out.println("No user found with ID " + id + ". Nothing updated.");
-			}
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -166,13 +157,7 @@ public class UserDAO implements UserInterface {
 
 			ps.setInt(1, id);
 
-			int rowsUpdated = ps.executeUpdate();
-
-			if (rowsUpdated > 0) {
-				System.out.println("User with ID " + id + " has been deactivated.");
-			} else {
-				System.out.println("No user found with ID " + id + ". Nothing changed.");
-			}
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -246,7 +231,7 @@ public class UserDAO implements UserInterface {
 				user.setId(rs.getInt(USERID));
 				user.setName(rs.getString(USERNAME));
 				user.setEmail(rs.getString(USEREMAIL));
-				user.setPassword(PasswordUtil.decodePassword(rs.getString(USERPASSWORD)));
+				user.setPassword(rs.getString(USERPASSWORD));
 				user.setPhoneNumber(rs.getLong(USERPHONENUMBER));
 				user.setStatus(rs.getBoolean(USERSTATUS));
 			}
@@ -323,7 +308,7 @@ public class UserDAO implements UserInterface {
 				user.setName(rs.getString(USERNAME));
 				user.setPhoneNumber(rs.getLong(USERPHONENUMBER));
 				user.setEmail(rs.getString(USEREMAIL));
-				user.setPassword(PasswordUtil.decodePassword(rs.getString(USERPASSWORD)));
+				user.setPassword(rs.getString(USERPASSWORD));
 				user.setStatus(rs.getBoolean(USERSTATUS));
 			} else {
 				throw new ValidationException("Invalid Email");
@@ -386,14 +371,8 @@ public class UserDAO implements UserInterface {
 			ps = con.prepareStatement(query);
 
 			ps.setInt(1, id);
-
-			int rowsUpdated = ps.executeUpdate();
-
-			if (rowsUpdated > 0) {
-				System.out.println("User with ID " + id + " has been deactivated.");
-			} else {
-				System.out.println("No user found with ID " + id + ". Nothing changed.");
-			}
+			
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			Logger.error(e);

@@ -31,7 +31,7 @@ public class OrderProductValidator {
 
 		// getting no of Days
 		long daysDifference = ChronoUnit.DAYS.between(today, deliveryDate);
-		long monthsDifference = ChronoUnit.DAYS.between(today, twoMonthsLater);
+		long monthsDifference = ChronoUnit.DAYS.between(today, twoMonthsLater); 
 		
 		if (daysDifference < 7) {
 			throw new ValidationException(

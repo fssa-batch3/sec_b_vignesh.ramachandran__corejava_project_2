@@ -31,11 +31,11 @@ public class OrderService {
 			LocalDateTime localDateTime = LocalDateTime.now();
 			order.setOrderDate(localDateTime);
 
-			// validate order
+			// validate order 
 			OrderValidator.validateOrder(order);
 			
 			// create order
-			generatedOrderId = orderDAO.create(order);
+			generatedOrderId = orderDAO.create(order); 
 			
 			new AddressBookService().setSelectedTrue(order.getAddressId());
 

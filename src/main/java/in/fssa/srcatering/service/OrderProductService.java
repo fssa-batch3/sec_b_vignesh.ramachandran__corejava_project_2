@@ -40,11 +40,11 @@ public class OrderProductService {
 			
 			OrderProductValidator.validateOrderProduct(orderProduct);
 
-			orderProductDAO.create(orderProduct);
+			orderProductDAO.create(orderProduct); 
 
-		} catch (DAOException e) {
+		} catch (DAOException e) { 
 			Logger.error(e);
-			throw new ServiceException(e.getMessage());
+			throw new ServiceException(e.getMessage()); 
 		}
 	}
 
@@ -171,8 +171,6 @@ public class OrderProductService {
 	 */
 	public Set<Map.Entry<Integer, Integer>> getOrderedMenuIdAndCategoryIdByOrderId(int orderId)
 			throws ValidationException, ServiceException {
-
-//		Map<Integer, Integer> menuIdCategoryIdMap = new HashMap<>();
 
 		Set<Map.Entry<Integer, Integer>> menuIdCategoryIdMap = new HashSet<>();
 

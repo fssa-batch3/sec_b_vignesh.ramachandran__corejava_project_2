@@ -17,7 +17,7 @@ public class ReviewValidator {
 		CategoryValidator.isCategoryIdExistsForThatMenu(review.getMenuId(), review.getCategoryId());
 		OrderValidator.isOrderIdIsValid(review.getOrderId());
 		IntUtil.rejectIfInvalidInt(review.getStar(), "Star");
-		StringUtil.rejectIfInvalidString(review.getFeedback(), "FeedBack");
+		StringUtil.rejectIfInvalidString(review.getFeedback(), "FeedBack"); 
 		
 	}
 	

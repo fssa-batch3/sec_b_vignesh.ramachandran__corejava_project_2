@@ -18,7 +18,7 @@ public class OrderValidator {
 	public static void validateOrder(Order order) throws ValidationException {
 		
 		if (order == null) {
-			throw new ValidationException("Invalid Order Input");
+			throw new ValidationException("Invalid Order Input"); 
 		}
 
 		IntUtil.rejectIfInvalidInt(order.getUserId(), "UserId");
@@ -27,7 +27,7 @@ public class OrderValidator {
 		StringUtil.rejectIfInvalidString(order.getEventName(), "EventName");
 
 		UserValidator.isUserIdIsValid(order.getUserId());	
-		AddressBookValidator.isAddressIdIsValid(order.getAddressId());
+		AddressBookValidator.isAddressIdIsValid(order.getAddressId()); 
 	}
 	
 	/**

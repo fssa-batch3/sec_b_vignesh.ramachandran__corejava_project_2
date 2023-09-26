@@ -31,7 +31,6 @@ public class CategoryImageDAO {
 			ps.setString(3, image.trim());
 
 			ps.executeUpdate();
-			System.out.println("Category Image created sucessfully");
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -61,13 +60,7 @@ public class CategoryImageDAO {
 			ps.setInt(2, menu_id);
 			ps.setInt(3, category_id);
 
-			int rowsUpdated = ps.executeUpdate();
-
-			if (rowsUpdated > 0) {
-				System.out.println("Category with id " + category_id + " has been updated successfully.");
-			} else {
-				System.out.println("Category with id " + category_id + " not found.");
-			}
+			ps.executeUpdate();
 
 		} catch (SQLException e) { 
 			Logger.error(e);

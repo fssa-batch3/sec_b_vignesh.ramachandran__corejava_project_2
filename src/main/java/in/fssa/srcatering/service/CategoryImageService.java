@@ -26,7 +26,7 @@ public class CategoryImageService {
 			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
-
+ 
 	}
 
 }

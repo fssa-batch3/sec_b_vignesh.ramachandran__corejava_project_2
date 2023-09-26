@@ -6,11 +6,12 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     phone_number BIGINT NOT NULL,
-    password VARCHAR(8) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     status BOOLEAN NOT NULL DEFAULT true,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
 
 CREATE TABLE IF NOT EXISTS address_book (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -32,13 +33,6 @@ CREATE TABLE IF NOT EXISTS address_book (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
-
-SELECT * FROM address_book;
-
-
-
-
 
 CREATE TABLE IF NOT EXISTS menus (
 id INT auto_increment primary KEY,
@@ -65,6 +59,9 @@ modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 -- https://iili.io/HWhX7YQ.jpg
 -- https://iili.io/HWhXYvV.jpg
 -- https://iili.io/HWhXayB.jpg
+-- https://iili.io/HglGuF2.jpg
+-- https://iili.io/HWhhlS4.jpg
+
 
 
 CREATE TABLE IF NOT EXISTS category_images (
@@ -73,7 +70,9 @@ CREATE TABLE IF NOT EXISTS category_images (
 	category_id INT,
     image VARCHAR(255) NOT NULL,
 	FOREIGN KEY (menu_id) REFERENCES menus(id),
-    FOREIGN KEY (category_id) REFERENCES categories(id)
+    FOREIGN KEY (category_id) REFERENCES categories(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 
@@ -120,25 +119,23 @@ CREATE TABLE IF NOT EXISTS cart(
     delivery_date DATE NOT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (menu_id) REFERENCES menus(id),
-    FOREIGN KEY (category_id) REFERENCES categories(id)
+    FOREIGN KEY (category_id) REFERENCES categories(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 
 CREATE TABLE IF NOT EXISTS orders(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
-    menu_id INT,
-    category_id INT,
-    no_of_guest INT,
+    address_id INT,
     total_cost INT,
     order_date TIMESTAMP NOT NULL,
-    delivery_date DATE NOT NULL,
-    order_status ENUM ("DELIVERED", "NOT_DELIVERED", "CANCELLED") NOT NULL,
+    event_name VARCHAR(20),
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (menu_id) REFERENCES menus(id),
-    FOREIGN KEY (category_id) REFERENCES categories(id)
+    FOREIGN KEY (address_id) REFERENCES address_book(id)
 );
 
 
@@ -147,18 +144,41 @@ CREATE TABLE IF NOT EXISTS order_products(
     order_id INT, 
     dish_id INT,
     price_id INT,
+    menu_id INT,
+    category_id INT,
+    no_of_guest INT,
+	delivery_date DATE NOT NULL,
+    cancel_date TIMESTAMP DEFAULT NULL,
+    cancel_reason VARCHAR(100) DEFAULT NULL,
+    order_status ENUM('DELIVERED', 'NOT_DELIVERED', 'CANCELLED') NOT NULL DEFAULT 'NOT_DELIVERED',
+    cater_approval ENUM('PENDING', 'APPROVED', 'REJECTED') NOT NULL DEFAULT 'PENDING',
+    reject_reason VARCHAR(100) DEFAULT NULL,
     FOREIGN KEY (order_id) REFERENCES orders(id),
     FOREIGN KEY (dish_id) REFERENCES category_dishes(dish_id),
-    FOREIGN KEY (price_id) REFERENCES dish_price(id)
+    FOREIGN KEY (price_id) REFERENCES dish_price(id),
+    FOREIGN KEY (menu_id) REFERENCES menus(id),
+    FOREIGN KEY (category_id) REFERENCES categories(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 
 
--- INSERT INTO orders(user_id, no_of_guest, total_cost, order_date, delivery_date, order_status,menu_id, category_id)
--- VALUES(2, 10, 100, "2023-09-09 13:46:27.405025", 2023-10-06, "NOT_DELIVERED", 1, 1);
-
--- drop table order_products;
--- drop table orders;
+CREATE TABLE IF NOT EXISTS reviews (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    order_id INT,
+    menu_id INT, 
+    category_id INT, 
+    star INT,
+    feedback VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (menu_id) REFERENCES menus(id),
+    FOREIGN KEY (category_id) REFERENCES categories(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 
 
 

@@ -68,7 +68,7 @@ public class CategoryDishService {
      * @throws ValidationException If the provided IDs are not valid.
      * @throws ServiceException    If there's an issue with the service operation.
      */
-	public List<String> findDishNameByMenuIdAndCategoryId(int menuId, int categoryId)
+	public List<String> findDishNamesByMenuIdAndCategoryId(int menuId, int categoryId)
 			throws ValidationException, ServiceException {
 
 		List<String> dishNames = new ArrayList<>();
@@ -124,7 +124,7 @@ public class CategoryDishService {
 			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
-		return dishIdPriceIdMap;
+		return dishIdPriceIdMap; 
 	}
 
 	/**

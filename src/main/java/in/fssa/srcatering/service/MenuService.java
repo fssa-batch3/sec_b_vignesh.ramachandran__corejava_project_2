@@ -29,13 +29,7 @@ public class MenuService {
 		try {
 
 			menuList = menuDAO.findAllActiveMenus();
-
-			Iterator<Menu> iterator = menuList.iterator();
-
-			while (iterator.hasNext()) {
-				System.out.println(iterator.next());
-			}
-
+ 
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage());
 		}
@@ -53,11 +47,6 @@ public class MenuService {
 		
 		try {
 			menuList = menuDAO.findAllMenus();
-			Iterator<Menu> iterator = menuList.iterator();
-
-			while (iterator.hasNext()) {
-				System.out.println(iterator.next());
-			}
 			
 		}  catch (DAOException e) {
 			throw new ServiceException(e.getMessage());
@@ -124,8 +113,6 @@ public class MenuService {
 		try {
 
 			MenuValidator.isMenuIdIsValid(menuId);
-
-			System.out.println(menuDAO.findById(menuId));
 
 			menu = menuDAO.findById(menuId);
 

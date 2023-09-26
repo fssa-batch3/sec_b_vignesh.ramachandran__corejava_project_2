@@ -47,13 +47,13 @@ public class MenuValidator {
 	public static void validateMenu(Menu menu) throws ValidationException {
 		
 		if(menu == null) {
-			throw new ValidationException("Invalid Menu Input");
+			throw new ValidationException("Invalid Menu Input"); 
 		}
 
 		StringUtil.rejectIfInvalidString(menu.getMenuName(), MENUNAME);
 		StringUtil.rejectIfInvalidName(menu.getMenuName(), MENUNAME);
 		StringUtil.rejectIfInvalidString(menu.getDescription(), "Description");
-		StringUtil.rejectIfInvalidString(menu.getImage(), "Image");
+		StringUtil.rejectIfInvalidString(menu.getImage(), "Image"); 
 
 	}
 

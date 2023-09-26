@@ -1,5 +1,6 @@
 package in.fssa.srcatering;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
@@ -90,7 +91,7 @@ class TestCategory {
 			categoryService.createCategory(category);
 		});
 		String expectedMessage = "CategoryName already exists";
-		String actualMessage = exception.getMessage();
+		String actualMessage = exception.getMessage(); 
 
 		assertEquals(expectedMessage, actualMessage);
 	}
@@ -332,9 +333,87 @@ class TestCategory {
 		assertEquals(expectedMessage, actualMessage);
 	}
 	
-
-
 	
+	@Test
+	void testFindAllCategories() {
+		
+		CategoryService categoryService = new CategoryService();
+		
+		assertDoesNotThrow(() -> {
+			categoryService.getAllCategories();
+		});
+		
+	}
+	
+	@Test
+	void testFindCategoriesByMenuId() {
+		CategoryService categoryService = new CategoryService();
+		
+		assertDoesNotThrow(() -> {
+			categoryService.getAllActiveCategoriesByMenuId(1);
+		});
+	}
+	
+	
+	@Test
+	void testFindAllActiveCategoriesByMenuId() {
+		CategoryService categoryService = new CategoryService();
+		
+		assertDoesNotThrow(() -> {
+			categoryService.getAllActiveCategoriesByMenuId(1);
+		});
+		
+	}
+	
+	@Test
+	void testFindCategoryByMenuIdAndCategoryId() {
+		CategoryService categoryService = new CategoryService();
+		
+		assertDoesNotThrow(() -> {
+			categoryService.getCategoryByMenuIdAndCategoryId(1, 1);
+		});
+	}
+	
+	
+	@Test
+	void testGetTotalPriceOfTheCategoryByMenuIdAndCategoryId() {
+		CategoryService categoryService = new CategoryService();
+		
+		assertDoesNotThrow(() -> {
+			categoryService.getTotalPriceOfTheCategoryByMenuIdAndCategoryId(1,1);
+		});
+	}
+	
+	@Test
+	void testIsCategoryIdExistsForThatMenu() {
+		CategoryService categoryService = new CategoryService();
+		
+		assertDoesNotThrow(() -> {
+			categoryService.isCategoryIdExistsForThatMenu(1, 1);
+		});
+	}
+	
+	
+	@Test
+	void testGetAllCategoryNamesByMenuId() {
+		CategoryService categoryService = new CategoryService();
+		
+		assertDoesNotThrow(() -> {
+			categoryService.getAllCategoryNamesByMenuId(1);
+		});
+	}
+	
+	
+	@Test
+	void testGetCategoriesByMenuId() {
+		CategoryService categoryService = new CategoryService();
+		
+		assertDoesNotThrow(() -> {
+			categoryService.getCategoriesByMenuId(1);
+		});
+	}
+
+
 //    private String generateRandomCategoryName() {
 //        String alphabet = "abcdefghijklmnopqrstuvwxyz";
 //        StringBuilder dishName = new StringBuilder();

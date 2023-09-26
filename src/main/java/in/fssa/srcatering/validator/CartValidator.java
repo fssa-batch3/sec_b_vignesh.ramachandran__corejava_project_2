@@ -32,7 +32,7 @@ public class CartValidator {
 			throw new ValidationException("NoOfGuest should be above 49 and less than 1501");
 		}
 
-		UserValidator.isUserIdIsValid(cart.getUserId());
+		UserValidator.isUserIdIsValid(cart.getUserId()); 
 		MenuValidator.isMenuIdIsValid(cart.getMenuId());
 		CategoryValidator.isCategoryIdExistsForThatMenu(cart.getMenuId(), cart.getCategoryId());
 	}

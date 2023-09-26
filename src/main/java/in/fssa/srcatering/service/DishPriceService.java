@@ -31,7 +31,7 @@ public class DishPriceService {
 	 */
 	public void createDishPrice(int dishId, int price) throws ValidationException, ServiceException {
 
-		try {
+		try { 
 
 			LocalDateTime localDateTime = LocalDateTime.now();
 			java.sql.Timestamp dateTime = java.sql.Timestamp.valueOf(localDateTime);
@@ -76,7 +76,6 @@ public class DishPriceService {
 			java.sql.Timestamp dateTime = java.sql.Timestamp.valueOf(localDateTime);
 
 			if (price != dishPrice) {
-				System.out.println("price in if condition" + price);
 
 				dishPriceDAO.update(priceId, dateTime);
 				dishPriceDAO.create(dishId, dishPrice, dateTime);
@@ -106,6 +105,26 @@ public class DishPriceService {
 			throw new ServiceException(e.getMessage());
 		}
 		return price;
+	}
+	
+	/**
+	 * 
+	 * @param dishId
+	 * @return
+	 * @throws ValidationException
+	 * @throws ServiceException
+	 */
+	public int findPriceIdByDishId(int dishId) throws ValidationException, ServiceException {
+		
+		int priceId = -1;
+		try {
+			IntUtil.rejectIfInvalidInt(dishId, "DishId");
+			priceId = dishPriceDAO.findPriceIdByDishId(dishId);
+		} catch (DAOException e) {
+			Logger.error(e);
+			throw new ServiceException(e.getMessage());
+		}
+		return priceId;
 	}
 
 	/**

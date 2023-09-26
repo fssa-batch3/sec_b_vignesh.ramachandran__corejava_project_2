@@ -1,12 +1,11 @@
 package in.fssa.srcatering;
 
-
-
 public class AppTest {
 
 	public static void main(String[] args) {
-				
 		
+		
+
 	}
 
 }

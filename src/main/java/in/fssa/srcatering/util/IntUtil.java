@@ -17,7 +17,7 @@ public class IntUtil {
 	    if (phoneNumberStr.length() != 10) {
 	        throw new ValidationException("PhoneNumber doesn't match the length");
 	    }
-
+ 
 		if (phoneNumber < 6000000000L || phoneNumber > 9999999999L) {
 			throw new ValidationException("Invalid phone number");
 		}

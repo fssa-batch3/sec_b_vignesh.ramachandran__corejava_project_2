@@ -1,5 +1,7 @@
 package in.fssa.srcatering.service;
 
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,20 +31,14 @@ public class UserService {
 		List<User> userList;
 		try {
 			userList = userDAO.findAll();
-			Iterator<User> iterator = userList.iterator();
-
-			while (iterator.hasNext()) {
-				System.out.println(iterator.next());
-			}
-
-			return userDAO.findAll();
+			return userList;
 		} catch (DAOException e) {
 			Logger.error(e);
 			throw new ServiceException("Failed to Getall User");
 		}
 
 	}
-
+ 
 	/**
 	 * Creates a new user.
 	 *
@@ -53,13 +49,13 @@ public class UserService {
 	public void createUser(User newUser) throws ValidationException, ServiceException {
 
 		try {
-			
+
 			UserValidator.validate(newUser);
 			UserValidator.isEmailAlreadyExists(newUser.getEmail());
-			
-			newUser.setPassword(PasswordUtil.encodePassword(newUser.getPassword()));
+
+			newUser.setPassword(PasswordUtil.encryptPassword(newUser.getPassword()));
 			userDAO.create(newUser);
-			
+
 		} catch (DAOException e) {
 			if (e.getMessage().contains("Email already exists")) {
 
@@ -68,6 +64,8 @@ public class UserService {
 
 				throw new ServiceException("Failed to Create User");
 			}
+		} catch (NoSuchAlgorithmException e) {
+			Logger.error(e);
 		}
 
 	}
@@ -83,10 +81,9 @@ public class UserService {
 	public void updateUser(int id, User newUser) throws ValidationException, ServiceException {
 
 		try {
-			UserValidator.validate(newUser);
+			UserValidator.validateUpdateUser(newUser);
 			UserValidator.isUserIdIsValid(id);
-			
-			newUser.setPassword(PasswordUtil.encodePassword(newUser.getPassword()));
+
 			userDAO.update(id, newUser);
 
 		} catch (DAOException e) {
@@ -137,7 +134,6 @@ public class UserService {
 			Logger.error(e);
 			throw new ServiceException("Failed to findById");
 		}
-		System.out.println(user);
 		return user;
 	}
 
@@ -161,7 +157,6 @@ public class UserService {
 			Logger.error(e);
 			throw new ServiceException("Failed to findById");
 		}
-		System.out.println(user);
 		return user;
 	}
 
@@ -170,7 +165,7 @@ public class UserService {
 	 * @param email
 	 * @param password
 	 * @throws ValidationException
-	 * @throws ServiceException 
+	 * @throws ServiceException
 	 */
 	public void loginUser(String email, String password) throws ValidationException, ServiceException {
 		try {
@@ -178,17 +173,34 @@ public class UserService {
 			StringUtil.rejectIfInvalidString(password, "Password");
 			StringUtil.rejectIfInvalidEmail(email);
 			StringUtil.rejectIfIvalidPassword(password);
+
+			User user = userDAO.findByEmail(email);
 			
-			userDAO.findByEmail(email);
+			String hashPassword = user.getPassword();
 			
-			password = PasswordUtil.encodePassword(password);
-			userDAO.passwordChecker(email, password);
+			int firstIndex = hashPassword.indexOf('$'); // Find the index of the first "$"
+	        int secondIndex = hashPassword.indexOf('$', firstIndex + 1); // Find the index of the second "$" starting from the position after the first one
+	        
+	        
+	        if (firstIndex != -1 && secondIndex != -1) {
+	        	
+	            String salt = hashPassword.substring(firstIndex + 1, secondIndex); // Extract the substring between the two "$" characters
+	            
+	            password = PasswordUtil.checkPass(password, salt);
+	            
+	            String genPass = "$"+salt+"$"+password;
+	         
+	            userDAO.passwordChecker(email, genPass);
+	            
+	        } else {
+	            Logger.debug("The input string does not contain the expected format.");
+	        }
+
 		} catch (DAOException e) {
 			Logger.error(e);
 			throw new ServiceException(e.getMessage());
 		}
 	}
-	
 
 	/**
 	 * Changes the status of a user by ID.

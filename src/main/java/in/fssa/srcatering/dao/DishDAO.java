@@ -80,7 +80,6 @@ public class DishDAO {
 			ps.setString(2, dish.getQuantityUnit().name());
 			ps.setInt(3, dish.getId());
 			ps.executeUpdate();
-			System.out.println("Dish updated sucessfully");
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -296,14 +295,8 @@ public class DishDAO {
 			ps = con.prepareStatement(query);
 
 			ps.setInt(1, dishId);
-
-			int rowsAffected = ps.executeUpdate();
-
-			if (rowsAffected > 0) {
-				System.out.println("Dish deleted successfully");
-			} else {
-				System.out.println("No rows deleted");
-			}
+			
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			Logger.error(e);

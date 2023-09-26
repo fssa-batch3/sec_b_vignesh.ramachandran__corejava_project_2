@@ -109,7 +109,7 @@ public class ReviewDAO {
 		List<Review> reviewList = new ArrayList<>();
 		
 		try {
-			String query = "SELECT id, user_id, order_id, menu_id, category_id, star, feedback FROM reviews WHERE menu_id = ?"
+			String query = "SELECT id, user_id, order_id, menu_id, category_id, star, feedback FROM reviews WHERE menu_id = ? "
 					+ "AND category_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);

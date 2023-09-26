@@ -218,7 +218,6 @@ public class CategoryDishDAO {
 			ps.executeUpdate();
 
 			con.commit();
-			System.out.println("CategoryDish has been created sucessfully");
 
 		} catch (SQLException e) {
 			rollBack = true;
@@ -247,7 +246,7 @@ public class CategoryDishDAO {
 				}
 
 			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+				Logger.error(e);
 			}
 
 			if (rollBack) {
@@ -283,12 +282,7 @@ public class CategoryDishDAO {
 			ps.setInt(3, categoryId);
 			ps.setInt(4, dishId);
 
-			int rowsUpdated = ps.executeUpdate();
-			if (rowsUpdated > 0) {
-				System.out.println("Status updated sucessfully");
-			} else {
-				System.out.println("Status updation failed");
-			}
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -321,7 +315,6 @@ public class CategoryDishDAO {
 			ps.setInt(3, dishId);
 
 			ps.executeUpdate();
-			System.out.println("Dish deleted sucessfully");
 
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -347,7 +340,7 @@ public class CategoryDishDAO {
 		
 		try {
 			String query = "SELECT dp.dish_id, dp.id FROM dish_price dp JOIN category_dishes cd ON dp.dish_id = cd.dish_id "
-					+ "WHERE dp.end_date IS NULL AND cd.menu_id = ? AND cd.category_id = ?";
+					+ "WHERE dp.end_date IS NULL AND cd.menu_id = ? AND cd.category_id = ? AND cd.status = 1";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			
@@ -392,7 +385,6 @@ public class CategoryDishDAO {
 			ps.setInt(3, dishId);
 
 			ps.executeUpdate();
-			System.out.println("done");
 
 		} catch (SQLException e) {
 			Logger.error(e);

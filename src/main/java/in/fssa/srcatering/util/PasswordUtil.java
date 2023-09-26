@@ -3,81 +3,56 @@ package in.fssa.srcatering.util;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 import in.fssa.srcatering.exception.DAOException;
 
 public class PasswordUtil {
 	
-	private static final String KEY = "SR_is_a_brand";
+    public static String getSecurePassword(String password, byte[] salt) {
 
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(salt);
+            byte[] bytes = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            Logger.error(e);
+        }
+        return generatedPassword; 
+    }
 
-	public static String encodePassword(String password) {
-		try {
-			// Convert the password and key to byte arrays
-			byte[] passwordBytes = password.getBytes("UTF-8");
-			byte[] keyBytes = KEY.getBytes("UTF-8");
-
-			// Perform XOR operation
-			for (int i = 0; i < passwordBytes.length; i++) {
-				passwordBytes[i] ^= keyBytes[i % keyBytes.length];
-			}
-
-			// Encode the result to Base64
-			byte[] encodedBytes = Base64.getEncoder().encode(passwordBytes);
-			return new String(encodedBytes, "UTF-8");
-		} catch (Exception e) {
-			Logger.error(e);
-			return null;
-		}
-	}
-
-	public static String decodePassword(String encodedPassword) {
-		
-		try {
-			// Decode the Base64-encoded password to byte array
-			byte[] encodedBytes = encodedPassword.getBytes("UTF-8");
-			byte[] passwordBytes = Base64.getDecoder().decode(encodedBytes);
-			byte[] keyBytes = KEY.getBytes("UTF-8");
-
-			// Perform XOR operation to decode
-			for (int i = 0; i < passwordBytes.length; i++) {
-				passwordBytes[i] ^= keyBytes[i % keyBytes.length];
-			}
-
-			// Convert byte array back to string
-			return new String(passwordBytes, "UTF-8");
-		} catch (Exception e) {
-			Logger.error(e);
-			return null;
-		}
-		
-	}
-	
-	/**
-	 * Hashes the provided password using the SHA-256 cryptographic hash function.
-	 *
-	 * @param password the raw password to be hashed.
-	 * @return the hashed password as a hexadecimal string.
-	 * @throws InvalidEmployeeException if an error occurs during hashing (e.g.,
-	 *                                  NoSuchAlgorithmException).
-	 */
-	public static String hashPassword(String password) throws DAOException {
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			byte[] hashedBytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
-
-			// Convert the byte array to a hexadecimal string
-			StringBuilder sb = new StringBuilder();
-			
-			for (byte b : hashedBytes) {
-				sb.append(String.format("%02x", b));
-			}
-
-			return sb.toString();
-		} catch (NoSuchAlgorithmException e) {
-			throw new DAOException(e.getMessage());
-		}
-	}
+    private static byte[] getSalt() throws NoSuchAlgorithmException {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        return salt;
+    }
+    
+    
+    public static String encryptPassword(String password) throws NoSuchAlgorithmException {
+    	
+    	byte[] salt = getSalt();
+    	String newPass = getSecurePassword(password, salt);
+    	
+    	String genPass = "$"+Base64.getEncoder().encodeToString(salt)+"$"+newPass;
+		return genPass;
+    }
+    
+    
+    public static String checkPass(String password, String salt) {
+    	
+    	byte[] saltt = Base64.getDecoder().decode(salt);
+    	String newPass = getSecurePassword(password, saltt);
+    	return newPass;
+    }
 
 }

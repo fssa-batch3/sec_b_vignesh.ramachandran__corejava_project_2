@@ -34,7 +34,7 @@ public class OrderDAO {
 			ps.setInt(2, order.getAddressId());
 			ps.setTimestamp(3, orderDateTime);
 			ps.setString(4, order.getEventName());
-			ps.setInt(5, order.getTotalCost());
+			ps.setInt(5, order.getTotalCost()); 
 			
 			ps.executeUpdate();
 			
@@ -43,8 +43,6 @@ public class OrderDAO {
 			if (rs.next()) {
 				generatedId = rs.getInt(1);
 			}
-			
-			System.out.println("Order created sucessfully");
 			
 		} catch (SQLException e) {
 			Logger.error(e);
@@ -168,7 +166,6 @@ public class OrderDAO {
                 Timestamp timestamp = rs.getTimestamp("order_date");
                 LocalDateTime orderDate = timestamp.toLocalDateTime();
                 order.setOrderDate(orderDate);
-				
 			}
 			
 		} catch (SQLException e) {

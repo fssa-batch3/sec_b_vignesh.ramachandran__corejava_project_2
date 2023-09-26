@@ -486,6 +486,27 @@ class TestMenu {
 		assertEquals(expectedMessage, actualMessage);
 	}
 	
+	
+	@Test
+	void testGetAllActiveMenus() {
+		MenuService menuService = new MenuService();
+
+		assertDoesNotThrow(() -> {
+			menuService.getAllActiveMenus();
+		});
+	}
+	
+	
+	@Test
+	void testGetAllMenuNames() {
+		MenuService menuService = new MenuService();
+
+		assertDoesNotThrow(() -> {
+			menuService.getAllMenuNames();
+		});
+	}
+	
+	
 //    private String generateRandomMenuName() {
 //        String alphabet = "abcdefghijklmnopqrstuvwxyz";
 //        StringBuilder dishName = new StringBuilder();

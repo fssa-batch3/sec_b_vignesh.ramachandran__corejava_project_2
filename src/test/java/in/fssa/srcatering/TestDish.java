@@ -10,6 +10,7 @@ import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Dish;
 import in.fssa.srcatering.model.QuantityUnit;
 import in.fssa.srcatering.service.CategoryDishService;
+import in.fssa.srcatering.service.DishPriceService;
 import in.fssa.srcatering.service.DishService;
 
  class TestDish {
@@ -787,6 +788,39 @@ import in.fssa.srcatering.service.DishService;
 
 		assertEquals(expectedMessage,actualMessage);
 	}
+	
+	
+	@Test
+	void testGetDishByDishId() {
+		DishService dishService = new DishService();
+		
+		assertDoesNotThrow(() -> {
+			dishService.getDishByDishId(1);
+		});
+	}
+	
+	
+	@Test
+	void testGetAllDishesByMenuIdAndCategoryId() {
+		DishService dishService = new DishService();
+		
+		assertDoesNotThrow(() -> {
+			dishService.getAllDishesByMenuIdAndCategoryId(1, 1);
+		});
+	}
+	
+	
+	@Test
+	void testGetAllActiveDishesByMenuIdAndCategoryId() {
+		DishService dishService = new DishService();
+		
+		assertDoesNotThrow(() -> {
+			dishService.getAllActiveDishesByMenuIdAndCategoryId(1, 1);
+		});
+	}
+	
+	
+	
 	
 	
 //    private String generateRandomDishName() {

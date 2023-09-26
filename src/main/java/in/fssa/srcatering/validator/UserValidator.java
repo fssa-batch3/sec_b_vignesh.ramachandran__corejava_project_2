@@ -32,6 +32,24 @@ public class UserValidator {
 	}
 	
 	/**
+	 * 
+	 * @param newUser
+	 * @throws ValidationException
+	 */
+	public static void validateUpdateUser(User newUser) throws ValidationException {
+		if (newUser == null) {
+			throw new ValidationException("Invalid User Input");
+		}
+
+		StringUtil.rejectIfInvalidString(newUser.getName(), "Name");
+		StringUtil.rejectIfInvalidString(newUser.getEmail(), "Email");
+
+		StringUtil.rejectIfInvalidName(newUser.getName(), "UserName");
+		IntUtil.rejectIfInvalidPhoneNumber(newUser.getPhoneNumber());
+		StringUtil.rejectIfInvalidEmail(newUser.getEmail());
+	}
+	
+	/**
      * Validates if the provided email already exists in the system.
      *
      * @param email The email to validate.

@@ -33,7 +33,7 @@ public class DishValidator {
 		IntUtil.quantityCheck(dish.getQuantity(), "Quantity");
 		IntUtil.priceCheck(dish.getDishPrice(), "Price");
 		
-		if(dish.getQuantity() > 501) {
+		if(dish.getQuantity() > 501) { 
 			throw new ValidationException("Quantity cannot be greater than 500");
 		}
 		 

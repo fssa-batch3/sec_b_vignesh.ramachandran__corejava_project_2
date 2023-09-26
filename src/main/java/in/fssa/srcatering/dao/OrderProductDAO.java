@@ -66,7 +66,6 @@ public class OrderProductDAO {
 			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
-			System.out.println("OrderedProduct created sucessfully");
 			ConnectionUtil.close(con, ps);
 		}
 	}
@@ -115,8 +114,6 @@ public class OrderProductDAO {
 			}
 			
 			ps.executeUpdate();
-
-	        System.out.println("Order status updated");
 
 		} catch (SQLException e) {
 	        Logger.error(e);
@@ -169,8 +166,6 @@ public class OrderProductDAO {
 			}
 
 			ps.executeUpdate();
-			
-			System.out.println("CaterApproval updated sucessfully");
 
 		} catch (SQLException e) {
 	        Logger.error(e);

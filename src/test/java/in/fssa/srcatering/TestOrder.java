@@ -178,5 +178,15 @@ public class TestOrder {
 		
 		assertEquals(expectedMessage, actualMessage);
 	}
+	
+	
+	@Test
+	void testGetAllOrders() {
+		OrderService orderService = new OrderService();
+
+		assertDoesNotThrow(() -> {
+			orderService.getAllOrders();
+		});
+	}
 
 }

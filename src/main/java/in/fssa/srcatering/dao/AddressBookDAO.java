@@ -427,7 +427,7 @@ public class AddressBookDAO {
 		ResultSet rs = null;
 		
 		try {
-			String query = "SELECT id FROM address_book WHERE id = ? AND status = 1	OR selected = 1";
+			String query = "SELECT id FROM address_book WHERE id = ? AND (status = 1	OR selected = 1)";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			

@@ -16,6 +16,10 @@ public class AddressBookValidator {
 	 * @throws ValidationException
 	 */
 	public static void validateAddress(AddressBook addressBook) throws ValidationException {
+		
+		if(addressBook == null) {
+			throw new ValidationException("Invalid Address Input");
+		}
 
 		// null or empty validation
 		IntUtil.rejectIfInvalidInt(addressBook.getUserId(), "UserId");
@@ -31,7 +35,7 @@ public class AddressBookValidator {
 		IntUtil.rejectIfInvalidInt(addressBook.getPincode(), "Pincode");
 
 		// pattern validation
-		StringUtil.rejectIfInvalidName(addressBook.getName(), "Name");
+		StringUtil.rejectIfInvalidName(addressBook.getName(), "Name"); 
 		StringUtil.rejectIfInvalidEmail(addressBook.getEmail());
 
 		if (StringUtil.validatePhoneNumber(addressBook.getPhoneNumber()) == false) {
