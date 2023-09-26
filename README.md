@@ -1,4 +1,5 @@
 
+
 # Milestone - 1
 # SR Catering Application Checklist
 
@@ -140,7 +141,7 @@ graph TD;
   C0 --> C["Whether the ID is in the database or not"]
   B -- Invalid --> C1["Validation Exception: Invalid input"]
   C -- Yes --> D["User DAO: Delete User"]
-  D --> E["User Service: User Dleleted(Response)"]
+  D --> E["User Service: User Deleted(Response)"]
   C -- No --> F["Validation Exception: User not found for the given ID (Error Response)"]
 ```
 
@@ -164,10 +165,82 @@ graph TD;
 -  Attributes
 		- int id
 		- String menu_name
+		- String menu_image
+		- String menu_description
 - [ ] Menu Service
 - [ ] Menu DAO
+
+### Feature 1: Create
+#### Admin story
+Admin can create Menu.
+#### Pre-requisites:
+- Implements Menu Service(createMenu( ))
+- Implement Menu DAO(create( ))
+
+
+#### Validation
+- [ ] Form validation
+		- menu null
+		- menu_name (null or empty string)
+		- menu_image (null or empty string)
+		- menu_image pattern validation
+		- menu_description (null or empty string)
+- [ ] Business validation
+		- menu_name alreadyExists 		
+		
+#### Messages
+- [ ] Menu cannot be null
+- [ ] menu_name cannot be null or empty
+- [ ] menu_image cannot be null or empty
+- [ ] menu_description cannot be null or empty
+- [ ] menu_image doesn't match the required format
+- [ ] Menu name already exists(Business validation
+
+#### Flow: 
+```mermaid
+graph TD;
+  A["Menu Service: Menu Creation"] --> B["Form Validation"]
+  B -- Valid--> C0["Business Validation"]
+  C0 --> C["Menu name already exists"]
+  B -- InValid--> C1["Validation Exception: Invalid input"]
+  C -- No --> D["Menu DAO: Create Menu"]
+  D --> E["Menu Service: Menu Created (Response)"]
+  C -- Yes --> F["Menu Service: Menu name Already Exists (Error Response)"]
+```
+
+
+### Feature 2: Update
+#### Admin story
+Admin can update Menu image and description.
+#### Pre-requisites:
+- Implements Menu Service(updateMenu( ))
+- Implement Menu DAO(update( ))
+
+
+#### Validation
+- [ ] Form validation
+		- menu null
+		- menu_name (null or empty string)
+		- menu_image (null or empty string)
+		- menu_image pattern validation
+		- menu_description (null or empty string)		
+		
+#### Messages
+- [ ] Menu cannot be null
+- [ ] menu_name cannot be null or empty
+- [ ] menu_image cannot be null or empty
+- [ ] menu_description cannot be null or empty
+- [ ] menu_image doesn't match the required format
+
+#### Flow: 
+```mermaid
+graph TD;
+  A["Menu Service: Menu update"] --> B["Form Validation"]
+  B -- Valid--> C["Menu Service: Menu updated(Response)"]
+  B -- InValid--> C1["Validation Exception: Invalid input"]
+```
 	
-### Feature 1: FindAll
+### Feature 3: FindAll
 #### Admin story
 Admin can see all Menu details.
 #### Pre-requisites:
@@ -181,18 +254,30 @@ graph TD;
   B --> C["Retrive all menus"]
 ```
 
-### Feature 2: Find By MenuId
+### Feature 4: Find By MenuId
 #### Admin story
 Admin can find menu by menu_id.
 #### Pre-requisites:
 - Implements Menu Service(findByMenuId( ))
 - Implement Menu DAO(findByMenuId( ))
 
+#### Validation
+- [ ] Form validation
+		- menu_id (less than or equal to zero)	
+- [ ] Business validaton
+		- Check whether menu_id is in the table or not
+		
+#### Messages
+- [ ] menu_id cannot be less than or equal to zero
+- [ ] menu_id not found
+
+
 #### Flow: 
 ```mermaid
 graph TD;
-  A["Menu Service: Find By Menu Id"] --> B["Menu DAO: Find By Menu Id"]
-  B --> C["Retrive all menus"]
+  A["Menu Service: Menu update"] --> B["Form Validation"]
+  B -- Valid --> C["Menu Service: Menu updated(Response)"]
+  B -- InValid--> C1["Validation Exception: Invalid input"]
 ```
 
 ## Module 2: Category
@@ -201,13 +286,88 @@ graph TD;
 -  Attributes
 		- int id
 		- String category_name
+		- String category_image
 		- String menu_id (foreign key)
 - [ ] Category Service
 - [ ] Category DAO
 
+### Feature 1: Create
+#### Admin story
+Admin can create Category.
+#### Pre-requisites:
+- Implements CategoryService(createCategory( ))
+- Implement CategoryDAO(create( ))
 
 
-### Feature 1: FindAll Category By Menu id
+#### Validation
+- [ ] Form validation
+		-category null
+		- category_name (null or empty string)
+		- category _image (null or empty string)
+		- category _image pattern validation
+		- menu_id (less than or equal to zero)
+- [ ] Business validation
+		- menu_id valid or not
+		- category_name alreadyExists 		
+		
+#### Messages
+- [ ] Category cannot be null
+- [ ] Category_name cannot be null or empty
+- [ ] Category_image cannot be null or empty
+- [ ] Category_image doesn't match the required format
+- [ ] Category name already exists(Business validation)
+- [ ] Invalid Menu_id
+
+#### Flow: 
+```mermaid
+graph TD;
+  A["Category Service: Category Creation"] --> B["Form Validation"]
+  B -- Valid--> C0["Business Validation"]
+  C0 --> C["Category name already exists for that menu"]
+  C -- Yes --> F["Category Service: Category name Already Exists (Error Response)"]
+  B -- InValid--> C1["Validation Exception: Invalid input"]
+  C -- No --> D["menu_id is valid or not"]
+  D -- valid --> E["Category DAO: Create Category"]
+  D -- Invalid --> G["Validation Exception: Invalid menu_id"]
+```
+
+### Feature 2: Update
+#### Admin story
+Admin can update Category.
+#### Pre-requisites:
+- Implements CategoryService(updateCategory( ))
+- Implement CategoryDAO(update( ))
+
+
+#### Validation
+- [ ] Form validation
+		-category null
+		- category_name (null or empty string)
+		- category _image (null or empty string)
+		- category _image pattern validation
+		- menu_id (less than or equal to zero)
+- [ ] Business validation
+		- menu_id valid or not		
+		
+#### Messages
+- [ ] Category cannot be null
+- [ ] Category_name cannot be null or empty
+- [ ] Category_image cannot be null or empty
+- [ ] Category_image doesn't match the required format
+- [ ] Invalid Menu_id
+
+#### Flow: 
+```mermaid
+graph TD;
+  A["Category Service: Category update"] --> B["Form Validation"]
+  B -- Valid--> C0["Business Validation"]
+  B -- InValid--> C1["Validation Exception: Invalid input"]
+  C0 --> C["menu_id is valid or not"]
+  C -- valid --> E["Category DAO: Update Category"]
+  C -- Invalid --> G["Validation Exception: Invalid menu_id"]
+```
+
+### Feature 3: FindAll Category By Menu id
 #### Admin story
 Admin can see all Category details by menu_id.
 #### Pre-requisites:
@@ -234,20 +394,22 @@ graph TD;
   B -- Invalid --> C1["Validation Exception: Invalid input"]
   C --> D["Category_Dish Service: findCategoryByMenuId(int menu_id"]
   D --> E["Check the menu_id is in the table or not"]
-  E -- Yes --> F["Get all category_id in the menu_id"]
+  E -- Yes --> F["Category DAO:Get all categories in the menu_id"]
   E -- No --> F1["Validation Exception: menu_id not found"]
-  F --> G["Category DAO: findById(int category_id)"]
 ```
 
 ## Module 3: Dish
 #### Pre-requisites:
 - [ ] Complete Menu module Feature 1
 - [ ] Complete Category module Feature 1
+- [ ] Create Dish Table
+- [ ] Create Dish Service
+- [ ] Complete Dish DAO
 - [ ] Create Dish_Price Table
-- [ ] Create Dish_Price Service
+- [ ] Complete Dish_Price Service
 - [ ] Complete Dish_Price DAO
 - [ ] Create Category_Dishes Table
-- [ ] Create Category_Dishes Service
+- [ ] Complete Category_Dishes Service
 - [ ] Complete Category_Dishes DAO
 - [ ] Create Dish table
 - [ ] Dish Entity model (abstract class)
@@ -283,11 +445,11 @@ Admin can create Dish.
 		- quantity_unit (null or empty string)
 		- menu_id <=0
 		- category_id <=0
-		- price <=0
+		- price <0
 - [ ] Business Logic
 		- Is the menu_id is in the Menu table?
 		- Is the category_id is in the Category table?
-		- dish name alreadyExists in the same Menu & Category in 		Category_Dish table
+		- dish name alreadyExists in the same Menu & Category in Category_Dish table
 
 #### Messages
 - dish cannot be null
@@ -337,7 +499,7 @@ Admin can upate Dish details.
 		- id<=0
 		- quantity <0 && quantity >=10
 		- quantity_unit (null or empty string)
-		- price <=0
+		- price <0
 - [ ] Business Logic
 		- Is the dish_id is in the table or not?
 
@@ -484,3 +646,272 @@ graph TD;
   G --> H["dishList created"]
   H --> I["Store all dish details in the dishList"]
 ```
+
+## Module 4: Cart
+#### Pre-requisites:
+- [ ] Complete Menu module Feature 1
+- [ ] Complete Category module Feature 1
+- [ ] Complete Dish module Feature 1
+- [ ] Create cart Table
+- [ ] Complete cart Entity
+- [ ] Complete cart Service
+- [ ] Complete cart DAO
+-  Attributes
+		- int id
+		- int user_id
+		- int menu_id
+		- int category_id
+		- int price
+		- int no_of_guest
+		- LocalDate delivery_date
+		
+### Feature 1: Create Cart
+#### User story
+User can create Cart.
+#### Pre-requisites:
+- Implements Cart Service(create)
+- Implement Cart DAO(create)
+
+#### Validation
+- [ ] Form Validation
+		- cart not null
+		- user_id <= 0 check
+		- menu_id <= 0 check
+		- category_id <= 0 check
+		- no_of_guest < 50 || no_of_guest > 1500
+		- price < 0
+- [ ] Business Logic
+		- Is the user_id is in the User table?
+		- Is the menu_id is in the Menu table?
+		- Is the category_id is in the Category table?
+		- Is the menu_id and category_id already exists in the cart for that user
+
+#### Messages
+- cart cannot be null
+- user_id cannot be less than or equal to zero
+- menu_id cannot be less than or equal to zero
+- category_id cannot be less than or equal to zero
+- no_of_guest cannot be less than 50 (or) greater than 1500
+- price cannot be less than zero
+- Invalid user_id (Business Validation)
+- Invalid menu_id (Business Validation)
+- Invalid category_id (Business Validation)
+- This menu with category already exists
+
+
+
+#### Flow: 
+```mermaid
+graph TD;
+  A["Cart Service: Cart Creation"] --> B["Form validation"]
+B -- Valid --> C["Business Validation"]
+B -- Invalid --> C1["Validation Exception: Invalid input"]
+C --> C2["Check the user_id is valid or not"]
+C2 -- valid --> D["Check the menu_id is valid or not"]
+C2 -- Invalid --> C3["Validation Exception: user_id not found"]
+D -- valid --> E["Check the category_id is valid or not"]
+D -- Invalid --> E0[Validation Exception: menu_id not found""]
+E -- valid --> E1["Is the menu_id and category_id already exists for that user"]
+E -- Invalid --> D2["Validation Exception: category_id not found"]
+E1 -- Yes --> E2["This menu with category is already exists in the cart"]
+E1 -- No --> F["Cart DAO: Cart create"]
+  ```
+
+
+### Feature 2: Update Cart
+#### User story
+User can update Cart.
+#### Pre-requisites:
+- Implements Cart Service(update)
+- Implement Cart DAO(update)
+
+#### Validation
+- [ ] Form Validation
+		- cart_id <= 0
+		- no_of_guest < 50 || no_of_guest > 1500
+		- price < 0
+		- delivery_date < 7 days from today (or) > 2 months from today
+- [ ] Business Logic
+		- Is the cart_id is in the Category table?
+
+#### Messages
+- cart cannot be null
+- cart_id cannot be less than or equal to zero
+- no_of_guest cannot be less than 50 (or) greater than 1500
+- price cannot be less than zero
+- Invalid cart_id (Business Validation)
+
+#### Flow: 
+```mermaid
+graph TD;
+  A["Cart Service: Cart Update"] --> B["Form validation"]
+B -- Valid --> C["Business Validation"]
+B -- Invalid --> C1["Validation Exception: Invalid input"]
+C --> C2["Check the cart_id is valid or not"]
+C2 -- valid --> D["Cart DAO: Update Cart"]
+C2 -- Invalid --> C3["Validation Exception: cart_id not found"]
+  ```
+
+
+### Feature 3: Remove Cart
+#### User story
+User can remove Cart.
+#### Pre-requisites:
+- Implements Cart Service(remove)
+- Implement Cart DAO(remove)
+
+#### Validation
+- [ ] Form Validation
+		- cart_id <= 0
+- [ ] Business Logic
+		- Is the cart_id is in the Category table?
+
+#### Messages
+- cart_id cannot be less than or equal to zero
+- Invalid cart_id (Business Validation)
+
+#### Flow: 
+```mermaid
+graph TD;
+  A["Cart Service: Cart Remove"] --> B["Form validation"]
+B -- Valid --> C["Business Validation"]
+B -- Invalid --> C1["Validation Exception: Invalid input"]
+C --> C2["Check the cart_id is valid or not"]
+C2 -- valid --> D["Cart DAO: Remove Cart"]
+C2 -- Invalid --> C3["Validation Exception: cart_id not found"]
+  ```
+
+
+## Module 5: Order
+#### Pre-requisites:
+- [ ] Complete Menu module Feature 1
+- [ ] Complete Category module Feature 1
+- [ ] Complete Dish module Feature 1
+- [ ] Create order Table
+- [ ] Complete order  Entity
+- [ ] Complete order  Service
+- [ ] Complete order  DAO
+-  Attributes
+		- int id
+		- int user_id
+		- int address_id
+		- int total_cost
+		- LocalDateTime order_date
+		- String event_name
+
+### Feature 1: Create Order
+#### User story
+User can create Order.
+#### Pre-requisites:
+- Implements Order Service(create)
+- Implement Order DAO(create)
+
+#### Validation
+- [ ] Form Validation
+		- user_id <= 0 check
+		- address_id <= 0 check
+		- total_cost <= 0 check
+		- event-name (null or empty string)
+- [ ] Business Logic
+		- Is the user_id is in the User table?
+		- Is the address_id is in the Menu table?
+
+#### Messages
+- order cannot be null
+- user_id cannot be less than or equal to zero
+- address_id cannot be less than or equal to zero
+- total_cost cannot be less than or equal to zero
+- Invalid user_id (Business Validation)
+- Invalid address_id (Business Validation)
+
+
+#### Flow: 
+```mermaid
+graph TD;
+  A["Order Service: Order Creation"] --> B["Form validation"]
+B -- Valid --> C["Business Validation"]
+B -- Invalid --> C1["Validation Exception: Invalid input"]
+C --> C2["Check the user_id is valid or not"]
+C2 -- valid --> D["Check the address_id is valid or not"]
+C2 -- Invalid --> C3["Validation Exception: user_id not found"]
+D -- valid --> E["Order DAO: Create Order"]
+D -- Invalid --> E0[Validation Exception: address_id not found""]
+  ```
+
+
+## Module 5: OrderProduct
+#### Pre-requisites:
+- [ ] Complete Menu module Feature 1
+- [ ] Complete Category module Feature 1
+- [ ] Complete Dish module Feature 1
+- [ ] Create order_products Table
+- [ ] Complete order_products Entity
+- [ ] Complete order_products Service
+- [ ] Complete order_products DAO
+-  Attributes
+		- int id
+		- int order_id
+		- int menu_id
+		- int category_id
+		- int dish_id
+		- int price_id
+		- int no_of_guest
+		- LocalDate delivery_date
+		- String order_status
+		- String cancel_date
+		- String cancel_reason
+		- String cater_approval
+		- String reject_reason
+
+
+### Feature 1: Create Order
+#### User story
+User can create OrderProduct.
+#### Pre-requisites:
+- Implements OrderProduct Service(create)
+- Implement OrderProduct DAO(create)
+
+#### Validation
+- [ ] Form Validation
+		- order_id <= 0 check
+		- menu_id <=0 check
+		- category_id <=0 check
+		- dish_id <= 0 check
+		- price_id <= 0 check
+		- no_of_guest <= 0 check
+		- delivery_date < 7 days from today (or) > 2 months from today
+- [ ] Business Logic
+		- Is the order_id is in the Order table?
+		- Is the menu_id is in the Menu table?
+		- Is the category_id is in the Category table?
+		- Is the dish_id is in the Dish table?
+		- Is the price_id is in the DishPrice table?
+
+#### Messages
+- orderProduct cannot be null
+- order_id cannot be less than or equal to zero
+- menu_id cannot be less than or equal to zero
+- category_id cannot be less than or equal to zero
+- dish_id cannot be less than or equal to zero
+- price_id cannot be less than or equal to zero
+- no_of_guest cannot be less than or equal to zero
+- delivery_date cannot be less than 7 days from today or more than 2 months from today
+- Invalid order_id (Business Validation)
+- Invalid menu_id (Business Validation)
+- Invalid category_id (Business Validation)
+- Invalid dish_id (Business Validation)
+- Invalid price_id (Business Validation)
+
+
+#### Flow: 
+```mermaid
+graph TD;
+  A["Order Service: Order Creation"] --> B["Form validation"]
+B -- Valid --> C["Business Validation"]
+B -- Invalid --> C1["Validation Exception: Invalid input"]
+C --> C2["Check the user_id is valid or not"]
+C2 -- valid --> D["Check the address_id is valid or not"]
+C2 -- Invalid --> C3["Validation Exception: user_id not found"]
+D -- valid --> E["Order DAO: Create Order"]
+D -- Invalid --> E0[Validation Exception: address_id not found""]
+  ```
