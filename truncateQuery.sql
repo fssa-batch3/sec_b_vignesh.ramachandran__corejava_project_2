@@ -1,7 +1,7 @@
 SET foreign_key_checks = 0;
 
 -- TRUNCATE TABLE users; 
--- TRUNCATE TABLE address_book;
+TRUNCATE TABLE address_book;
 -- TRUNCATE TABLE menus;
 -- TRUNCATE TABLE categories;
 -- TRUNCATE TABLE category_images;

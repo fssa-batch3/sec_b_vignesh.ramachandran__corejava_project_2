@@ -13,7 +13,6 @@ import in.fssa.srcatering.interfaces.UserInterface;
 import in.fssa.srcatering.model.User;
 import in.fssa.srcatering.util.ConnectionUtil;
 import in.fssa.srcatering.util.Logger;
-import in.fssa.srcatering.util.PasswordUtil;
 
 public class UserDAO implements UserInterface {
 	

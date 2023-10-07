@@ -1,8 +1,8 @@
 INSERT INTO users (name, email, phone_number, password)
-VALUES ("Vignesh", "vignesh@gmail.com", 9876543210, "BTs4KUJtUms="),
-("Varun", "srvarun@gmail.com", "9878685848", "BTMtKUJtUms="),
-("Boobalan", "boobalan@gmail.com",9787675747, "ET09KUJtUms="),
-("Maruthan", "maruthan@gmail.com", 9686765646, "HjMtKUJtUms=");
+VALUES ("Vignesh", "vignesh@gmail.com", 9876543210, "$rrAeMbynYS8DAnb8Ebjqog==$ebbf204b43c1f3e55e26f367e8f964c87186586ee74d53b574962dc8dfdd681a"),
+("Varun", "srvarun@gmail.com", "9878685848", "$pu1ozzMnY88YCnlMSBc7MQ==$5fefeea89d947ecf803a84dda320c20ea1e7ea931f7a772bef14f7a024b52846"),
+("Boobalan", "boobalan@gmail.com",9787675747, "$nx9sGiy9Ci7khCuQaMyIYg==$00133df9f20d909c06343ec422172b73546d705076816bcd62244b46fb590053"),
+("Maruthan", "maruthan@gmail.com", 9686765646, "$axK+5rjZ4H3gsQbkNvvdhw==$62a5a1242646a0d8b79e2294d34453783826ef98e194d271f2c9d16062e41587");
 
 -- findall users
 SELECT * FROM users;
