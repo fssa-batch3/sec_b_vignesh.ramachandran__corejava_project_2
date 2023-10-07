@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.AddressBook;
-import in.fssa.srcatering.model.Cart;
 import in.fssa.srcatering.service.AddressBookService;
-import in.fssa.srcatering.service.CartService;
 
 public class TestAddressBook {
 	

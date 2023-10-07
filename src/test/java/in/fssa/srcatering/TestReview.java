@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Review;
 import in.fssa.srcatering.service.ReviewService;
-import in.fssa.srcatering.service.UserService;
 
 public class TestReview {
 	

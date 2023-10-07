@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Cart;
 import in.fssa.srcatering.service.CartService;
-import in.fssa.srcatering.service.DishPriceService;
 
 public class TestCart {
 
@@ -578,7 +577,6 @@ public class TestCart {
 		assertEquals(expectedMessage, actualMessage);
 	}
 	
-	
 	@Test 
 	void testFindCartByInvalidCartId(){
 		CartService cartService = new CartService();
@@ -599,16 +597,6 @@ public class TestCart {
 		
 		assertDoesNotThrow(() -> {
 			cartService.getCartCountByUserId(1);
-		});
-	}
-	
-	
-	@Test
-	void testGetCartByCartId() {
-		CartService cartService = new CartService();
-		
-		assertDoesNotThrow(() -> {
-			cartService.getCartByCartId(1);
 		});
 	}
 

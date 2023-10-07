@@ -1,14 +1,9 @@
 package in.fssa.srcatering.util;
 
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-
-import in.fssa.srcatering.exception.DAOException;
 
 public class PasswordUtil {
 	

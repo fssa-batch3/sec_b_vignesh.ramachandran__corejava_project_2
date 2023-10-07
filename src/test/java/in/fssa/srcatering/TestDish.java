@@ -10,7 +10,6 @@ import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.Dish;
 import in.fssa.srcatering.model.QuantityUnit;
 import in.fssa.srcatering.service.CategoryDishService;
-import in.fssa.srcatering.service.DishPriceService;
 import in.fssa.srcatering.service.DishService;
 
  class TestDish {

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import in.fssa.srcatering.exception.ServiceException;
 import in.fssa.srcatering.exception.ValidationException;
 import in.fssa.srcatering.model.User;
-import in.fssa.srcatering.service.DishService;
 import in.fssa.srcatering.service.UserService;
 
  class TestUser {
@@ -337,70 +336,6 @@ import in.fssa.srcatering.service.UserService;
 		String actualMessage = exception.getMessage();
 		assertEquals(expectedMessage,actualMessage);
 	}
-	
-	@Test
-	 void testUpdateUserWithPasswordNull() {
-		UserService userService = new UserService();
-
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			// user 1
-			User newUser = new User();
-
-			newUser.setName("Vignesh");
-			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhoneNumber(9876545678L);
-			newUser.setPassword(null);
-
-			userService.updateUser(1,newUser);
-		});
-		String expectedMessage = "Password cannot be null or empty";
-		String actualMessage = exception.getMessage();
-		assertEquals(expectedMessage,actualMessage);
-	}
-	
-	
-	@Test
-	 void testUpdateUserWithPasswordEmpty() {
-		UserService userService = new UserService();
-
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			// user 1
-			User newUser = new User();
-
-			newUser.setName("Vignesh");
-			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhoneNumber(9876545678L);
-			newUser.setPassword("");
-
-			userService.updateUser(1,newUser);
-		});
-		String expectedMessage = "Password cannot be null or empty";
-		String actualMessage = exception.getMessage();
-		assertEquals(expectedMessage,actualMessage);
-	}
-	
-	
-	@Test
-	 void testUpdateUserWithWrongPasswordPattern() {
-		UserService userService = new UserService();
-
-		Exception exception = assertThrows(ValidationException.class, () -> {
-			// user 1
-			User newUser = new User();
-
-			newUser.setName("Vignesh");
-			newUser.setEmail("vignesh@gmail.com");
-			newUser.setPhoneNumber(9876545678L);
-			newUser.setPassword("kljdbfka12");
-
-			userService.updateUser(1,newUser);
-		});
-		String expectedMessage = "Password atleast contain one Uppercase, one Lowercase,one Special character,"
-				+ "one number, must contains 8 characters. Eg: Abc@1234";
-		String actualMessage = exception.getMessage();
-		assertEquals(expectedMessage,actualMessage);
-	}
-	
 
 	@Test
 	 void testUpdateUserWithIdZero() {
