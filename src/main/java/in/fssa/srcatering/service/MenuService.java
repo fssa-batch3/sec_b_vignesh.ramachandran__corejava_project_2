@@ -37,8 +37,9 @@ public class MenuService {
 	}
 	
 	/**
+	 * Retrieve a set of all available menus.
 	 * 
-	 * @return
+	 * @return A Set of Menu objects representing all available menus.
 	 * @throws ServiceException
 	 */
 	public Set<Menu> getAllMenus() throws ServiceException{
@@ -135,8 +136,9 @@ public class MenuService {
 	}
 	
 	/**
+	 * Retrieves a list of all menu names from the database.
 	 * 
-	 * @return
+	 * @return A List of String objects containing all menu names.
 	 * @throws ServiceException
 	 */
 	public List<String> getAllMenuNames() throws ServiceException {

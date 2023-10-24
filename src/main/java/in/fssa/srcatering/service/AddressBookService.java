@@ -16,10 +16,11 @@ public class AddressBookService {
 	AddressBookDAO addressBookDAO = new AddressBookDAO();
 
 	/**
-	 * 
-	 * @param addressBook
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Create a new address book entry in the database or update an existing entry if it exists. Checks and handles address existence and status based on the provided address details.
+	 *
+	 * @param addressBook The address details to be created or updated.
+	 * @throws ValidationException If the address details are invalid.
+	 * @throws ServiceException If a service error occurs during address creation or update.
 	 */
 	public void createAddress(AddressBook addressBook) throws ValidationException, ServiceException {
 
@@ -49,10 +50,11 @@ public class AddressBookService {
 	}
 
 	/**
-	 * 
-	 * @param addressBook
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Update an address book entry in the database. Handles existing address status and 'set as default' functionality based on the provided address details.
+	 *
+	 * @param addressBook The address details to be updated.
+	 * @throws ValidationException If the address details are invalid.
+	 * @throws ServiceException If a service error occurs during address update.
 	 */
 	public void updateAddress(AddressBook addressBook) throws ValidationException, ServiceException {
 
@@ -91,10 +93,11 @@ public class AddressBookService {
 	}
 
 	/**
-	 * 
-	 * @param addressId
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Set the status of an address book entry to true (active) in the database.
+	 *
+	 * @param addressId The ID of the address to update its status.
+	 * @throws ValidationException If the provided address ID is invalid.
+	 * @throws ServiceException If a service error occurs during status update.
 	 */
 	public void setStatusTrue(int addressId) throws ValidationException, ServiceException {
 
@@ -108,10 +111,11 @@ public class AddressBookService {
 	}
 
 	/**
-	 * 
-	 * @param addressId
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Set the status of an address book entry to false (inactive) in the database.
+	 *
+	 * @param addressId The ID of the address to update its status.
+	 * @throws ValidationException If the provided address ID is invalid.
+	 * @throws ServiceException If a service error occurs during status update.
 	 */
 	public void setStatusFalse(int addressId) throws ValidationException, ServiceException {
 
@@ -125,10 +129,11 @@ public class AddressBookService {
 	}
 
 	/**
-	 * 
-	 * @param addressId
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Set an address book entry as the default address in the database.
+	 *
+	 * @param addressId The ID of the address to set as default.
+	 * @throws ValidationException If the provided address ID is invalid.
+	 * @throws ServiceException If a service error occurs during the default address update.
 	 */
 	public void setAsDefaultTrue(int addressId) throws ValidationException, ServiceException {
 
@@ -142,10 +147,11 @@ public class AddressBookService {
 	}
 
 	/**
-	 * 
-	 * @param addressId
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Unset an address book entry as the default address in the database.
+	 *
+	 * @param addressId The ID of the address to unset as default.
+	 * @throws ValidationException If the provided address ID is invalid.
+	 * @throws ServiceException If a service error occurs during the default address update.
 	 */
 	public void setAsDefaultFalse(int addressId) throws ValidationException, ServiceException {
 
@@ -159,10 +165,11 @@ public class AddressBookService {
 	}
 
 	/**
-	 * 
-	 * @param addressId
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Set an address book entry as selected (active) in the database.
+	 *
+	 * @param addressId The ID of the address to set as selected.
+	 * @throws ValidationException If the provided address ID is invalid.
+	 * @throws ServiceException If a service error occurs during the selected address update.
 	 */
 	public void setSelectedTrue(int addressId) throws ValidationException, ServiceException {
 
@@ -176,10 +183,11 @@ public class AddressBookService {
 	}
 
 	/**
-	 * 
-	 * @param addressId
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Unset an address book entry as selected (inactive) in the database.
+	 *
+	 * @param addressId The ID of the address to unset as selected.
+	 * @throws ValidationException If the provided address ID is invalid.
+	 * @throws ServiceException If a service error occurs during the selected address update.
 	 */
 	public void setSelectedFalse(int addressId) throws ValidationException, ServiceException {
 
@@ -193,10 +201,12 @@ public class AddressBookService {
 	}
 
 	/**
-	 * 
-	 * @param addressId
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Get an address book entry by its ID from the database.
+	 *
+	 * @param addressId The ID of the address to retrieve.
+	 * @return The address book entry with the provided ID, or null if not found.
+	 * @throws ValidationException If the provided address ID is invalid.
+	 * @throws ServiceException If a service error occurs during address retrieval.
 	 */
 	public AddressBook getAddressByAddressId(int addressId) throws ValidationException, ServiceException {
 
@@ -212,10 +222,12 @@ public class AddressBookService {
 	}
 
 	/**
-	 * 
-	 * @param userId
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Get all address book entries associated with a specific user from the database.
+	 *
+	 * @param userId The ID of the user to retrieve addresses for.
+	 * @return A list of address book entries associated with the user.
+	 * @throws ValidationException If the provided user ID is invalid.
+	 * @throws ServiceException If a service error occurs during address retrieval.
 	 */
 	public List<AddressBook> getAllAddressesByUserId(int userId) throws ValidationException, ServiceException {
 
@@ -231,10 +243,12 @@ public class AddressBookService {
 	}
 
 	/**
-	 * 
-	 * @return
-	 * @throws ServiceException
-	 * @throws  
+	 * Get the default address associated with a specific user from the database.
+	 *
+	 * @param userId The ID of the user to retrieve the default address for.
+	 * @return The default address associated with the user, or null if not found.
+	 * @throws ValidationException If the provided user ID is invalid.
+	 * @throws ServiceException If a service error occurs during address retrieval.
 	 */
 	public AddressBook getDefaultAddressByUserId(int userId) throws ValidationException, ServiceException {
 

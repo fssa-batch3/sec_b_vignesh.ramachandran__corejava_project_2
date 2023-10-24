@@ -5,7 +5,7 @@ public abstract class CategoryEntity implements Comparable<CategoryEntity> {
 	private int id;
 	private String categoryName;
 	private String image;
-	private int menu_id;
+	private int menuId;
 
 	public int getId() {
 		return id;
@@ -31,18 +31,18 @@ public abstract class CategoryEntity implements Comparable<CategoryEntity> {
 		this.image = image;
 	}
 
-	public int getMenu_id() {
-		return menu_id;
+	public int getMenuId() {
+		return menuId;
 	}
 
-	public void setMenu_id(int menu_id) {
-		this.menu_id = menu_id;
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
 	}
 
 	@Override
 	public String toString() {
 		return "CategoryEntity [id=" + id + ", categoryName=" + categoryName + ", image=" + image + ", menu_id="
-				+ menu_id + "]";
+				+ menuId + "]";
 	}
 
 }

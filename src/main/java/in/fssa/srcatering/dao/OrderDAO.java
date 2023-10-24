@@ -16,6 +16,13 @@ import in.fssa.srcatering.util.Logger;
 
 public class OrderDAO {
 	
+	/**
+	 * Create a new order entry in the database.
+	 *
+	 * @param order The Order object representing the order to be created.
+	 * @return The ID of the newly created order.
+	 * @throws DAOException If a database error occurs during the creation.
+	 */
 	public int create(Order order) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -56,9 +63,10 @@ public class OrderDAO {
 	
 	
 	/**
-	 * 
-	 * @param orderId
-	 * @throws DAOException
+	 * Check if an order with the specified order ID exists in the database.
+	 *
+	 * @param orderId The ID of the order to check.
+	 * @throws DAOException If there's an issue with the database operation or if the order ID is not found.
 	 */
 	public void isOrderIdIsValid(int orderId) throws DAOException {
 		Connection con = null;
@@ -86,10 +94,11 @@ public class OrderDAO {
 	}
 	
 	/**
-	 * 
-	 * @param userId
-	 * @return
-	 * @throws DAOException
+	 * Retrieve a list of all orders associated with a specific user.
+	 *
+	 * @param userId The ID of the user to filter orders.
+	 * @return A List of Order objects representing all orders of the specified user.
+	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
 	public List<Order> findAllOrdersByUserId(int userId) throws DAOException{
 		Connection con = null;
@@ -134,10 +143,11 @@ public class OrderDAO {
 	
 
 	/**
-	 * 
-	 * @param orderId
-	 * @return
-	 * @throws DAOException
+	 * Retrieve an order by its order ID.
+	 *
+	 * @param orderId The ID of the order to retrieve.
+	 * @return The Order object representing the requested order.
+	 * @throws DAOException If a database error occurs during the retrieval or if the order ID is not found.
 	 */
 	public Order findOrderByOrderId(int orderId) throws DAOException {
 		Connection con = null;
@@ -178,9 +188,10 @@ public class OrderDAO {
 	}
 	
 	/**
-	 * 
-	 * @return
-	 * @throws DAOException
+	 * Retrieve a list of all orders in the database.
+	 *
+	 * @return A List of Order objects representing all orders in the database.
+	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
 	public List<Order> findAllOrders() throws DAOException{
 		Connection con = null;
@@ -223,7 +234,4 @@ public class OrderDAO {
 		
 	}
 	
-
-	
-
 }

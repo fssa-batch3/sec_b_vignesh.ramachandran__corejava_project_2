@@ -58,6 +58,12 @@ public class MenuDAO {
 		return menuList;
 	}
 
+	/**
+	 * Retrieve a set of all available menus.
+	 *
+	 * @return A Set of Menu objects representing all available menus.
+	 * @throws DAOException If a database error occurs during the retrieval.
+	 */
 	public Set<Menu> findAllMenus() throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -252,7 +258,6 @@ public class MenuDAO {
 			ConnectionUtil.close(con, ps, rs);
 		}
 		return menuNames;
-
 	}
 
 }

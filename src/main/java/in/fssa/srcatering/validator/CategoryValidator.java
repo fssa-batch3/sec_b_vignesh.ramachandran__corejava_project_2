@@ -24,12 +24,12 @@ public class CategoryValidator {
 			throw new ValidationException("Invalid Category Input");
 		}
 
-		MenuValidator.isMenuIdIsValid(category.getMenu_id());
+		MenuValidator.isMenuIdIsValid(category.getMenuId());
 		
 		StringUtil.rejectIfInvalidString(category.getImage(), "CategoryImage");
 		MenuValidator.validateImage(category.getImage());
 
-		isCategoryNameAlreadyExistsForThatMenu(category.getCategoryName(), category.getMenu_id());
+		isCategoryNameAlreadyExistsForThatMenu(category.getCategoryName(), category.getMenuId());
 	} 
 
 	/**

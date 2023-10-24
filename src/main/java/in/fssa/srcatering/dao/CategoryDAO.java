@@ -19,9 +19,10 @@ public class CategoryDAO {
 	private static final String CATEGORYNAME = "category_name";
 
 	/**
-	 * 
-	 * @return
-	 * @throws DAOException
+	 * Retrieve a list of all categories from the category table.
+	 *
+	 * @return A Set of Category objects representing all categories.
+	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
 	public Set<Category> findAllCategories() throws DAOException {
 
@@ -43,7 +44,7 @@ public class CategoryDAO {
 				category.setCategoryName(rs.getString("category_name"));
 				category.setId(rs.getInt("id"));
 				category.setImage(rs.getString("image"));
-				category.setMenu_id(rs.getInt("menu_id"));
+				category.setMenuId(rs.getInt("menu_id"));
 				categoryList.add(category);
 			}
 
@@ -57,10 +58,11 @@ public class CategoryDAO {
 	}
 
 	/**
-	 * 
-	 * @param menuId
-	 * @return
-	 * @throws DAOException
+	 * Retrieve a list of categories by a given menu ID.
+	 *
+	 * @param menuId The ID of the menu to filter categories.
+	 * @return A Set of Category objects representing categories for the specified menu.
+	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
 	public Set<Category> findCategoriesByMenuId(int menuId) throws DAOException {
 		Connection con = null;
@@ -83,7 +85,7 @@ public class CategoryDAO {
 				category.setCategoryName(rs.getString(CATEGORYNAME));
 				category.setId(rs.getInt("id"));
 				category.setImage(rs.getString("image"));
-				category.setMenu_id(rs.getInt("menu_id"));
+				category.setMenuId(rs.getInt("menu_id"));
 				categoryList.add(category);
 			}
 
@@ -97,10 +99,11 @@ public class CategoryDAO {
 	}
 	
 	/**
-	 * 
-	 * @param menuId
-	 * @return
-	 * @throws DAOException
+	 * Retrieve a list of active categories by menu ID.
+	 *
+	 * @param menuId The ID of the menu to filter categories.
+	 * @return A Set of Category objects representing active categories for the specified menu.
+	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
 	public Set<Category> findAllActiveCategoriesByMenuId(int menuId) throws DAOException{
 		Connection con = null;
@@ -124,7 +127,7 @@ public class CategoryDAO {
 				category.setId(rs.getInt("id"));
 				category.setCategoryName(rs.getString("category_name"));
 				category.setImage(rs.getString("image"));
-				category.setMenu_id(rs.getInt("menu_id"));
+				category.setMenuId(rs.getInt("menu_id"));
 				categoryList.add(category);
 			}
 			
@@ -139,9 +142,10 @@ public class CategoryDAO {
 	
 	
 	/**
-	 * Retrieves a list of all category names from the database.
+	 * Retrieve a set of category names by menu ID.
 	 *
-	 * @return A List of String objects containing all category names.
+	 * @param menuId The ID of the menu to filter category names.
+	 * @return A Set of Strings containing category names for the specified menu.
 	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
 	public Set<String> findAllCategoryNamesByMenuId(int menu_id) throws DAOException {
@@ -176,11 +180,12 @@ public class CategoryDAO {
 	}
 
 	/**
-	 * 
-	 * @param menu_id
-	 * @param category_id
-	 * @return
-	 * @throws DAOException
+	 * Retrieve a category by its menu ID and category ID.
+	 *
+	 * @param menu_id The ID of the menu.
+	 * @param category_id The ID of the category.
+	 * @return A Category object representing the category with the specified menu and category ID.
+	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
 	public Category findCategoryByMenuIdAndCategoryId(int menu_id, int category_id) throws DAOException {
 		Connection con = null;
@@ -205,7 +210,7 @@ public class CategoryDAO {
 				category.setCategoryName(rs.getString(CATEGORYNAME));
 				category.setId(rs.getInt("id"));
 				category.setImage(rs.getString("image"));
-				category.setMenu_id(rs.getInt("menu_id"));
+				category.setMenuId(rs.getInt("menu_id"));
 			}
 
 		} catch (SQLException e) {
@@ -219,10 +224,11 @@ public class CategoryDAO {
 	}
 
 	/**
-	 * 
-	 * @param categoryName
-	 * @return
-	 * @throws DAOException
+	 * Retrieve the ID of a category by its name.
+	 *
+	 * @param categoryName The name of the category.
+	 * @return The ID of the category with the specified name.
+	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
 	public int findCategoryIdByCategoryName(String categoryName) throws DAOException {
 		Connection con = null;
@@ -252,11 +258,11 @@ public class CategoryDAO {
 	}
 
 	/**
-	 * Checks whether a category with the specified ID exists in the database.
+	 * Check if a category with a specific ID exists for a given menu.
 	 *
+	 * @param menuId The ID of the menu.
 	 * @param categoryId The ID of the category to check.
-	 * @throws DAOException If there's an issue with the database operation or if
-	 *                      the category ID is not found.
+	 * @throws DAOException If the category ID is not found for the menu or if there's a database error.
 	 */
 	public void isCategoryIdExistsForThatMenu(int menuId, int categoryId) throws DAOException {
 
@@ -285,7 +291,12 @@ public class CategoryDAO {
 		}
 	}
 	
-	
+	/**
+	 * Check if a category with a specific ID is valid.
+	 *
+	 * @param categoryId The ID of the category to check.
+	 * @throws DAOException If the category ID is not found or if there's a database error.
+	 */
 	public void isCategoryIdIsValid(int categoryId) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -312,10 +323,11 @@ public class CategoryDAO {
 	}
 
 	/**
-	 * 
-	 * @param category
-	 * @return
-	 * @throws DAOException
+	 * Create a new category in the database.
+	 *
+	 * @param category The Category object to be created.
+	 * @return The generated ID of the newly created category.
+	 * @throws DAOException If a database error occurs during the creation.
 	 */
 	public int createCategory(Category category) throws DAOException {
 		Connection con = null;
@@ -346,11 +358,12 @@ public class CategoryDAO {
 	}
 	
 	/**
-	 * 
-	 * @param menuId
-	 * @param categoryId
-	 * @return
-	 * @throws DAOException
+	 * Retrieve the total price of dishes in a category by menu ID and category ID.
+	 *
+	 * @param menuId The ID of the menu.
+	 * @param categoryId The ID of the category.
+	 * @return The total price of dishes in the specified category and menu.
+	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
 	public int getTotalPriceOfTheCategoryByMenuIdAndCategoryId(int menuId, int categoryId) throws DAOException {
 		Connection con = null;

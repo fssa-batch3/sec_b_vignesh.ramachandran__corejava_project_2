@@ -50,7 +50,7 @@ class TestCategory {
 			Category category = new Category();
 			category.setCategoryName(null);
 			category.setImage("https://iili.io/HWh0ZrB.jpg");
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			
 			categoryService.createCategory(category);
 		});
@@ -68,7 +68,7 @@ class TestCategory {
 			Category category = new Category();
 			category.setCategoryName("");
 			category.setImage("https://iili.io/HWh0ZrB.jpg");
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			
 			categoryService.createCategory(category);
 		});
@@ -86,7 +86,7 @@ class TestCategory {
 			Category category = new Category();
 			category.setCategoryName("Ordinary");
 			category.setImage("https://iili.io/HWh0ZrB.jpg");
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			
 			categoryService.createCategory(category);
 		});
@@ -104,7 +104,7 @@ class TestCategory {
 			Category category = new Category();
 			category.setCategoryName("Ultra");
 			category.setImage(null);
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			
 			categoryService.createCategory(category);
 		});
@@ -122,7 +122,7 @@ class TestCategory {
 			Category category = new Category();
 			category.setCategoryName("Ultra");
 			category.setImage(""); 
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			
 			categoryService.createCategory(category);
 		});
@@ -141,7 +141,7 @@ class TestCategory {
 			Category category = new Category();
 			category.setCategoryName("Ultra");
 			category.setImage("httlskd2345");
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			
 			categoryService.createCategory(category);
 		});
@@ -160,7 +160,7 @@ class TestCategory {
 			Category category = new Category();
 			category.setCategoryName("Ultra");
 			category.setImage("https://iili.io/HWh0ZrB.jpg");
-			category.setMenu_id(0);
+			category.setMenuId(0);
 			
 			categoryService.createCategory(category);
 		});
@@ -178,7 +178,7 @@ class TestCategory {
 			Category category = new Category();
 			category.setCategoryName("Ultra");
 			category.setImage("https://iili.io/HWh0ZrB.jpg");
-			category.setMenu_id(-2);
+			category.setMenuId(-2);
 			
 			categoryService.createCategory(category);
 		});
@@ -196,7 +196,7 @@ class TestCategory {
 			Category category = new Category();
 			category.setCategoryName("Ultra");
 			category.setImage("https://iili.io/HWh0ZrB.jpg");
-			category.setMenu_id(20);
+			category.setMenuId(20);
 			
 			categoryService.createCategory(category);
 		});
@@ -214,10 +214,10 @@ class TestCategory {
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Category category = new Category();
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			category.setId(1);
 			category.setCategoryName("Ordinary");
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			category.setImage(null);
 			
 			categoryService.updateCategory(category);
@@ -235,10 +235,10 @@ class TestCategory {
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Category category = new Category();
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			category.setId(1);
 			category.setCategoryName("Ordinary");
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			category.setImage("");
 			
 			categoryService.updateCategory(category);
@@ -256,10 +256,10 @@ class TestCategory {
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Category category = new Category();
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			category.setId(1);
 			category.setCategoryName("Ordinary");
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			category.setImage("httlskd2345");
 			
 			categoryService.updateCategory(category);
@@ -277,10 +277,10 @@ class TestCategory {
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Category category = new Category();
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			category.setId(1);
 			category.setCategoryName("Ordinary");
-			category.setMenu_id(0);
+			category.setMenuId(0);
 			category.setImage("https://iili.io/HWh0ZrB.jpg");
 			
 			categoryService.updateCategory(category);
@@ -298,10 +298,10 @@ class TestCategory {
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Category category = new Category();
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			category.setId(1);
 			category.setCategoryName("Ordinary");
-			category.setMenu_id(-1);
+			category.setMenuId(-1);
 			category.setImage("https://iili.io/HWh0ZrB.jpg");
 			
 			categoryService.updateCategory(category);
@@ -319,10 +319,10 @@ class TestCategory {
 		
 		Exception exception = assertThrows(ValidationException.class, () -> {
 			Category category = new Category();
-			category.setMenu_id(1);
+			category.setMenuId(1);
 			category.setId(1);
 			category.setCategoryName("Ordinary");
-			category.setMenu_id(20);
+			category.setMenuId(20);
 			category.setImage("https://iili.io/HWh0ZrB.jpg");
 			
 			categoryService.updateCategory(category);

@@ -323,10 +323,42 @@ public class UserDAO implements UserInterface {
 	}
 	
 	/**
-	 * 
-	 * @param email
-	 * @param password
-	 * @throws DAOException
+	 * Check if a user with the given phone number already exists in the database.
+	 *
+	 * @param phoneNumber The phone number to be checked for existence.
+	 * @throws DAOException If a database error occurs during the check or if a user with the given phone number already exists.
+	 */
+	public void isPhoneNumberAlreadyExists(long phoneNumber) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			String query = "SELECT phone_number FROM users WHERE phone_number = ?";
+			con = ConnectionUtil.getConnection();
+			ps = con.prepareStatement(query);
+
+			ps.setLong(1, phoneNumber);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				throw new DAOException("PhoneNumber already exists");
+			}
+
+		} catch (SQLException e) {
+			Logger.error(e);
+			throw new DAOException(e.getMessage());
+		} finally {
+			ConnectionUtil.close(con, ps, rs);
+		}
+	}
+	
+	/**
+	 * Verify a user's login credentials by comparing the provided password with the password associated with the given email.
+	 *
+	 * @param email The user's email for which the password needs to be checked.
+	 * @param password The password to be verified.
+	 * @throws DAOException If a database error occurs during the password verification or if the login credentials are invalid.
 	 */
 	public void passwordChecker(String email, String password) throws DAOException {
 		Connection con = null;

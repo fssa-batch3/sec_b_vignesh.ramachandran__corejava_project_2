@@ -108,11 +108,12 @@ public class DishPriceService {
 	}
 	
 	/**
-	 * 
-	 * @param dishId
-	 * @return
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Find the price ID associated with a specific dish ID.
+	 *
+	 * @param dishId The ID of the dish for which to find the price ID.
+	 * @return The price ID associated with the specified dish.
+	 * @throws ValidationException If the provided dish ID is invalid.
+	 * @throws ServiceException If a service error occurs during the retrieval process.
 	 */
 	public int findPriceIdByDishId(int dishId) throws ValidationException, ServiceException {
 		
@@ -140,12 +141,13 @@ public class DishPriceService {
 	}
 
 	/**
-	 * 
-	 * @param menuId
-	 * @param categoryId
-	 * @return
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Get a list of price IDs associated with a specific menu and category combination.
+	 *
+	 * @param menuId The ID of the menu.
+	 * @param categoryId The ID of the category.
+	 * @return A list of price IDs for the specified menu and category.
+	 * @throws ValidationException If the provided menu ID or category ID is invalid.
+	 * @throws ServiceException If a service error occurs during the retrieval process.
 	 */
 	public List<Integer> getAllPriceIdsByMenuIdAndCategoryId(int menuId, int categoryId) throws ValidationException, ServiceException {
 
@@ -164,11 +166,12 @@ public class DishPriceService {
 	}
 
 	/**
-	 * 
-	 * @param priceIds
-	 * @return
-	 * @throws ServiceException 
-	 * @throws  
+	 * Calculate the total price based on a list of price IDs.
+	 *
+	 * @param priceIds A list of price IDs for which to calculate the total price.
+	 * @return The total price calculated from the provided price IDs.
+	 * @throws ValidationException If any of the provided price IDs is invalid.
+	 * @throws ServiceException If a service error occurs during the calculation.
 	 */
 	public int getTotalPriceByPriceId(List<Integer> priceIds) throws ValidationException, ServiceException  {
 		

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
 
-public class OrderProduct extends OrderProductEntity {
+public class OrderProduct extends OrderProductEntity{
 
 	
 

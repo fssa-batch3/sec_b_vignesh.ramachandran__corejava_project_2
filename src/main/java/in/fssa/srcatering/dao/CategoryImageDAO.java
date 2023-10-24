@@ -11,11 +11,12 @@ import in.fssa.srcatering.util.Logger;
 public class CategoryImageDAO {
 
 	/**
-	 * 
-	 * @param menu_id
-	 * @param category_id
-	 * @param image
-	 * @throws DAOException
+	 * Create a new category image entry in the database for a specific menu and category.
+	 *
+	 * @param menu_id The ID of the menu to associate the image with.
+	 * @param category_id The ID of the category to associate the image with.
+	 * @param image The image URL or path to be stored.
+	 * @throws DAOException If a database error occurs during the creation.
 	 */
 	public void createCategoryImage(int menu_id, int category_id, String image) throws DAOException {
 		Connection con = null;
@@ -41,11 +42,12 @@ public class CategoryImageDAO {
 	}
 
 	/**
-	 * 
-	 * @param menu_id
-	 * @param category_id
-	 * @param image
-	 * @throws DAOException
+	 * Update the image URL for an existing category image entry in the database.
+	 *
+	 * @param menu_id The ID of the menu associated with the category image.
+	 * @param category_id The ID of the category associated with the image.
+	 * @param image The updated image URL or path.
+	 * @throws DAOException If a database error occurs during the update.
 	 */
 	public void updateCategoryImage(int menu_id, int category_id, String image) throws DAOException {
 		Connection con = null;

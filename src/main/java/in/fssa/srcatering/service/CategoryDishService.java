@@ -104,12 +104,13 @@ public class CategoryDishService {
 	}
 	
 	/**
-	 * 
-	 * @param menuId
-	 * @param categoryId
-	 * @return
-	 * @throws ServiceException
-	 * @throws ValidationException
+	 * Retrieve a map of dish IDs and their corresponding price IDs for a specific menu and category from the database.
+	 *
+	 * @param menuId The ID of the menu for which to retrieve dish IDs and price IDs.
+	 * @param categoryId The ID of the category within the menu for which to retrieve dish IDs and price IDs.
+	 * @return A map where keys are dish IDs, and values are their corresponding price IDs.
+	 * @throws ValidationException If the provided menu ID or category ID is invalid.
+	 * @throws ServiceException If a service error occurs during data retrieval.
 	 */
 	public Map<Integer, Integer> getDishIdAndPriceIdByMenuIdAndCategoryId(int menuId, int categoryId) throws ServiceException, ValidationException{
 		
@@ -148,9 +149,17 @@ public class CategoryDishService {
  
 	}
 	
-	
+	/**
+	 * Update the status of a dish within a specific menu and category.
+	 *
+	 * @param menuId The ID of the menu containing the dish to update.
+	 * @param categoryId The ID of the category within the menu containing the dish.
+	 * @param dishId The ID of the dish to update.
+	 * @param status The new status to set for the dish (0 for inactive, 1 for active).
+	 * @throws ValidationException If the provided menu ID, category ID, dish ID, or status is invalid.
+	 * @throws ServiceException If a service error occurs during the update process.
+	 */
 	public void updateCategoryDish(int menuId, int categoryId, int dishId, int status) throws ValidationException, ServiceException {
-		
 		
 		try {
 			MenuValidator.isMenuIdIsValid(menuId);
@@ -201,7 +210,6 @@ public class CategoryDishService {
      * @throws ServiceException    If there's an issue with the service operation.
      */
 	public void changeCategoryDishStatus(int menuId, int categoryId, int dishId) throws ValidationException, ServiceException {
-		
 		
 		try {
 			IntUtil.rejectIfInvalidInt(menuId, "Menu Id");

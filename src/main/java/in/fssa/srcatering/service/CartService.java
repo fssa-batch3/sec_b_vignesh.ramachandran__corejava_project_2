@@ -18,10 +18,11 @@ public class CartService {
 	CartDAO addtoCartDAO = new CartDAO();
 
 	/**
-	 * 
-	 * @param cart
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Create a new cart entry or update an existing one in the database. Validates the cart data, calculates the total price, and sets a delivery date.
+	 *
+	 * @param cart The cart data to be created or updated.
+	 * @throws ValidationException If the cart data is invalid.
+	 * @throws ServiceException If a service error occurs during cart creation or update.
 	 */
 	public void createAddtoCart(Cart cart) throws ValidationException, ServiceException {
 
@@ -52,11 +53,13 @@ public class CartService {
 	}
 
 	/**
-	 * 
-	 * @param noOfGuest
-	 * @param cartId
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Update an existing cart entry in the database with new guest count and delivery date.
+	 *
+	 * @param noOfGuest The number of guests for the cart.
+	 * @param deliveryDate The delivery date for the cart.
+	 * @param cartId The ID of the cart to update.
+	 * @throws ValidationException If the provided data is invalid or the cart ID is invalid.
+	 * @throws ServiceException If a service error occurs during cart update.
 	 */
 	public void updateCart(int noOfGuest, LocalDate deliveryDate, int cartId)
 			throws ValidationException, ServiceException {
@@ -80,10 +83,11 @@ public class CartService {
 	}
 
 	/**
-	 * 
-	 * @param cartId
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Delete a cart entry from the database based on the provided cart ID.
+	 *
+	 * @param cartId The ID of the cart to delete.
+	 * @throws ValidationException If the provided cart ID is invalid.
+	 * @throws ServiceException If a service error occurs during cart deletion.
 	 */
 	public void deleteCart(int cartId) throws ValidationException, ServiceException {
 
@@ -101,13 +105,17 @@ public class CartService {
 	}
 	
 	/**
-	 * 
-	 * @throws ServiceException
+	 * Delete all cart items associated with a specific user from the database.
+	 *
+	 * @param userId The ID of the user for whom cart items should be deleted.
+	 * @throws ValidationException If the provided user ID is invalid.
+	 * @throws ServiceException If a service error occurs during cart items deletion.
 	 */
-	public void deleteAllCart() throws ServiceException {
+	public void deleteAllCart(int userId) throws ServiceException, ValidationException {
 		
 		try {
-			addtoCartDAO.deleteAllCart();
+			UserValidator.isUserIdIsValid(userId);
+			addtoCartDAO.deleteAllCart(userId);
 		} catch (DAOException e) {
 			Logger.error(e);
 			throw new ServiceException("AllCart items deletion failed");
@@ -116,11 +124,12 @@ public class CartService {
 	}
 
 	/**
-	 * 
-	 * @param userId
-	 * @return
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Get all cart entries associated with a specific user from the database.
+	 *
+	 * @param userId The ID of the user to retrieve cart entries for.
+	 * @return A list of cart entries associated with the user.
+	 * @throws ValidationException If the provided user ID is invalid.
+	 * @throws ServiceException If a service error occurs during cart retrieval.
 	 */
 	public List<Cart> getAllCartsByUserId(int userId) throws ValidationException, ServiceException {
 
@@ -138,11 +147,12 @@ public class CartService {
 	}
 
 	/**
-	 * 
-	 * @param userId
-	 * @return
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Get a specific cart entry by its ID from the database.
+	 *
+	 * @param cartId The ID of the cart entry to retrieve.
+	 * @return The cart entry with the provided ID, or null if not found.
+	 * @throws ValidationException If the provided cart ID is invalid.
+	 * @throws ServiceException If a service error occurs during cart retrieval.
 	 */
 	public Cart getCartByCartId(int cartId) throws ValidationException, ServiceException {
 
@@ -162,11 +172,12 @@ public class CartService {
 	}
 
 	/**
-	 * 
-	 * @param userId
-	 * @return
-	 * @throws ValidationException
-	 * @throws ServiceException 
+	 * Get the count of cart entries associated with a specific user from the database.
+	 *
+	 * @param userId The ID of the user to count cart entries for.
+	 * @return The count of cart entries associated with the user.
+	 * @throws ValidationException If the provided user ID is invalid.
+	 * @throws ServiceException If a service error occurs during count retrieval.
 	 */
 	public int getCartCountByUserId(int userId) throws ValidationException, ServiceException {
 

@@ -12,6 +12,15 @@ public class CategoryImageService {
 
 	CategoryImageDAO categoryImageDAO = new CategoryImageDAO();
 
+	/**
+	 * Create a category image for a specific menu and category.
+	 *
+	 * @param menu_id The ID of the menu to associate the image with.
+	 * @param category_id The ID of the category within the menu to associate the image with.
+	 * @param image The image content or URL to be associated with the category.
+	 * @throws ValidationException If the provided menu ID or category ID is invalid.
+	 * @throws ServiceException If a service error occurs during the image creation process.
+	 */
 	public void createCategoryImage(int menu_id, int category_id, String image)
 			throws ValidationException, ServiceException {
 

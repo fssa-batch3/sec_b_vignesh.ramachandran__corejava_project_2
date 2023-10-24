@@ -42,11 +42,12 @@ public class CategoryService {
 	}
 
 	/**
-	 * 
-	 * @param menuId
-	 * @return
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Retrieve all active categories within a menu by their IDs.
+	 *
+	 * @param menuId The ID of the menu containing the categories.
+	 * @return A set of Category objects representing the active categories in the menu.
+	 * @throws ValidationException If the provided menu ID is invalid.
+	 * @throws ServiceException If a service error occurs during the retrieval process.
 	 */
 	public Set<Category> getAllActiveCategoriesByMenuId(int menuId) throws ValidationException, ServiceException {
 
@@ -65,11 +66,12 @@ public class CategoryService {
 	}
 
 	/**
-	 * 
-	 * @param menuId
-	 * @return
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Retrieve the names of all categories within a menu by their IDs.
+	 *
+	 * @param menuId The ID of the menu containing the categories.
+	 * @return A set of category names within the menu.
+	 * @throws ValidationException If the provided menu ID is invalid.
+	 * @throws ServiceException If a service error occurs during the retrieval process.
 	 */
 	public Set<String> getAllCategoryNamesByMenuId(int menuId) throws ValidationException, ServiceException {
 
@@ -88,11 +90,12 @@ public class CategoryService {
 	}
 
 	/**
-	 * 
-	 * @param menuId
-	 * @return
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Retrieve all categories within a menu by their IDs.
+	 *
+	 * @param menuId The ID of the menu containing the categories.
+	 * @return A set of Category objects representing all categories in the menu.
+	 * @throws ValidationException If the provided menu ID is invalid.
+	 * @throws ServiceException If a service error occurs during the retrieval process.
 	 */
 	public Set<Category> getCategoriesByMenuId(int menuId) throws ValidationException, ServiceException {
 
@@ -111,12 +114,13 @@ public class CategoryService {
 	}
 
 	/**
-	 * 
-	 * @param menuId
-	 * @param categoryId
-	 * @return
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Retrieve a specific category within a menu by its ID.
+	 *
+	 * @param menuId The ID of the menu containing the category.
+	 * @param categoryId The ID of the category to retrieve.
+	 * @return The Category object representing the requested category.
+	 * @throws ValidationException If the provided menu ID or category ID is invalid.
+	 * @throws ServiceException If a service error occurs during the retrieval process.
 	 */
 	public Category getCategoryByMenuIdAndCategoryId(int menuId, int categoryId)
 			throws ValidationException, ServiceException {
@@ -155,7 +159,7 @@ public class CategoryService {
 				int id = categoryDAO.findCategoryIdByCategoryName(category.getCategoryName());
 
 				CategoryImageService categoryImageService = new CategoryImageService();
-				categoryImageService.createCategoryImage(category.getMenu_id(), id, category.getImage());
+				categoryImageService.createCategoryImage(category.getMenuId(), id, category.getImage());
 
 			} else {
 
@@ -164,7 +168,7 @@ public class CategoryService {
 				generatedCategoryId = categoryDAO.createCategory(category);
 
 				CategoryImageService categoryImageService = new CategoryImageService();
-				categoryImageService.createCategoryImage(category.getMenu_id(), generatedCategoryId,
+				categoryImageService.createCategoryImage(category.getMenuId(), generatedCategoryId,
 						category.getImage());
 			}
 
@@ -175,19 +179,21 @@ public class CategoryService {
 	}
 
 	/**
-	 * 
-	 * @param category
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Update a category with new information.
+	 *
+	 * @param category The Category object containing the updated information.
+	 * @throws ValidationException If the category name, menu ID, or category image is invalid,
+	 *                           or if the category doesn't exist for that menu.
+	 * @throws ServiceException If a service error occurs during the update process.
 	 */
 	public void updateCategory(Category category) throws ValidationException, ServiceException {
 
 		StringUtil.rejectIfInvalidString(category.getCategoryName(), "CategoryName");
 		StringUtil.rejectIfInvalidName(category.getCategoryName(), "CategoryName");
 
-		MenuValidator.isMenuIdIsValid(category.getMenu_id());
+		MenuValidator.isMenuIdIsValid(category.getMenuId());
 
-		CategoryValidator.isCategoryIdExistsForThatMenu(category.getMenu_id(), category.getId());
+		CategoryValidator.isCategoryIdExistsForThatMenu(category.getMenuId(), category.getId());
 
 		StringUtil.rejectIfInvalidString(category.getImage(), "CategoryImage");
 		MenuValidator.validateImage(category.getImage());
@@ -195,7 +201,7 @@ public class CategoryService {
 		CategoryImageDAO categoryImageDAO = new CategoryImageDAO();
 
 		try {
-			categoryImageDAO.updateCategoryImage(category.getMenu_id(), category.getId(), category.getImage());
+			categoryImageDAO.updateCategoryImage(category.getMenuId(), category.getId(), category.getImage());
 		} catch (DAOException e) {
 			Logger.error(e);
 			throw new ServiceException("Failed to create Category");
@@ -204,11 +210,13 @@ public class CategoryService {
 	}
 
 	/**
-	 * 
-	 * @param menuId
-	 * @param categoryId
-	 * @throws ValidationException
-	 * @throws ServiceException
+	 * Get the total price of a category by its menu ID and category ID.
+	 *
+	 * @param menuId The ID of the menu containing the category.
+	 * @param categoryId The ID of the category to retrieve the total price for.
+	 * @return The total price of the category.
+	 * @throws ValidationException If the provided menu ID or category ID is invalid.
+	 * @throws ServiceException If a service error occurs during the retrieval process.
 	 */
 	public int getTotalPriceOfTheCategoryByMenuIdAndCategoryId(int menuId, int categoryId)
 			throws ValidationException, ServiceException {
@@ -226,11 +234,12 @@ public class CategoryService {
 	}
 	
 	/**
-	 * 
-	 * @param menuId
-	 * @param categoryId
-	 * @throws ValidationException
-	 * @throws ServiceException 
+	 * Check if a category ID exists for the specified menu.
+	 *
+	 * @param menuId The ID of the menu to check within.
+	 * @param categoryId The ID of the category to check for existence.
+	 * @throws ValidationException If the provided menu ID or category ID is invalid.
+	 * @throws ServiceException If a service error occurs during the check.
 	 */
 	public void isCategoryIdExistsForThatMenu(int menuId, int categoryId) throws ValidationException, ServiceException {
 		

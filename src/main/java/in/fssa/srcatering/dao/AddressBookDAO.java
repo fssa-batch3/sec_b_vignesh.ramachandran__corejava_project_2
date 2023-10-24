@@ -15,9 +15,10 @@ import in.fssa.srcatering.util.Logger;
 public class AddressBookDAO {
 
 	/**
+	 * Create new Address entry in the address_book table
 	 * 
 	 * @param addressBook
-	 * @throws DAOException
+	 * @throws DAOException If there's an issue with the database operation.
 	 */
 	public void create(AddressBook addressBook) throws DAOException {
 		Connection con = null;
@@ -53,6 +54,7 @@ public class AddressBookDAO {
 	}
 	
 	/**
+	 * Update address details in the address_book table
 	 * 
 	 * @param addressBook
 	 * @throws DAOException
@@ -90,9 +92,10 @@ public class AddressBookDAO {
 	}
 	
 	/**
+	 * Change the address status into 0
 	 * 
 	 * @param addressId
-	 * @throws DAOException
+	 * @throws DAOException if addressId not found
 	 */
 	public void setStausFalse(int addressId) throws DAOException {
 		Connection con = null;
@@ -116,9 +119,10 @@ public class AddressBookDAO {
 	}
 	
 	/**
+	 * Change the address status into 1
 	 * 
 	 * @param addressId
-	 * @throws DAOException
+	 * @throws DAOException if addressId not found
 	 */
 	public void setStausTrue(int addressId) throws DAOException {
 		Connection con = null;
@@ -143,9 +147,10 @@ public class AddressBookDAO {
 	
 	
 	/**
+	 * Change the address setAsDefault into 1
 	 * 
 	 * @param addressId
-	 * @throws DAOException
+	 * @throws DAOException if addressId not found
 	 */
 	public void setAsDefaultTrue(int addressId) throws DAOException {
 		Connection con = null;
@@ -169,9 +174,10 @@ public class AddressBookDAO {
 	}
 	
 	/**
+	 * Change the address setAsDefault into 0
 	 * 
 	 * @param addressId
-	 * @throws DAOException
+	 * @throws DAOException if addressId not found
 	 */
 	public void setAsDefaultFalse(int addressId) throws DAOException {
 		Connection con = null;
@@ -195,9 +201,10 @@ public class AddressBookDAO {
 	}
 	
 	/**
+	 * Change the address selected into 1
 	 * 
 	 * @param addressId
-	 * @throws DAOException
+	 * @throws DAOException if addressId not found
 	 */
 	public void setSelectedTrue(int addressId) throws DAOException {
 		Connection con = null;
@@ -222,9 +229,10 @@ public class AddressBookDAO {
 	
 	
 	/**
+	 * Change the address selected into 0
 	 * 
 	 * @param addressId
-	 * @throws DAOException
+	 * @throws DAOException if addressId not found
 	 */
 	public void setSelectedFalse(int addressId) throws DAOException {
 		Connection con = null;
@@ -250,9 +258,10 @@ public class AddressBookDAO {
 	
 	
 	/**
+	 * Check the address is already exists or not
 	 * 
 	 * @param addressBook
-	 * @return
+	 * @return AddressBook if the address is exists
 	 * @throws DAOException
 	 */
 	public AddressBook isAddressAlreadyExists(AddressBook addressBook) throws DAOException {
@@ -313,9 +322,10 @@ public class AddressBookDAO {
 	
 	
 	/**
+	 * Get the address by using addressId
 	 * 
 	 * @param addressId
-	 * @return
+	 * @return address if the address is found
 	 * @throws DAOException
 	 */
 	public AddressBook findAddressByAddressId(int addressId) throws DAOException {
@@ -365,10 +375,11 @@ public class AddressBookDAO {
 	
 	
 	/**
+	 * Retrieve all addressBook of the user
 	 * 
 	 * @param userId
-	 * @return
-	 * @throws DAOException 
+	 * @return List of addressBook of the user
+	 * @throws DAOException if userId not exists
 	 */
 	public List<AddressBook> findAllAddressesByUserId(int userId) throws DAOException{
 		Connection con = null;
@@ -417,6 +428,7 @@ public class AddressBookDAO {
 	
 	
 	/**
+	 * Check whether the address id is valid or not (Is in the database or not)
 	 * 
 	 * @param addressId
 	 * @throws DAOException
@@ -427,7 +439,7 @@ public class AddressBookDAO {
 		ResultSet rs = null;
 		
 		try {
-			String query = "SELECT id FROM address_book WHERE id = ? AND (status = 1	OR selected = 1)";
+			String query = "SELECT id FROM address_book WHERE id = ? AND (status = 1 OR selected = 1)";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 			
@@ -448,9 +460,10 @@ public class AddressBookDAO {
 	}
 	
 	/**
+	 * Get the default address by userId
 	 * 
-	 * @return
-	 * @throws DAOException
+	 * @return address if default address is found for the user
+	 * @throws DAOException if userId is invalid
 	 */
 	public AddressBook findDefaultAddressByUserId(int userId) throws DAOException {
 		Connection con = null;

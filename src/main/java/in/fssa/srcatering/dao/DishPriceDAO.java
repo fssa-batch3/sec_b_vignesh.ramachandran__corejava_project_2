@@ -25,57 +25,28 @@ public class DishPriceDAO {
 	public void create(int dishId, int price, Timestamp dateTime) throws DAOException {
 
 		Connection con = null;
-		PreparedStatement ps = null; 
-		boolean rollBack = false;
+		PreparedStatement ps = null;
 
 		try {
-			con = ConnectionUtil.getConnection();
-			con.setAutoCommit(false);
-
 			String query = "INSERT INTO dish_price(dish_id, price,start_date) VALUES (?,?,?)";
+			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
+			
 			ps.setInt(1, dishId);
 			ps.setInt(2, price);
-			ps.setTimestamp(3, dateTime); 
-			ps.executeUpdate(); 
-
-			con.commit();
+			ps.setTimestamp(3, dateTime);
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
-			rollBack = true;
+			
+			DishDAO dishDAO = new DishDAO();
+			dishDAO.deleteByDishId(dishId);
+			
 			Logger.error(e);
-
-			try {
-				if (con != null) {
-					con.rollback();
-				}
-			} catch (SQLException rollbackEx) {
-				rollbackEx.printStackTrace(); 
-			}
-
-			throw new DAOException("Error creating DishPrice "+e.getMessage());
+			throw new DAOException(e.getMessage());
+			
 		} finally {
-			try {
-
-				if (ps != null) {
-					ps.close();
-				}
-
-				if (con != null) {
-					con.setAutoCommit(true);
-					con.close();
-				}
-				
-			} catch (SQLException e) {
-				Logger.error(e);
-				Logger.debug(e);
-			}
-
-			if (rollBack) {
-				// Perform any necessary cleanup or additional handling
-				DishDAO dishDAO = new DishDAO();
-				dishDAO.deleteByDishId(dishId);
-			}
+			ConnectionUtil.close(con, ps);
 		}
 
 	}
@@ -209,36 +180,38 @@ public class DishPriceDAO {
 			ConnectionUtil.close(con, ps, rs);
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @param menuId
-	 * @param categoryId
-	 * @return
-	 * @throws DAOException
+	 * Retrieve a list of all price IDs for dishes in a specific menu and category.
+	 *
+	 * @param menuId     The ID of the menu to filter dishes.
+	 * @param categoryId The ID of the category to filter dishes.
+	 * @return A List of Integer objects containing all price IDs for dishes in the
+	 *         specified menu and category.
+	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
-	public List<Integer> findAllPriceIdsByMenuIdAndCategoryId(int menuId, int categoryId) throws DAOException{
+	public List<Integer> findAllPriceIdsByMenuIdAndCategoryId(int menuId, int categoryId) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
+
 		List<Integer> priceIds = new ArrayList<>();
-		
+
 		try {
 			String query = "SELECT dp.id FROM dish_price dp JOIN category_dishes cd ON dp.dish_id = cd.dish_id "
 					+ "WHERE dp.end_date IS NULL AND cd.menu_id = ? AND cd.category_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
-			
+
 			ps.setInt(1, menuId);
 			ps.setInt(2, categoryId);
-			
+
 			rs = ps.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				priceIds.add(rs.getInt("id"));
 			}
-			
+
 		} catch (SQLException e) {
 			Logger.error(e);
 			throw new DAOException(e.getMessage());
@@ -247,7 +220,6 @@ public class DishPriceDAO {
 		}
 		return priceIds;
 	}
-	
 
 	/**
 	 * Deletes dish prices from the database associated with the provided dish ID.
@@ -258,16 +230,16 @@ public class DishPriceDAO {
 	void deleteDishPriceByDishId(int dishId) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
-		
+
 		try {
 			String query = "DELETE FROM dish_price WHERE dish_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
-			
+
 			ps.setInt(1, dishId);
-			
+
 			ps.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			Logger.error(e);
 			throw new DAOException(e.getMessage());
@@ -275,46 +247,57 @@ public class DishPriceDAO {
 			ConnectionUtil.close(con, ps);
 		}
 	}
-	
+
 	/**
-	 * 
-	 * @param dishIds
-	 * @throws DAOException
+	 * Calculate the total price by summing the prices of dishes based on their
+	 * price IDs.
+	 *
+	 * @param priceIds A List of Integer objects representing price IDs of dishes to
+	 *                 include in the total.
+	 * @return The total price calculated from the specified price IDs.
+	 * @throws DAOException If a database error occurs during the calculation.
 	 */
 	public int getTotalPriceByPriceIds(List<Integer> priceIds) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
+
 		int sum = 0;
-		
+
 		try {
-			
-			StringBuilder idList = new StringBuilder();
-            for (int i = 0; i < priceIds.size(); i++) {
-                idList.append(priceIds.get(i));
-                if (i < priceIds.size() - 1) {
-                    idList.append(",");
-                }
-            }
-			
-            String query = "SELECT SUM(price) AS total FROM dish_price WHERE id IN (" + idList.toString() + ")";
+
+			String query = "SELECT SUM(price) AS total FROM dish_price WHERE id IN (";
+
+			// Create a parameter for each ID in the priceIds list
+			for (int i = 0; i < priceIds.size(); i++) {
+				query += "?";
+				if (i < priceIds.size() - 1) {
+					query += ",";
+				}
+			}
+			query += ")";
+
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
-			
+
+			// Set parameters for each ID in the priceIds list
+			for (int i = 0; i < priceIds.size(); i++) {
+				ps.setInt(i + 1, priceIds.get(i));
+			}
+
 			rs = ps.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				sum = rs.getInt("total");
 			}
-			
+
 		} catch (SQLException e) {
 			Logger.error(e);
 			throw new DAOException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(con, ps);
 		}
-		
+
 		return sum;
 	}
 

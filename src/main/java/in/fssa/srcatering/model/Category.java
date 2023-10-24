@@ -12,7 +12,7 @@ public class Category extends CategoryEntity {
 		super.setId(id);
 		super.setCategoryName(name);
 		super.setImage(image);
-		super.setMenu_id(menu_id);
+		super.setMenuId(menu_id);
 	}
 
     @Override

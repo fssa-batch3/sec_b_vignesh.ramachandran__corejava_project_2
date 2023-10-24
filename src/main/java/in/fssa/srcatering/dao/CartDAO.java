@@ -17,6 +17,7 @@ import in.fssa.srcatering.util.Logger;
 public class CartDAO {
 
 	/**
+	 * Create a new cart in the cart table
 	 * 
 	 * @param cart
 	 * @throws DAOException
@@ -53,8 +54,11 @@ public class CartDAO {
 
 	
 	/**
+	 * Update cart details in the cart table using cartId
 	 * 
-	 * @param cart
+	 * @param noOfGuest
+	 * @param deliveryDate
+	 * @param cartId
 	 * @throws DAOException
 	 */
 	public void updateCart(int noOfGuest,LocalDate deliveryDate, int cartId) throws DAOException {
@@ -85,6 +89,7 @@ public class CartDAO {
 	
 
 	/**
+	 * Delete cart from cart table using cartId
 	 * 
 	 * @param cartId
 	 * @throws DAOException
@@ -111,17 +116,21 @@ public class CartDAO {
 	
 	
 	/**
+	 * Delete cart from cart table using userId
 	 * 
-	 * @throws DAOException
+	 * @param userId
+	 * @throws DAOException if userId is invalid
 	 */
-	public void deleteAllCart() throws DAOException {
+	public void deleteAllCart(int userId) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
 		try {
-			String query = "TRUNCATE TABLE cart";
+			String query = "DELETE FROM cart WHERE user_id = ?";
 			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
+			
+			ps.setInt(1, userId);
 			
 			ps.executeUpdate();
 			
@@ -135,9 +144,10 @@ public class CartDAO {
 
 	
 	/**
+	 * Check the cartId is valid or not
 	 * 
 	 * @param cartId
-	 * @return
+	 * @return true if cartId is valid otherwise return false 
 	 * @throws DAOException
 	 */
 	public boolean isCartIdIsValid(int cartId) throws DAOException {
@@ -164,10 +174,11 @@ public class CartDAO {
 	}
 
 	/**
+	 * Retrieve list of carts from cart table by using userId
 	 * 
 	 * @param userId
-	 * @return
-	 * @throws DAOException
+	 * @return list of carts
+	 * @throws DAOException if userId is not found
 	 */
 	public List<Cart> findAllCartsByUserId(int userId) throws DAOException {
 		Connection con = null;
@@ -209,10 +220,11 @@ public class CartDAO {
 	}
 	
 	/**
+	 * find cart by cartId
 	 * 
 	 * @param userId
-	 * @return
-	 * @throws DAOException
+	 * @return cart details
+	 * @throws DAOException if cartId is invalid
 	 */
 	public Cart findCartByCartId(int cartId) throws DAOException {
 		Connection con = null;
@@ -252,11 +264,12 @@ public class CartDAO {
 	}
 	
 	/**
+	 * Check the menu and categoryId is exists in the cart table for the particular user
 	 * 
 	 * @param menuId
 	 * @param categoryId
 	 * @param userId
-	 * @throws DAOException
+	 * @throws DAOException if menuId or categoryId or userId is invalid
 	 */
 	public void isThatMenuAndCategoryAlreadyExists(int menuId, int categoryId, int userId) throws DAOException {
 		Connection con = null;
@@ -287,10 +300,11 @@ public class CartDAO {
 	}
 	
 	/**
+	 * get the count of the cart items for the particular user
 	 * 
 	 * @param userId
-	 * @return
-	 * @throws DAOException
+	 * @return count of the cart items
+	 * @throws DAOException if userId is invalid
 	 */
 	public int findCartCountByUserId(int userId) throws DAOException {
 		Connection con = null;

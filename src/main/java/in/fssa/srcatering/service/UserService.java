@@ -50,6 +50,7 @@ public class UserService {
 
 			UserValidator.validate(newUser);
 			UserValidator.isEmailAlreadyExists(newUser.getEmail());
+			UserValidator.isPhoneNumberAlreadyExists(newUser.getPhoneNumber());
 
 			newUser.setPassword(PasswordUtil.encryptPassword(newUser.getPassword()));
 			userDAO.create(newUser);

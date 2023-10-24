@@ -8,6 +8,7 @@ VALUES ("Vignesh", "vignesh@gmail.com", 9876543210, "$rrAeMbynYS8DAnb8Ebjqog==$e
 SELECT * FROM users;
 
 
+
 INSERT INTO address_book (user_id, name, email, phone_number, door_no, street_name, sub_locality, city, district, state, pincode, status, set_as_default, selected, created_at, modified_at)
 VALUES
 (2, 'Varun', 'srvarun@gmail.com', '9878685848', '456', 'Mahamaha Kulam South', 'Kanmani Devi Nagar', 'Kumbakonam', 'Thanjavur', 'TN', 612001, 1, 1, 1, '2023-09-15 03:23:21', '2023-09-15 03:40:06'),

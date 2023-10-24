@@ -16,9 +16,10 @@ import in.fssa.srcatering.util.Logger;
 public class ReviewDAO {
 	
 	/**
-	 * 
-	 * @param review
-	 * @throws DAOException
+	 * Create a new review in the database, associating it with a specific user, order, menu, and category.
+	 *
+	 * @param review The Review object representing the review to be created.
+	 * @throws DAOException If a database error occurs during the creation.
 	 */
 	public void create(Review review) throws DAOException {
 		Connection con = null;
@@ -47,12 +48,13 @@ public class ReviewDAO {
 	}
 	
 	/**
-	 * 
-	 * @param orderId
-	 * @param menuId
-	 * @param categoryId
-	 * @return
-	 * @throws DAOException
+	 * Retrieve a review by its associated order ID, menu ID, and category ID.
+	 *
+	 * @param orderId The ID of the associated order.
+	 * @param menuId The ID of the associated menu.
+	 * @param categoryId The ID of the associated category.
+	 * @return The Review object representing the requested review.
+	 * @throws DAOException If a database error occurs during the retrieval or if the review is not found.
 	 */
 	public Review findReviewByOrderIdAndMenuIdAndCategoryId(int orderId, int menuId, int categoryId) throws DAOException{
 		Connection con = null;
@@ -95,11 +97,12 @@ public class ReviewDAO {
 	
 	
 	/**
-	 * 
-	 * @param menuId
-	 * @param categoryId
-	 * @return
-	 * @throws DAOException
+	 * Retrieve a list of reviews associated with a specific menu and category.
+	 *
+	 * @param menuId The ID of the associated menu.
+	 * @param categoryId The ID of the associated category.
+	 * @return A List of Review objects representing all reviews for the specified menu and category.
+	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
 	public List<Review> findAllReviewsByMenuIdAndCategoryId(int menuId, int categoryId) throws DAOException{
 		Connection con = null;

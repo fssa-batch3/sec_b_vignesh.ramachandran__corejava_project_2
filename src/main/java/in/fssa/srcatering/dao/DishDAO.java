@@ -227,11 +227,12 @@ public class DishDAO {
 	}
 
 	/**
-	 * 
-	 * @param menuId
-	 * @param categoryId
-	 * @return
-	 * @throws DAOException
+	 * Retrieve a set of all active dishes for a specific menu and category.
+	 *
+	 * @param menuId The ID of the menu to filter dishes.
+	 * @param categoryId The ID of the category to filter dishes.
+	 * @return A Set of Dish objects representing all active dishes in the specified menu and category.
+	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
 	public Set<Dish> findAllActiveDishesByMenuIdAndCategoryId(int menuId, int categoryId) throws DAOException {
 		Connection con = null;

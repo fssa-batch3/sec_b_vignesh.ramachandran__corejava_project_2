@@ -136,10 +136,11 @@ public class DishService {
 	}
 
 	/**
+	 * Retrieve a set of all active dishes for a specific menu and category.
 	 * 
 	 * @param menuId
 	 * @param categoryId
-	 * @return
+	 * @return A Set of Dish objects representing all active dishes in the specified menu and category.
 	 * @throws ValidationException
 	 * @throws ServiceException
 	 */

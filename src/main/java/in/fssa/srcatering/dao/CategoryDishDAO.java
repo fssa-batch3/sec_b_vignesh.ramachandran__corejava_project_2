@@ -202,13 +202,10 @@ public class CategoryDishDAO {
 
 		Connection con = null;
 		PreparedStatement ps = null;
-		boolean rollBack = false;
 
 		try {
-			con = ConnectionUtil.getConnection();
-			con.setAutoCommit(false);
-
 			String query = "INSERT INTO category_dishes(menu_id, category_id, dish_id) VALUES (?,?,?)";
+			con = ConnectionUtil.getConnection();
 			ps = con.prepareStatement(query);
 
 			ps.setInt(1, menuId);
@@ -217,56 +214,32 @@ public class CategoryDishDAO {
 
 			ps.executeUpdate();
 
-			con.commit();
-
 		} catch (SQLException e) {
-			rollBack = true;
-			Logger.error(e);
+			
+			DishDAO dishDAO = new DishDAO();
+			DishPriceDAO dishPriceDAO = new DishPriceDAO();
 
-			try {
-				if (con != null) {
-					con.rollback();
-				}
-			} catch (SQLException rollbackEx) {
-				rollbackEx.printStackTrace();
-			}
+			dishDAO.deleteByDishId(dishId);
+			dishPriceDAO.deleteDishPriceByDishId(dishId);
+			
+			Logger.error(e);
 
 			throw new DAOException("Error creating CategoryDish " + e.getMessage());
 
 		} finally {
-			try {
-
-				if (ps != null) {
-					ps.close();
-				}
-
-				if (con != null) {
-					con.setAutoCommit(true);
-					con.close();
-				}
-
-			} catch (SQLException e) {
-				Logger.error(e);
-			}
-
-			if (rollBack) {
-				// Perform any necessary cleanup or additional handling
-				DishDAO dishDAO = new DishDAO();
-				DishPriceDAO dishPriceDAO = new DishPriceDAO();
-
-				dishDAO.deleteByDishId(dishId);
-				dishPriceDAO.deleteDishPriceByDishId(dishId);
-			}
+			
+			ConnectionUtil.close(con, ps);
 		}
 	}
 
 	/**
-	 * 
-	 * @param menuId
-	 * @param categoryId
-	 * @param dishId
-	 * @param status
-	 * @throws DAOException
+	 * Update the status of a category-dish association in the database.
+	 *
+	 * @param menuId The ID of the menu.
+	 * @param categoryId The ID of the category.
+	 * @param dishId The ID of the dish.
+	 * @param status The new status to set for the category-dish association.
+	 * @throws DAOException If a database error occurs during the update.
 	 */
 	public void updateCategoryDish(int menuId, int categoryId, int dishId, int status) throws DAOException {
 		Connection con = null;
@@ -325,11 +298,12 @@ public class CategoryDishDAO {
 	}
 	
 	/**
-	 * 
-	 * @param menuId
-	 * @param categoryId
-	 * @return
-	 * @throws DAOException
+	 * Retrieve a mapping of dish IDs to their associated price IDs for a given menu and category.
+	 *
+	 * @param menuId The ID of the menu.
+	 * @param categoryId The ID of the category.
+	 * @return A Map where the keys are dish IDs and the values are corresponding price IDs.
+	 * @throws DAOException If a database error occurs during the retrieval.
 	 */
 	public Map<Integer, Integer> findDishIdAndPriceIdByMenuIdAndCategoryId(int menuId, int categoryId) throws DAOException{
 		Connection con = null;
