@@ -122,7 +122,7 @@ public class ReviewDAO {
 			
 			rs = ps.executeQuery();
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				Review review = new Review();
 				review.setId(rs.getInt("id"));
 				review.setUserId(rs.getInt("user_id"));
